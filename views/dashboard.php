@@ -116,7 +116,7 @@ require_once('../partials/head.php');
                                                                     </div>
                                                                     <div class="align-end flex-sm-wrap g-4 flex-md-nowrap">
                                                                         <div class="nk-sale-data">
-                                                                            <span class="amount">9.69K</span>
+                                                                            <span class="amount"><?php echo $students; ?></span>
                                                                         </div>
                                                                         <div class="nk-sales-ck text-right">
                                                                             <i class="fas fa-users fa-4x"></i>
@@ -130,19 +130,15 @@ require_once('../partials/head.php');
                                                                 <div class="card-inner">
                                                                     <div class="card-title-group align-start mb-2">
                                                                         <div class="card-title">
-                                                                            <h6 class="title">Avg Subscriptions</h6>
-                                                                        </div>
-                                                                        <div class="card-tools">
-                                                                            <em class="card-hint icon ni ni-help-fill" data-toggle="tooltip" data-placement="left" title="Daily Avg. subscription"></em>
+                                                                            <h6 class="title">Cashiers</h6>
                                                                         </div>
                                                                     </div>
                                                                     <div class="align-end flex-sm-wrap g-4 flex-md-nowrap">
                                                                         <div class="nk-sale-data">
-                                                                            <span class="amount">346.2</span>
-                                                                            <span class="sub-title"><span class="change up text-success"><em class="icon ni ni-arrow-long-up"></em>2.45%</span>since last week</span>
+                                                                            <span class="amount"><?php echo $cashiers; ?></span>
                                                                         </div>
-                                                                        <div class="nk-sales-ck">
-                                                                            <canvas class="sales-bar-chart" id="totalSubscription"></canvas>
+                                                                        <div class="nk-sales-ck text-right">
+                                                                            <i class="fas fa-user-tie fa-4x"></i>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -153,19 +149,73 @@ require_once('../partials/head.php');
                                                                 <div class="card-inner">
                                                                     <div class="card-title-group align-start mb-2">
                                                                         <div class="card-title">
-                                                                            <h6 class="title">Avg Subscriptions</h6>
-                                                                        </div>
-                                                                        <div class="card-tools">
-                                                                            <em class="card-hint icon ni ni-help-fill" data-toggle="tooltip" data-placement="left" title="Daily Avg. subscription"></em>
+                                                                            <h6 class="title">Available Meals</h6>
                                                                         </div>
                                                                     </div>
                                                                     <div class="align-end flex-sm-wrap g-4 flex-md-nowrap">
                                                                         <div class="nk-sale-data">
-                                                                            <span class="amount">346.2</span>
-                                                                            <span class="sub-title"><span class="change up text-success"><em class="icon ni ni-arrow-long-up"></em>2.45%</span>since last week</span>
+                                                                            <span class="amount"><?php echo $meals; ?></span>
                                                                         </div>
-                                                                        <div class="nk-sales-ck">
-                                                                            <canvas class="sales-bar-chart" id="totalSubscription"></canvas>
+                                                                        <div class="nk-sales-ck text-right">
+                                                                            <i class="fas fa-pie fa-4x"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div><!-- .card -->
+                                                        </div><!-- .col -->
+                                                        <div class="col-sm-4 col-lg-4 col-xxl-6">
+                                                            <div class="card card-bordered">
+                                                                <div class="card-inner">
+                                                                    <div class="card-title-group align-start mb-2">
+                                                                        <div class="card-title">
+                                                                            <h6 class="title">Orders</h6>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="align-end flex-sm-wrap g-4 flex-md-nowrap">
+                                                                        <div class="nk-sale-data">
+                                                                            <span class="amount"><?php echo $orders; ?></span>
+                                                                        </div>
+                                                                        <div class="nk-sales-ck text-right">
+                                                                            <i class="fas fa-file-signature fa-4x"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div><!-- .card -->
+                                                        </div><!-- .col -->
+
+                                                        <div class="col-sm-4 col-lg-4 col-xxl-6">
+                                                            <div class="card card-bordered">
+                                                                <div class="card-inner">
+                                                                    <div class="card-title-group align-start mb-2">
+                                                                        <div class="card-title">
+                                                                            <h6 class="title">MealCards Allocated Funds</h6>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="align-end flex-sm-wrap g-4 flex-md-nowrap">
+                                                                        <div class="nk-sale-data">
+                                                                            <span class="amount">Ksh <?php echo $allocated_funds; ?></span>
+                                                                        </div>
+                                                                        <div class="nk-sales-ck text-right">
+                                                                            <i class="fas fa-id-card fa-4x"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div><!-- .card -->
+                                                        </div><!-- .col -->
+                                                        <div class="col-sm-4 col-lg-4 col-xxl-6">
+                                                            <div class="card card-bordered">
+                                                                <div class="card-inner">
+                                                                    <div class="card-title-group align-start mb-2">
+                                                                        <div class="card-title">
+                                                                            <h6 class="title">Overall Cafe Income</h6>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="align-end flex-sm-wrap g-4 flex-md-nowrap">
+                                                                        <div class="nk-sale-data">
+                                                                            <span class="amount">Ksh <?php echo $overall_income; ?></span>
+                                                                        </div>
+                                                                        <div class="nk-sales-ck text-right">
+                                                                            <i class="fas fa-money-bill-alt fa-4x"></i>
                                                                         </div>
                                                                     </div>
                                                                 </div>
