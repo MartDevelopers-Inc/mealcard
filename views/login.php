@@ -90,86 +90,93 @@ if (isset($_POST['sign_in'])) {
     }
 }
 require_once('../partials/head.php');
+/* Pop System Settings Here */
+$ret = "SELECT * FROM  system_settings  ";
+$stmt = $mysqli->prepare($ret);
+$stmt->execute(); //ok
+$res = $stmt->get_result();
+while ($sys = $res->fetch_object()) {
 ?>
 
-<body class="nk-body npc-crypto ui-clean pg-auth">
-    <!-- app body @s -->
-    <div class="nk-app-root">
-        <div class="nk-split nk-split-page nk-split-md">
-            <div class="nk-split-content nk-block-area nk-block-area-column nk-auth-container">
-                <div class="absolute-top-right d-lg-none p-3 p-sm-5">
-                    <a href="#" class="toggle btn-white btn btn-icon btn-light" data-target="athPromo"><em class="icon ni ni-info"></em></a>
-                </div>
-                <div class="nk-block nk-block-middle nk-auth-body">
-                    <div class="brand-logo pb-5">
-                        <a href="" class="logo-link">
-                            <img class="logo-light logo-img logo-img-lg" src="../public/backend_assets/images/logo.png" srcset=../public/backend_assets/images/logo2x.png 2x" alt="logo">
-                            <img class="logo-dark logo-img logo-img-lg" src="../public/backend_assets/images/logo-dark.png" srcset="../public/backend_assets/images/logo-dark2x.png 2x" alt="logo-dark">
-                        </a>
+    <body class="nk-body npc-crypto ui-clean pg-auth">
+        <!-- app body @s -->
+        <div class="nk-app-root">
+            <div class="nk-split nk-split-page nk-split-md">
+                <div class="nk-split-content nk-block-area nk-block-area-column nk-auth-container">
+                    <div class="absolute-top-right d-lg-none p-3 p-sm-5">
+                        <a href="#" class="toggle btn-white btn btn-icon btn-light" data-target="athPromo"><em class="icon ni ni-info"></em></a>
                     </div>
-                    <div class="nk-block-head">
-                        <div class="nk-block-head-content">
-                            <h5 class="nk-block-title">Sign In</h5>
-                            <div class="nk-block-des">
-                                <p>Enter Your Email And Password, To Aaccess Your MealCard Information System Dashboard.</p>
-                            </div>
+                    <div class="nk-block nk-block-middle nk-auth-body">
+                        <div class="brand-logo pb-5">
+                            <a href="" class="logo-link">
+                                <img class="logo-light logo-img logo-img-lg" src="../public/backend_assets/images/kca_uni_logo.webp" srcset=../public/backend_assets/images/logo2x.png 2x" alt="logo">
+                                <img class="logo-dark logo-img logo-img-lg" src="../public/backend_assets/images/kca_uni_logo.webp" srcset="../public/backend_assets/images/logo-dark2x.png 2x" alt="logo-dark">
+                            </a>
                         </div>
-                    </div><!-- .nk-block-head -->
-
-                    <form method="POST">
-                        <div class="form-group">
-                            <div class="form-label-group">
-                                <label class="form-label" for="default-01">Email </label>
-                            </div>
-                            <input type="email" name="user_email" required class="form-control form-control-lg">
-                        </div><!-- .foem-group -->
-                        <div class="form-group">
-                            <div class="form-label-group">
-                                <label class="form-label" for="password">Password</label>
-                                <a class="link link-primary link-sm" tabindex="-1" href="forgot_password">Forgot Password?</a>
-                            </div>
-                            <div class="form-control-wrap">
-                                <a tabindex="-1" href="#" class="form-icon form-icon-right passcode-switch" data-target="password">
-                                    <em class="passcode-icon icon-show icon ni ni-eye"></em>
-                                    <em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
-                                </a>
-                                <input type="password" name="user_password" required class="form-control form-control-lg" id="password">
-                            </div>
-                        </div><!-- .foem-group -->
-                        <div class="form-group">
-                            <button name="sign_in" type="submit" class="btn btn-lg btn-primary btn-block">Sign in</button>
-                        </div>
-                    </form><!-- form -->
-
-                </div><!-- .nk-block -->
-                <div class="nk-block nk-auth-footer">
-                    <div class="mt-3">
-                        <p>&copy; 2019 MealCard Intergrated System. All Rights Reserved. <br> A <a href="https://martdev.info" target="_blank">MartDevelopers Inc</a> Production</p>
-                    </div>
-                </div><!-- .nk-block -->
-            </div><!-- .nk-split-content -->
-
-            <div class="nk-split-content nk-split-stretch bg-lighter d-flex toggle-break-lg toggle-slide toggle-slide-right" data-content="athPromo" data-toggle-screen="lg" data-toggle-overlay="true">
-                <div class="slider-wrap w-100 w-max-550px p-3 p-sm-5 m-auto">
-                    <div class="slider-init">
-                        <div class="slider-item">
-                            <div class="nk-feature nk-feature-center">
-                                <div class="nk-feature-img">
-                                    <img class="round" src="../public/backend_assets/images/slides/promo-a.png" alt="">
-                                </div>
-                                <div class="nk-feature-content py-4 p-sm-5">
-                                    <h4>Meal Card IS</h4>
-                                    <p>Instilling Automation in University Cafeteria checkout points</p>
+                        <div class="nk-block-head">
+                            <div class="nk-block-head-content">
+                                <h5 class="nk-block-title">Sign In</h5>
+                                <div class="nk-block-des">
+                                    <p>Enter Your Email And Password, To Access Your <?php echo $sys->sys_name; ?> Dashboard.</p>
                                 </div>
                             </div>
-                        </div><!-- .slider-item -->
-                    </div><!-- .slider-init -->
-                </div><!-- .slider-wrap -->
-            </div><!-- .nk-split-content -->
-        </div><!-- .nk-split -->
-    </div><!-- app body @e -->
-    <!-- JavaScript -->
-    <?php require_once('../partials/scripts.php'); ?>
-</body>
+                        </div><!-- .nk-block-head -->
+
+                        <form method="POST">
+                            <div class="form-group">
+                                <div class="form-label-group">
+                                    <label class="form-label" for="default-01">Email </label>
+                                </div>
+                                <input type="email" name="user_email" required class="form-control form-control-lg">
+                            </div><!-- .foem-group -->
+                            <div class="form-group">
+                                <div class="form-label-group">
+                                    <label class="form-label" for="password">Password</label>
+                                    <a class="link link-primary link-sm" tabindex="-1" href="forgot_password">Forgot Password?</a>
+                                </div>
+                                <div class="form-control-wrap">
+                                    <a tabindex="-1" href="#" class="form-icon form-icon-right passcode-switch" data-target="password">
+                                        <em class="passcode-icon icon-show icon ni ni-eye"></em>
+                                        <em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
+                                    </a>
+                                    <input type="password" name="user_password" required class="form-control form-control-lg" id="password">
+                                </div>
+                            </div><!-- .foem-group -->
+                            <div class="form-group">
+                                <button name="sign_in" type="submit" class="btn btn-lg btn-primary btn-block">Sign in</button>
+                            </div>
+                        </form><!-- form -->
+
+                    </div><!-- .nk-block -->
+                    <div class="nk-block nk-auth-footer">
+                        <div class="mt-3">
+                            <p>&copy; 2019 <?php echo $sys->sys_name; ?>. All Rights Reserved. A <a href="https://martdev.info" target="_blank">MartDevelopers Inc</a> Production</p>
+                        </div>
+                    </div><!-- .nk-block -->
+                </div><!-- .nk-split-content -->
+
+                <div class="nk-split-content nk-split-stretch bg-lighter d-flex toggle-break-lg toggle-slide toggle-slide-right" data-content="athPromo" data-toggle-screen="lg" data-toggle-overlay="true">
+                    <div class="slider-wrap w-100 w-max-550px p-3 p-sm-5 m-auto">
+                        <div class="slider-init">
+                            <div class="slider-item">
+                                <div class="nk-feature nk-feature-center">
+                                    <div class="nk-feature-img">
+                                        <img class="round" src="../public/backend_assets/images/slides/KCA_Auth_bg.png" alt="">
+                                    </div>
+                                    <div class="nk-feature-content py-4 p-sm-5">
+                                        <h4><?php echo $sys->sys_name; ?></h4>
+                                        <p><?php echo $sys->sys_tagline; ?></p>
+                                    </div>
+                                </div>
+                            </div><!-- .slider-item -->
+                        </div><!-- .slider-init -->
+                    </div><!-- .slider-wrap -->
+                </div><!-- .nk-split-content -->
+            </div><!-- .nk-split -->
+        </div><!-- app body @e -->
+        <!-- JavaScript -->
+        <?php require_once('../partials/scripts.php'); ?>
+    </body>
+<?php } ?>
 
 </html>
