@@ -76,8 +76,8 @@ while ($user = $res->fetch_object()) {
                 </div>
                 <div class="nk-header-brand d-xl-none">
                     <a href="dashboard" class="logo-link">
-                        <img class="logo-light logo-img" src="../public/backend_assets/images/logo.png" alt="logo">
-                        <img class="logo-dark logo-img" src="../public/backend_assets/images/logo-dark.png" alt="logo-dark">
+                        <img class="logo-light logo-img" src="../public/backend_assets/images/logo.jpeg" alt="logo">
+                        <img class="logo-dark logo-img" src="../public/backend_assets/images/logo.jpeg" alt="logo-dark">
                     </a>
                 </div><!-- .nk-header-brand -->
                 <!--

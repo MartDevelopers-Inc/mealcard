@@ -2,7 +2,7 @@
     <div class="nk-sidebar-element nk-sidebar-head">
         <div class="nk-sidebar-brand">
             <a href="dashboard" class="logo-link nk-sidebar-logo">
-                <img class="logo-light logo-img" src="../public/backend_assets/images/logo.png" alt="logo">
+                <img class="logo-light logo-img" src="../public/backend_assets/images/logo.jpeg" alt="logo">
             </a>
         </div>
         <div class="nk-menu-trigger mr-n2">
