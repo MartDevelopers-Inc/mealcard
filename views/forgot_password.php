@@ -59,7 +59,45 @@
  * IN NO EVENT WILL DEVLAN  LIABILITY FOR ANY CLAIM, WHETHER IN CONTRACT 
  * TORT OR ANY OTHER THEORY OF LIABILITY, EXCEED THE LICENSE FEE PAID BY YOU, IF ANY.
  */
+session_start();
+require_once('../config/config.php');
+require_once('../config/codeGen.php');
 
+if (isset($_POST['Reset_Password'])) {
+    //prevent posting blank value for email
+    if (isset($_POST['user_email']) && !empty($_POST['user_email'])) {
+        $user_email = mysqli_real_escape_string($mysqli, trim($_POST['user_email']));
+    } else {
+        $error = 1;
+        $err = "Enter your E-mail";
+    }
+    $query = mysqli_query($mysqli, "SELECT * FROM users WHERE user_email='" . $user_email . "'");
+    $num_rows = mysqli_num_rows($query);
+
+    if ($num_rows > 0) {
+        $password = $sys_gen_password; /* Find This @config/codeGen.php */
+        /* Mail User Plain Password */
+        $new_password = substr($password, 0, 10);
+        /* Hash Password  */
+        $hashed_password = sha1(md5($new_password));
+        $query = "UPDATE users SET  user_password=? WHERE  user_email =?";
+        $stmt = $mysqli->prepare($query);
+        //bind paramaters
+        $rc = $stmt->bind_param('ss', $hashed_password, $user_email);
+        $stmt->execute();
+        /* Load Mailer */
+        require_once('../mailers/reset_password_mailer.php');
+
+        if ($stmt && $mail->send()) {
+            $success = "Password Reset Instructions Sent To Your Mail";
+        } else {
+            $err = "Password Reset Failed!, Try again $mail->ErrorInfo";
+        }
+    }
+    /* User Does Not Exist */ else {
+        $err = "Sorry, User Account With That Email Does Not Exist";
+    }
+}
 require_once('../partials/head.php');
 ?>
 
