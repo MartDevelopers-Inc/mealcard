@@ -63,6 +63,7 @@ session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
 checklogin();
+require_once('../partials/analytics.php');
 require_once('../partials/head.php');
 ?>
 
@@ -227,222 +228,55 @@ require_once('../partials/head.php');
                                             </div><!-- .row -->
                                         </div><!-- .col -->
 
-                                        <div class="col-md-6 col-xxl-4">
+                                        <div class="col-md-6 col-xxl-6">
                                             <div class="card card-bordered card-full">
                                                 <div class="card-inner border-bottom">
                                                     <div class="card-title-group">
                                                         <div class="card-title">
-                                                            <h6 class="title">Recent Activities</h6>
+                                                            <h6 class="title"><?Php echo date('d M Y'); ?> Meal Orders</h6>
                                                         </div>
                                                         <div class="card-tools">
-                                                            <ul class="card-tools-nav">
-                                                                <li><a href="#"><span>Cancel</span></a></li>
-                                                                <li class="active"><a href="#"><span>All</span></a></li>
-                                                            </ul>
+                                                            <a href="orders" class="link">View All</a>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <ul class="nk-activity">
-                                                    <li class="nk-activity-item">
-                                                        <div class="nk-activity-media user-avatar bg-success"><img src="./images/avatar/c-sm.jpg" alt=""></div>
-                                                        <div class="nk-activity-data">
-                                                            <div class="label">Keith Jensen requested to Widthdrawl.</div>
-                                                            <span class="time">2 hours ago</span>
-                                                        </div>
-                                                    </li>
-                                                    <li class="nk-activity-item">
-                                                        <div class="nk-activity-media user-avatar bg-warning">HS</div>
-                                                        <div class="nk-activity-data">
-                                                            <div class="label">Harry Simpson placed a Order.</div>
-                                                            <span class="time">2 hours ago</span>
-                                                        </div>
-                                                    </li>
-                                                    <li class="nk-activity-item">
-                                                        <div class="nk-activity-media user-avatar bg-azure">SM</div>
-                                                        <div class="nk-activity-data">
-                                                            <div class="label">Stephanie Marshall got a huge bonus.</div>
-                                                            <span class="time">2 hours ago</span>
-                                                        </div>
-                                                    </li>
-                                                    <li class="nk-activity-item">
-                                                        <div class="nk-activity-media user-avatar bg-purple"><img src="./images/avatar/d-sm.jpg" alt=""></div>
-                                                        <div class="nk-activity-data">
-                                                            <div class="label">Nicholas Carr deposited funds.</div>
-                                                            <span class="time">2 hours ago</span>
-                                                        </div>
-                                                    </li>
-                                                    <li class="nk-activity-item">
-                                                        <div class="nk-activity-media user-avatar bg-pink">TM</div>
-                                                        <div class="nk-activity-data">
-                                                            <div class="label">Timothy Moreno placed a Order.</div>
-                                                            <span class="time">2 hours ago</span>
-                                                        </div>
-                                                    </li>
+                                                    <?php
+                                                    /* Load Orders Logs */
+                                                    $ret = "SELECT * FROM  orders o
+                                                    INNER JOIN users s ON s.user_id = o.order_user_id
+                                                    INNER JOIN meals m ON m.meal_id = o.order_meal_id 
+                                                    WHERE  o.order_date_posted = CURDATE()";
+                                                    $stmt = $mysqli->prepare($ret);
+                                                    $stmt->execute(); //ok
+                                                    $res = $stmt->get_result();
+                                                    while ($orders = $res->fetch_object()) {
+
+                                                    ?>
+                                                        <li class="nk-activity-item">
+                                                            <div class="nk-activity-media user-avatar bg-success">
+                                                                <?php echo substr($orders->user_name, 0, 2); ?>
+                                                            </div>
+                                                            <div class="nk-activity-data">
+                                                                <div class="label">
+                                                                    <?php echo $orders->user_name; ?> Has Ordered <?php echo $orders->meal_name . '. Quantity: ' . $orders->order_quanty; ?>
+                                                                </div>
+                                                                <span class="time"><?php echo date('d M Y, g:ia', strtotime($orders->order_date_posted)); ?></span>
+                                                            </div>
+                                                        </li>
+                                                    <?php } ?>
+
                                                 </ul>
                                             </div><!-- .card -->
                                         </div><!-- .col -->
-                                        <div class="col-md-6 col-xxl-4">
-                                            <div class="card card-bordered card-full">
-                                                <div class="card-inner-group">
-                                                    <div class="card-inner">
-                                                        <div class="card-title-group">
-                                                            <div class="card-title">
-                                                                <h6 class="title">New Users</h6>
-                                                            </div>
-                                                            <div class="card-tools">
-                                                                <a href="html/general/user-list-regular.html" class="link">View All</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-inner card-inner-md">
-                                                        <div class="user-card">
-                                                            <div class="user-avatar bg-primary-dim">
-                                                                <span>AB</span>
-                                                            </div>
-                                                            <div class="user-info">
-                                                                <span class="lead-text">Abu Bin Ishtiyak</span>
-                                                                <span class="sub-text">info@softnio.com</span>
-                                                            </div>
-                                                            <div class="user-action">
-                                                                <div class="drodown">
-                                                                    <a href="#" class="dropdown-toggle btn btn-icon btn-trigger mr-n1" data-toggle="dropdown" aria-expanded="false"><em class="icon ni ni-more-h"></em></a>
-                                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                                        <ul class="link-list-opt no-bdr">
-                                                                            <li><a href="#"><em class="icon ni ni-setting"></em><span>Action Settings</span></a></li>
-                                                                            <li><a href="#"><em class="icon ni ni-notify"></em><span>Push Notification</span></a></li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-inner card-inner-md">
-                                                        <div class="user-card">
-                                                            <div class="user-avatar bg-pink-dim">
-                                                                <span>SW</span>
-                                                            </div>
-                                                            <div class="user-info">
-                                                                <span class="lead-text">Sharon Walker</span>
-                                                                <span class="sub-text">sharon-90@example.com</span>
-                                                            </div>
-                                                            <div class="user-action">
-                                                                <div class="drodown">
-                                                                    <a href="#" class="dropdown-toggle btn btn-icon btn-trigger mr-n1" data-toggle="dropdown" aria-expanded="false"><em class="icon ni ni-more-h"></em></a>
-                                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                                        <ul class="link-list-opt no-bdr">
-                                                                            <li><a href="#"><em class="icon ni ni-setting"></em><span>Action Settings</span></a></li>
-                                                                            <li><a href="#"><em class="icon ni ni-notify"></em><span>Push Notification</span></a></li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-inner card-inner-md">
-                                                        <div class="user-card">
-                                                            <div class="user-avatar bg-warning-dim">
-                                                                <span>GO</span>
-                                                            </div>
-                                                            <div class="user-info">
-                                                                <span class="lead-text">Gloria Oliver</span>
-                                                                <span class="sub-text">gloria_72@example.com</span>
-                                                            </div>
-                                                            <div class="user-action">
-                                                                <div class="drodown">
-                                                                    <a href="#" class="dropdown-toggle btn btn-icon btn-trigger mr-n1" data-toggle="dropdown" aria-expanded="false"><em class="icon ni ni-more-h"></em></a>
-                                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                                        <ul class="link-list-opt no-bdr">
-                                                                            <li><a href="#"><em class="icon ni ni-setting"></em><span>Action Settings</span></a></li>
-                                                                            <li><a href="#"><em class="icon ni ni-notify"></em><span>Push Notification</span></a></li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-inner card-inner-md">
-                                                        <div class="user-card">
-                                                            <div class="user-avatar bg-success-dim">
-                                                                <span>PS</span>
-                                                            </div>
-                                                            <div class="user-info">
-                                                                <span class="lead-text">Phillip Sullivan</span>
-                                                                <span class="sub-text">phillip-85@example.com</span>
-                                                            </div>
-                                                            <div class="user-action">
-                                                                <div class="drodown">
-                                                                    <a href="#" class="dropdown-toggle btn btn-icon btn-trigger mr-n1" data-toggle="dropdown" aria-expanded="false"><em class="icon ni ni-more-h"></em></a>
-                                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                                        <ul class="link-list-opt no-bdr">
-                                                                            <li><a href="#"><em class="icon ni ni-setting"></em><span>Action Settings</span></a></li>
-                                                                            <li><a href="#"><em class="icon ni ni-notify"></em><span>Push Notification</span></a></li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div><!-- .card -->
-                                        </div><!-- .col -->
-                                        <div class="col-lg-6 col-xxl-4">
+
+
+                                        <div class="col-lg-6 col-xxl-6">
                                             <div class="card card-bordered h-100">
                                                 <div class="card-inner border-bottom">
                                                     <div class="card-title-group">
                                                         <div class="card-title">
-                                                            <h6 class="title">Support Requests</h6>
-                                                        </div>
-                                                        <div class="card-tools">
-                                                            <a href="html/subscription/tickets.html" class="link">All Tickets</a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <ul class="nk-support">
-                                                    <li class="nk-support-item">
-                                                        <div class="user-avatar">
-                                                            <img src="./images/avatar/a-sm.jpg" alt="">
-                                                        </div>
-                                                        <div class="nk-support-content">
-                                                            <div class="title">
-                                                                <span>Vincent Lopez</span><span class="badge badge-dot badge-dot-xs badge-warning ml-1">Pending</span>
-                                                            </div>
-                                                            <p>Thanks for contact us with your issues...</p>
-                                                            <span class="time">6 min ago</span>
-                                                        </div>
-                                                    </li>
-                                                    <li class="nk-support-item">
-                                                        <div class="user-avatar bg-purple-dim">
-                                                            <span>DM</span>
-                                                        </div>
-                                                        <div class="nk-support-content">
-                                                            <div class="title">
-                                                                <span>Daniel Moore</span><span class="badge badge-dot badge-dot-xs badge-info ml-1">Open</span>
-                                                            </div>
-                                                            <p>Thanks for contact us with your issues...</p>
-                                                            <span class="time">2 Hours ago</span>
-                                                        </div>
-                                                    </li>
-                                                    <li class="nk-support-item">
-                                                        <div class="user-avatar">
-                                                            <img src="./images/avatar/b-sm.jpg" alt="">
-                                                        </div>
-                                                        <div class="nk-support-content">
-                                                            <div class="title">
-                                                                <span>Larry Henry</span><span class="badge badge-dot badge-dot-xs badge-success ml-1">Solved</span>
-                                                            </div>
-                                                            <p>Thanks for contact us with your issues...</p>
-                                                            <span class="time">3 Hours ago</span>
-                                                        </div>
-                                                    </li>
-                                                </ul>
-                                            </div><!-- .card -->
-                                        </div><!-- .col -->
-                                        <div class="col-lg-6 col-xxl-4">
-                                            <div class="card card-bordered h-100">
-                                                <div class="card-inner border-bottom">
-                                                    <div class="card-title-group">
-                                                        <div class="card-title">
-                                                            <h6 class="title">Notifications</h6>
+                                                            <h6 class="title"><?Php echo date('d M Y'); ?> Orders Payment Logs</h6>
                                                         </div>
                                                         <div class="card-tools">
                                                             <a href="html/subscription/tickets.html" class="link">View All</a>
@@ -451,41 +285,36 @@ require_once('../partials/head.php');
                                                 </div>
                                                 <div class="card-inner">
                                                     <div class="timeline">
-                                                        <h6 class="timeline-head">November, 2019</h6>
                                                         <ul class="timeline-list">
-                                                            <li class="timeline-item">
-                                                                <div class="timeline-status bg-primary is-outline"></div>
-                                                                <div class="timeline-date">13 Nov <em class="icon ni ni-alarm-alt"></em></div>
-                                                                <div class="timeline-data">
-                                                                    <h6 class="timeline-title">Submited KYC Application</h6>
-                                                                    <div class="timeline-des">
-                                                                        <p>Re-submitted KYC Application form.</p>
-                                                                        <span class="time">09:30am</span>
+                                                            <?php
+                                                            $ret = "SELECT * FROM  payments p
+                                                            INNER JOIN orders o ON o.order_id  = p.payment_order_id
+                                                            INNER JOIN users s ON s.user_id = o.order_user_id
+                                                            INNER JOIN meals m ON m.meal_id = o.order_meal_id 
+                                                            WHERE  p.payment_date_posted  = CURDATE()";
+                                                            $stmt = $mysqli->prepare($ret);
+                                                            $stmt->execute(); //ok
+                                                            $res = $stmt->get_result();
+                                                            while ($payments = $res->fetch_object()) {
+
+                                                            ?>
+                                                                <li class="timeline-item">
+                                                                    <div class="timeline-status bg-primary is-outline"></div>
+                                                                    <div class="timeline-date"><?php echo date('d M Y', strtotime($payments->payment_date_posted)); ?>
+                                                                        <em class="icon ni ni-check"></em></div>
+                                                                    <div class="timeline-data">
+                                                                        <h6 class="timeline-title"><?php echo $payments->payment_confirmation_code; ?> Confirmed</h6>
+                                                                        <div class="timeline-des">
+                                                                            <p>
+                                                                                <?php echo $payments->user_name . '' . $user->user_number; ?> Paid Ksh <?php echo $payments->payment_amount; ?><br>
+                                                                                Using <?php echo $payments->payment_means; ?> For <?php echo $payments->meal_name; ?>
+                                                                            </p>
+                                                                            <span class="time"><?php echo date('g:ia', strtotime($payments->payment_date_posted)); ?></span>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </li>
-                                                            <li class="timeline-item">
-                                                                <div class="timeline-status bg-primary"></div>
-                                                                <div class="timeline-date">13 Nov <em class="icon ni ni-alarm-alt"></em></div>
-                                                                <div class="timeline-data">
-                                                                    <h6 class="timeline-title">Submited KYC Application</h6>
-                                                                    <div class="timeline-des">
-                                                                        <p>Re-submitted KYC Application form.</p>
-                                                                        <span class="time">09:30am</span>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                            <li class="timeline-item">
-                                                                <div class="timeline-status bg-pink"></div>
-                                                                <div class="timeline-date">13 Nov <em class="icon ni ni-alarm-alt"></em></div>
-                                                                <div class="timeline-data">
-                                                                    <h6 class="timeline-title">Submited KYC Application</h6>
-                                                                    <div class="timeline-des">
-                                                                        <p>Re-submitted KYC Application form.</p>
-                                                                        <span class="time">09:30am</span>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
+                                                                </li>
+                                                            <?php } ?>
+
                                                         </ul>
                                                     </div>
                                                 </div>

@@ -113,7 +113,9 @@ while ($user = $res->fetch_object()) {
                                 <div class="dropdown-inner user-card-wrap bg-lighter d-none d-md-block">
                                     <div class="user-card">
                                         <div class="user-avatar">
-                                            <span>AB</span>
+                                            <span>
+                                                <?php echo substr($user->user_name, 0, 2); ?>
+                                            </span>
                                         </div>
                                         <div class="user-info">
                                             <span class="lead-text"><?php echo $user->user_name; ?></span>
