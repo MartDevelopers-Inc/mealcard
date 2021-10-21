@@ -80,36 +80,26 @@ require_once('../partials/head.php');
                     </div>
                     <div class="nk-block-head">
                         <div class="nk-block-head-content">
-                            <h5 class="nk-block-title">Sign In</h5>
+                            <h5 class="nk-block-title">Reset password</h5>
                             <div class="nk-block-des">
-                                <p>Enter Your Email And Password, To Aaccess Your MealCard Information System Dashboard.</p>
+                                <p>If you forgot your password, well, then we’ll email you instructions to reset your password.</p>
                             </div>
                         </div>
                     </div><!-- .nk-block-head -->
-                    <form method="POST">
+                    <form action="html/general/pages/auths/auth-success.html">
                         <div class="form-group">
                             <div class="form-label-group">
-                                <label class="form-label" for="default-01">Email </label>
+                                <label class="form-label" for="default-01">Email</label>
                             </div>
-                            <input type="email" name="user_email" required class="form-control form-control-lg">
-                        </div><!-- .foem-group -->
+                            <input type="email" name="user_email" class="form-control form-control-lg">
+                        </div>
                         <div class="form-group">
-                            <div class="form-label-group">
-                                <label class="form-label" for="password">Password</label>
-                                <a class="link link-primary link-sm" tabindex="-1" href="forgot_password">Forgot Password?</a>
-                            </div>
-                            <div class="form-control-wrap">
-                                <a tabindex="-1" href="#" class="form-icon form-icon-right passcode-switch" data-target="password">
-                                    <em class="passcode-icon icon-show icon ni ni-eye"></em>
-                                    <em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
-                                </a>
-                                <input type="password" name="user_password" required class="form-control form-control-lg" id="password">
-                            </div>
-                        </div><!-- .foem-group -->
-                        <div class="form-group">
-                            <button name="sign_in" type="submit" class="btn btn-lg btn-primary btn-block">Sign in</button>
+                            <button name="Reset_Password" type="submit" class="btn btn-lg btn-primary btn-block">Send Reset Link</button>
                         </div>
                     </form><!-- form -->
+                    <div class="form-note-s2 pt-5">
+                        <a href="login"><strong>Return to login</strong></a>
+                    </div>
                 </div><!-- .nk-block -->
                 <div class="nk-block nk-auth-footer">
                     <div class="mt-3">
