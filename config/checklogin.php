@@ -60,29 +60,17 @@
  * TORT OR ANY OTHER THEORY OF LIABILITY, EXCEED THE LICENSE FEE PAID BY YOU, IF ANY.
  */
 
-/* Staff Checklogin */
-function staff_checklogin()
-{
-	if ((strlen($_SESSION['staff_id']) == 0) && strlen($_SESSION['staff_rank']) == 0
-	) {
-		$host = $_SERVER['HTTP_HOST'];
-		$uri  = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-		$extra = "../index";
-		$_SESSION["staff_id"] = "";
-		$_SESSION["staff_rank"] = "";
-		header("Location: http://$host$uri/$extra");
-	}
-}
 
 
 /* User Checklogin */
-function client_checklogin()
+function checklogin()
 {
-	if ((strlen($_SESSION['client_id']) == 0)) {
+	if ((strlen($_SESSION['user_id']) == 0) && strlen($_SESSION['user_access_level']) == 0) {
 		$host = $_SERVER['HTTP_HOST'];
 		$uri  = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
 		$extra = "../index";
-		$_SESSION["client_id"] = "";
+		$_SESSION["user_id"] = "";
+		$_SESSION["user_access_level"] = "";
 		header("Location: http://$host$uri/$extra");
 	}
 }
