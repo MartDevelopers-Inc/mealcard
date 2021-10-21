@@ -60,7 +60,6 @@
  * TORT OR ANY OTHER THEORY OF LIABILITY, EXCEED THE LICENSE FEE PAID BY YOU, IF ANY.
  */
 
-
 /* Load System Setttings Here */
 $ret = "SELECT * FROM  system_settings  ";
 $stmt = $mysqli->prepare($ret);
