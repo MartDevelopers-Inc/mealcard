@@ -85,18 +85,21 @@ require_once('../partials/head.php');
                                 <p>If you forgot your password, well, then we’ll email you instructions to reset your password.</p>
                             </div>
                         </div>
+
                     </div><!-- .nk-block-head -->
-                    <form action="html/general/pages/auths/auth-success.html">
+
+                    <form method="POST">
                         <div class="form-group">
                             <div class="form-label-group">
                                 <label class="form-label" for="default-01">Email</label>
                             </div>
-                            <input type="email" name="user_email" class="form-control form-control-lg">
+                            <input type="email" required name="user_email" class="form-control form-control-lg">
                         </div>
                         <div class="form-group">
                             <button name="Reset_Password" type="submit" class="btn btn-lg btn-primary btn-block">Send Reset Link</button>
                         </div>
                     </form><!-- form -->
+
                     <div class="form-note-s2 pt-5">
                         <a href="login"><strong>Return to login</strong></a>
                     </div>

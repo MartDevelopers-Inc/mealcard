@@ -13,4 +13,6 @@
     <!-- StyleSheets  -->
     <link rel="stylesheet" href="../public/backend_assets/css/dashlite.css?ver=1.4.0">
     <link id="skin-default" rel="stylesheet" href="../public/backend_assets/css/theme.css?ver=1.4.0">
+    <!-- Izi Alerts -->
+    <link rel="stylesheet" href="../public/backend_assets/iziToast/iziToast.min.css">
 </head>

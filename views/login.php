@@ -60,6 +60,29 @@
  * TORT OR ANY OTHER THEORY OF LIABILITY, EXCEED THE LICENSE FEE PAID BY YOU, IF ANY.
  */
 
+/* Handle User Login  */
+session_start();
+require_once '../config/config.php';
+require_once '../config/checklogin.php';
+require_once '../config/codeGen.php';
+
+if (isset($_POST['sign_in'])) {
+    $client_email = $_POST['client_email'];
+    $client_password = sha1(md5($_POST['client_password']));
+
+    $stmt = $mysqli->prepare("SELECT client_email, client_password, client_id FROM client WHERE client_email=? AND client_password=? ");
+    $stmt->bind_param('ss', $client_email, $client_password);
+    $stmt->execute();
+    $stmt->bind_result($client_email, $client_password, $client_id);
+    $rs = $stmt->fetch();
+
+    if ($rs) {
+        $_SESSION['client_id'] = $client_id;
+        header("location:client_home");
+    } else {
+        $err = "Access Denied Please Check Your Email Or Password";
+    }
+}
 require_once('../partials/head.php');
 ?>
 
@@ -86,6 +109,7 @@ require_once('../partials/head.php');
                             </div>
                         </div>
                     </div><!-- .nk-block-head -->
+
                     <form method="POST">
                         <div class="form-group">
                             <div class="form-label-group">
@@ -110,6 +134,7 @@ require_once('../partials/head.php');
                             <button name="sign_in" type="submit" class="btn btn-lg btn-primary btn-block">Sign in</button>
                         </div>
                     </form><!-- form -->
+
                 </div><!-- .nk-block -->
                 <div class="nk-block nk-auth-footer">
                     <div class="mt-3">
