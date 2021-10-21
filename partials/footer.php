@@ -60,31 +60,23 @@
  * TORT OR ANY OTHER THEORY OF LIABILITY, EXCEED THE LICENSE FEE PAID BY YOU, IF ANY.
  */
 
-/* Pop System Settings Here */
+
+/* Load System Setttings Here */
 $ret = "SELECT * FROM  system_settings  ";
 $stmt = $mysqli->prepare($ret);
 $stmt->execute(); //ok
 $res = $stmt->get_result();
 while ($sys = $res->fetch_object()) {
 ?>
-    <!DOCTYPE html>
-    <html lang="zxx" class="js">
-
-    <head>
-        <meta charset="utf-8">
-        <meta name="author" content="Softnio">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="@@page-discription">
-        <!-- Fav Icon  -->
-        <link rel="shortcut icon" href="../public/backend_assets/images/favicon.png">
-        <!-- Page Title  -->
-        <title><?php echo $sys->sys_name; ?> | <?php echo $sys->sys_tagline; ?></title>
-        <!-- StyleSheets  -->
-        <link rel="stylesheet" href="../public/backend_assets/css/dashlite.css?ver=1.4.0">
-        <link id="skin-default" rel="stylesheet" href="../public/backend_assets/css/theme.css?ver=1.4.0">
-        <!-- Izi Alerts -->
-        <link rel="stylesheet" href="../public/backend_assets/iziToast/iziToast.min.css">
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
-    </head>
+    <div class="nk-footer">
+        <div class="container-fluid">
+            <div class="nk-footer-wrap">
+                <div class="nk-footer-copyright text-center">
+                    &copy; 2021 - <?php echo date('Y'); ?>.
+                    <?php echo $sys->sys_name; ?>. All Rights Reserved. Crafted With <i class="fas fa-heart text-danger"></i>
+                    by <a href="http://martdev.info">MartDevelopers Inc</a>
+                </div>
+            </div>
+        </div>
+    </div>
 <?php } ?>
