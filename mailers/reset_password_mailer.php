@@ -63,7 +63,7 @@
 
 /* Password Reset Email  */
 
-require_once('config.php');
+require_once('../config/config.php');
 
 /* Mailer Configurations */
 require '../vendor/autoload.php';
@@ -78,17 +78,17 @@ $stmt->execute(); //ok
 $res = $stmt->get_result();
 while ($sys = $res->fetch_object()) {
 
-    $mail->setFrom($sys->mail_from);
+    $mail->setFrom($sys->mailer_from_email);
     $mail->addAddress($user_email);
     $mail->FromName = $sys->sys_name;
     $mail->isHTML(true);
     $mail->IsSMTP();
     $mail->SMTPSecure = 'ssl';
-    $mail->Host = $sys->mail_host;
+    $mail->Host = $sys->mailer_host;
     $mail->SMTPAuth = true;
     $mail->Port = '465';
-    $mail->Username = $sys->mail_username;
-    $mail->Password = $sys->mail_password;
+    $mail->Username = $sys->mailer_username;
+    $mail->Password = $sys->mailer_password;
     $mail->Subject = 'Password Reset Request';
     /* Custom Mail Body */
     $mail->Body = '
