@@ -1,10 +1,16 @@
 <?php
 /*
- * Created on Wed Oct 13 2021
+ * Created on Thu Oct 21 2021
+ *
+ *  MartDevelopers - martdev.info 
+ *
+ * mail@martdev.info
+ *
+ * +254 740 847 563
  *
  * The Devlan End User License Agreement
- * Copyright (c) 2021 DevLan
  *
+ * Copyright (c) 2021 MartDevelopers Inc
  *
  * 1. GRANT OF LICENSE
  * Devlan hereby grants to you (an individual) the revocable, personal, non-exclusive, and nontransferable right to
@@ -53,8 +59,6 @@
  * IN NO EVENT WILL DEVLAN  LIABILITY FOR ANY CLAIM, WHETHER IN CONTRACT 
  * TORT OR ANY OTHER THEORY OF LIABILITY, EXCEED THE LICENSE FEE PAID BY YOU, IF ANY.
  */
-
-
 
 /* Staff Checklogin */
 function staff_checklogin()

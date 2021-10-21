@@ -1,13 +1,19 @@
 <?php
 /*
- * Created on Wed Oct 13 2021
+ * Created on Thu Oct 21 2021
+ *
+ *  MartDevelopers - martdev.info 
+ *
+ * mail@martdev.info
+ *
+ * +254 740 847 563
  *
  * The Devlan End User License Agreement
- * Copyright (c) 2021 DevLan
  *
+ * Copyright (c) 2021 MartDevelopers Inc
  *
  * 1. GRANT OF LICENSE
- * Devlan hereby grants to you (an individual) the revocable, personal, non-exclusive, and non transferable right to
+ * Devlan hereby grants to you (an individual) the revocable, personal, non-exclusive, and nontransferable right to
  * install and activate this system on two separated computers solely for your personal and non-commercial use,
  * unless you have purchased a commercial license from Devlan. Sharing this Software with other individuals, 
  * or allowing other individuals to view the contents of this Software, is in violation of this license.
@@ -63,5 +69,5 @@ if (!empty($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'])) {
 }
 $uri .= $_SERVER['HTTP_HOST'];
 /* Redirect To Index Under Views, Also Include Folder Name */
-header('Location: ' . $uri . '/barbershop/views/');
+header('Location: ' . $uri . '/mealcard/views/');
 exit;
