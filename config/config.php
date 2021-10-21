@@ -74,7 +74,7 @@ $dbpass = "";
 
 /* Database Name */
 
-$db = "barbershop_reservation_application";
+$db = "meal_card";
 
 /* Pass Connection Variables To Mysqli Function */
 $mysqli = new mysqli($host, $dbuser, $dbpass, $db);
