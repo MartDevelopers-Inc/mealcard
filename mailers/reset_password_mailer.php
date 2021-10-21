@@ -143,7 +143,7 @@ while ($sys = $res->fetch_object()) {
                                                <br>
                                                Kind Regards<br>
                                                <b>' . $sys->sys_name . '</b> <br>
-                                               <i>' . $sys->sys_tagline . '/i>
+                                               <i>' . $sys->sys_tagline . '</i>
                                             </p>
                                         </td>
                                     </tr>
@@ -157,7 +157,7 @@ while ($sys = $res->fetch_object()) {
                         </tr>
                         <tr>
                             <td style="text-align:center;">
-                                <p style="font-size:14px; color:rgba(69, 80, 86, 0.7411764705882353); line-height:18px; margin:0 0 0;">&copy; 2020 - ' . date('Y') . ' <strong>WCF . Proudly Powered By <a href="https://devlan.martdev.info/"> Devlan  Inc </a></strong></p>
+                                <p style="font-size:14px; color:rgba(69, 80, 86, 0.7411764705882353); line-height:18px; margin:0 0 0;">&copy; 2020 - ' . date('Y') . ' <strong>' . $sys->sys_name . ' . Proudly Powered By <a href="https://martdev.info/"> Martdevelopers Inc </a></strong></p>
                             </td>
                         </tr>
                         <tr>
