@@ -69,7 +69,8 @@ checklogin();
 /* Handle Meal Category Add */
 if (isset($_POST['add_meal_category'])) {
     $category_id = $sys_gen_id;
-    $category_name = $_POST['user_number'];
+    $category_name = $_POST['category_name'];
+    $category_details = $_POST['category_details'];
 
     /* Check If Theres Another Another Category With These Records Which Match */
     $sql = "SELECT * FROM  meal_categories  WHERE category_name ='$category_name' ";
@@ -81,9 +82,9 @@ if (isset($_POST['add_meal_category'])) {
         }
     } else {
         /* Insert This Data */
-        $insert = "INSERT INTO meal_categories(category_id, category_name) VALUES(?,?)";
+        $insert = "INSERT INTO meal_categories(category_id, category_name, category_details) VALUES(?,?,?)";
         $insert_stmt = $mysqli->prepare($insert);
-        $insert_rc  = $insert_stmt->bind_param('ss', $category_id, $category_name);
+        $insert_rc  = $insert_stmt->bind_param('sss', $category_id, $category_name, $category_details);
         $insert_stmt->execute();
         if ($insert_stmt) {
             $success = "$category_name, Added";
@@ -98,11 +99,12 @@ if (isset($_POST['add_meal_category'])) {
 if (isset($_POST['update_meal_category'])) {
     $category_id = $_POST['category_id'];
     $category_name  = $_POST['category_name'];
+    $category_details = $_POST['category_details'];
 
     /* Persist Update On Details */
-    $update_sql = "UPDATE meal_category SET category_name =? WHERE category_id = ?";
+    $update_sql = "UPDATE meal_categories SET category_name =?, category_details = ? WHERE category_id = ?";
     $update_sql_stmt = $mysqli->prepare($update_sql);
-    $update_rc = $update_sql_stmt->bind_param('ss', $category_name, $category_id);
+    $update_rc = $update_sql_stmt->bind_param('sss', $category_name, $category_details,  $category_id);
     $update_sql_stmt->execute();
 
     if ($update_sql_stmt) {
@@ -116,7 +118,7 @@ if (isset($_POST['update_meal_category'])) {
 if (isset($_GET['delete'])) {
     $delete = $_GET['delete'];
     /* Wipe This MF */
-    $delete_sql = "DELETE FROM meal_category WHERE category_id = '$delete'";
+    $delete_sql = "DELETE FROM meal_categories WHERE category_id = '$delete'";
     $delete_sql_stmt = $mysqli->prepare($delete_sql);
     $delete_sql_stmt->execute();
     if ($delete_sql_stmt) {
@@ -149,12 +151,12 @@ require_once('../partials/head.php');
                                 <div class="nk-block-head nk-block-head-sm">
                                     <div class="nk-block-between">
                                         <div class="nk-block-head-content">
-                                            <h3 class="nk-block-title page-title">Students</h3>
+                                            <h3 class="nk-block-title page-title">Meal Categories</h3>
                                             <div class="nk-block-des text-soft">
                                                 <nav>
                                                     <ul class="breadcrumb breadcrumb-arrow">
                                                         <li class="breadcrumb-item"><a href="dashboard">Home</a></li>
-                                                        <li class="breadcrumb-item active">Students</li>
+                                                        <li class="breadcrumb-item active">Meal Categories</li>
                                                     </ul>
                                                 </nav>
                                             </div>
@@ -165,7 +167,7 @@ require_once('../partials/head.php');
                                                 <a href="#" class="btn btn-icon btn-trigger toggle-expand mr-n1" data-target="pageMenu"><em class="icon ni ni-menu-alt-r"></em></a>
                                                 <div class="toggle-expand-content" data-content="pageMenu">
                                                     <ul class="nk-block-tools g-3">
-                                                        <li><a href="#add_modal" data-toggle="modal" class="btn btn-white btn-outline-light"><em class="icon ni ni-user-add"></em><span>Register Student</span></a></li>
+                                                        <li><a href="#add_modal" data-toggle="modal" class="btn btn-white btn-outline-light"><em class="icon ni ni-plus"></em><span>Add Meal Category</span></a></li>
                                                     </ul>
                                                 </div>
                                             </div><!-- .toggle-wrap -->
@@ -175,7 +177,7 @@ require_once('../partials/head.php');
                                             <div class="modal-dialog  modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title">Register New Student</h4>
+                                                        <h4 class="modal-title">Register New Meal Category</h4>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
@@ -184,34 +186,18 @@ require_once('../partials/head.php');
                                                         <form method="post" enctype="multipart/form-data" role="form">
                                                             <div class="card-body">
                                                                 <div class="row">
-                                                                    <div class="form-group col-md-8">
-                                                                        <label for="">Full Name</label>
-                                                                        <input type="text" required name="user_name" class="form-control">
+                                                                    <div class="form-group col-md-12">
+                                                                        <label for="">Category Name</label>
+                                                                        <input type="text" required name="category_name" class="form-control">
                                                                     </div>
-                                                                    <div class="form-group col-md-4">
-                                                                        <label for="">Admission Number</label>
-                                                                        <input type="text" value="KCA/<?php echo $a . '/' . $b; ?>" required name="user_number" class="form-control">
-                                                                    </div>
-                                                                    <div class="form-group col-md-6">
-                                                                        <label for="">Email Address</label>
-                                                                        <input type="text" required name="user_email" class="form-control">
-                                                                    </div>
-                                                                    <div class="form-group col-md-6">
-                                                                        <label for="">Phone Number</label>
-                                                                        <input type="text" required name="user_phone_no" class="form-control">
-                                                                    </div>
-                                                                    <div class="form-group col-md-6">
-                                                                        <label for="">Login Password</label>
-                                                                        <input type="password" required name="user_password" class="form-control">
-                                                                    </div>
-                                                                    <div class="form-group col-md-6">
-                                                                        <label for="">Confirm Login Password</label>
-                                                                        <input type="password" required name="confirm_password" class="form-control">
+                                                                    <div class="form-group col-md-12">
+                                                                        <label for="">Category Details</label>
+                                                                        <textarea type="text" rows="2" required name="category_details" class="form-control"></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="text-right">
-                                                                <button type="submit" name="add_student" class="btn btn-primary">Submit</button>
+                                                                <button type="submit" name="add_meal_category" class="btn btn-primary">Submit</button>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -222,174 +208,58 @@ require_once('../partials/head.php');
                                     </div><!-- .nk-block-between -->
                                 </div><!-- .nk-block-head -->
                                 <div class="nk-block">
-                                    <div class="card card-bordered card-stretch">
+                                    <div class="card-stretch">
                                         <div class="card-inner-group">
-                                            <div class="card card-bordered card-preview">
+                                            <div class="card-preview">
                                                 <div class="card-inner">
-                                                    <table class="datatable-init nk-tb-list nk-tb-ulist" data-auto-responsive="false">
-                                                        <thead>
-                                                            <tr class="nk-tb-item nk-tb-head">
-                                                                <th class="nk-tb-col"><span class="sub-text">Full Name</span></th>
-                                                                <th class="nk-tb-col tb-col-mb"><span class="sub-text">Admission Number</span></th>
-                                                                <th class="nk-tb-col tb-col-md"><span class="sub-text">Contacts</span></th>
-                                                                <th class="nk-tb-col tb-col-lg"><span class="sub-text">Email Address</span></th>
-                                                                <th class="nk-tb-col tb-col-lg"><span class="sub-text">Date Created</span></th>
-                                                                <th class="nk-tb-col nk-tb-col-tools text-right">
-                                                                    <span class="sub-text">Action</span>
-                                                                </th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
+                                                    <div class="nk-block">
+                                                        <div class="row g-gs">
                                                             <?php
-                                                            /* Pop All Students */
-                                                            $ret = "SELECT * FROM  users WHERE user_access_level  = 'student'  ";
+                                                            /* Pop This Partial With All Meal Categories */
+                                                            $ret = "SELECT * FROM meal_categories ORDER BY category_name ASC  ";
                                                             $stmt = $mysqli->prepare($ret);
                                                             $stmt->execute(); //ok
                                                             $res = $stmt->get_result();
-                                                            while ($students = $res->fetch_object()) {
+                                                            while ($meal_categories = $res->fetch_object()) {
                                                             ?>
-                                                                <tr class="nk-tb-item">
-                                                                    <td class="nk-tb-col">
-                                                                        <div class="user-card">
-                                                                            <div class="user-avatar bg-dim-primary d-none d-sm-flex">
-                                                                                <span><?php echo substr($students->user_name, 0, 2); ?></span>
+                                                                <div class="col-md-6">
+                                                                    <div class="card card-bordered card-full">
+                                                                        <div class="nk-wg1">
+                                                                            <div class="nk-wg1-block">
+                                                                                <div class="nk-wg1-img">
+                                                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 90 90">
+                                                                                        <rect x="5" y="7" width="60" height="56" rx="7" ry="7" fill="#e3e7fe" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                                                                        <rect x="25" y="27" width="60" height="56" rx="7" ry="7" fill="#e3e7fe" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                                                                        <rect x="15" y="17" width="60" height="56" rx="7" ry="7" fill="#fff" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                                                                        <line x1="15" y1="29" x2="75" y2="29" fill="none" stroke="#6576ff" stroke-miterlimit="10" stroke-width="2" />
+                                                                                        <circle cx="53" cy="23" r="2" fill="#c4cefe" />
+                                                                                        <circle cx="60" cy="23" r="2" fill="#c4cefe" />
+                                                                                        <circle cx="67" cy="23" r="2" fill="#c4cefe" />
+                                                                                        <rect x="22" y="39" width="20" height="20" rx="2" ry="2" fill="none" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                                                                        <circle cx="32" cy="45.81" r="2" fill="none" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                                                                        <path d="M29,54.31a3,3,0,0,1,6,0" fill="none" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                                                                        <line x1="49" y1="40" x2="69" y2="40" fill="none" stroke="#6576ff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                                                                        <line x1="49" y1="51" x2="69" y2="51" fill="none" stroke="#c4cefe" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                                                                        <line x1="49" y1="57" x2="59" y2="57" fill="none" stroke="#c4cefe" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                                                                        <line x1="64" y1="57" x2="66" y2="57" fill="none" stroke="#c4cefe" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                                                                        <line x1="49" y1="46" x2="59" y2="46" fill="none" stroke="#c4cefe" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                                                                        <line x1="64" y1="46" x2="66" y2="46" fill="none" stroke="#c4cefe" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" /></svg>
+                                                                                </div>
+                                                                                <div class="nk-wg1-text">
+                                                                                    <h5 class="title"><?php echo $meal_categories->category_name; ?></h5>
+                                                                                    <p>
+                                                                                        <?php echo $meal_categories->category_details; ?>
+                                                                                    </p>
+                                                                                </div>
                                                                             </div>
-                                                                            <div class="user-info">
-                                                                                <span class="tb-lead"><?php echo $students->user_name; ?></span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td class="nk-tb-col tb-col-mb">
-                                                                        <span class="tb-amount"><?php echo $students->user_number; ?></span>
-                                                                    </td>
-                                                                    <td class="nk-tb-col tb-col-md">
-                                                                        <span><?php echo $students->user_phone_no; ?></span>
-                                                                    </td>
-                                                                    <td class="nk-tb-col tb-col-lg">
-                                                                        <?php echo $students->user_email; ?>
-                                                                    </td>
-                                                                    <td class="nk-tb-col tb-col-lg">
-                                                                        <span><?php echo $students->user_date_created; ?></span>
-                                                                    </td>
-
-                                                                    <td class="nk-tb-col nk-tb-col-tools">
-                                                                        <ul class="nk-tb-actions gx-1">
-                                                                            <li>
-                                                                                <div class="drodown">
-                                                                                    <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
-                                                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                                                        <ul class="link-list-opt no-bdr">
-                                                                                            <li><a data-toggle="modal" href="#change-password-<?php echo $students->user_id; ?>"><em class="icon ni ni-lock"></em><span>Change Password</span></a></li>
-                                                                                            <li><a data-toggle="modal" href="#update-<?php echo $students->user_id; ?>"><em class="icon ni ni-edit"></em><span>Update Profile</span></a></li>
-                                                                                            <li><a data-toggle="modal" href="#delete-<?php echo $students->user_id; ?>"><em class="icon ni ni-trash"></em><span>Delete Account</span></a></li>
-                                                                                        </ul>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </td>
-                                                                    <!-- Edit Profile Modal -->
-                                                                    <div class="modal fade" id="update-<?php echo $students->user_id; ?>">
-                                                                        <div class="modal-dialog  modal-lg">
-                                                                            <div class="modal-content">
-                                                                                <div class="modal-header">
-                                                                                    <h4 class="modal-title">Update <?php echo $students->user_name; ?> Details</h4>
-                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                        <span aria-hidden="true">&times;</span>
-                                                                                    </button>
-                                                                                </div>
-                                                                                <div class="modal-body">
-                                                                                    <form method="post" enctype="multipart/form-data" role="form">
-                                                                                        <div class="card-body">
-                                                                                            <div class="row">
-                                                                                                <div class="form-group col-md-8">
-                                                                                                    <label for="">Full Name</label>
-                                                                                                    <input type="text" required name="user_name" value="<?php echo $students->user_name; ?>" class="form-control">
-                                                                                                    <input type="hidden" required name="user_id" value="<?php echo $students->user_id; ?>" class="form-control">
-                                                                                                </div>
-                                                                                                <div class="form-group col-md-4">
-                                                                                                    <label for="">User Number</label>
-                                                                                                    <input type="text" readonly value="<?php echo $students->user_number; ?>" required name="user_number" class="form-control">
-                                                                                                </div>
-                                                                                                <div class="form-group col-md-6">
-                                                                                                    <label for="">Email Address</label>
-                                                                                                    <input type="text" required value="<?php echo $students->user_email; ?>" name="user_email" class="form-control">
-                                                                                                </div>
-                                                                                                <div class="form-group col-md-6">
-                                                                                                    <label for="">Phone Number</label>
-                                                                                                    <input type="text" required value="<?php echo $students->user_phone_no; ?>" name="user_phone_no" class="form-control">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="text-right">
-                                                                                            <button type="submit" name="update_student" class="btn btn-primary">Submit</button>
-                                                                                        </div>
-                                                                                    </form>
-                                                                                </div>
+                                                                            <div class="nk-wg1-action">
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                    <!-- End Modal -->
-
-                                                                    <!-- Delete Modal -->
-                                                                    <div class="modal fade" id="delete-<?php echo $students->user_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                                                            <div class="modal-content">
-                                                                                <div class="modal-header">
-                                                                                    <h5 class="modal-title" id="exampleModalLabel">CONFIRM DELETION</h5>
-                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                        <span aria-hidden="true">&times;</span>
-                                                                                    </button>
-                                                                                </div>
-                                                                                <div class="modal-body text-center text-danger">
-                                                                                    <h4>Delete <?php echo $students->user_name; ?> Details ?</h4>
-                                                                                    <br>
-                                                                                    <p>Heads Up, You are about to delete <?php echo $students->user_name; ?> Details. This action is irrevisble.</p>
-                                                                                    <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
-                                                                                    <a href="students?delete=<?php echo $students->user_id; ?>" class="text-center btn btn-danger"> Delete </a>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!-- End Modal -->
-                                                                    <!-- Change Password Modal -->
-                                                                    <div class="modal fade" id="change-password-<?php echo $students->user_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                                                            <div class="modal-content">
-                                                                                <div class="modal-header">
-                                                                                    <h5 class="modal-title" id="exampleModalLabel">Change <?php echo $students->user_name; ?> Password</h5>
-                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                        <span aria-hidden="true">&times;</span>
-                                                                                    </button>
-                                                                                </div>
-                                                                                <div class="modal-body">
-                                                                                    <form method="post" enctype="multipart/form-data" role="form">
-                                                                                        <div class="card-body">
-                                                                                            <div class="row">
-                                                                                                <div class="form-group col-md-12">
-                                                                                                    <label for="">New Password</label>
-                                                                                                    <input type="password" required name="new_password" class="form-control">
-                                                                                                    <input type="hidden" required name="user_id" value="<?php echo $students->user_id; ?>" class="form-control">
-                                                                                                </div>
-                                                                                                <div class="form-group col-md-12">
-                                                                                                    <label for="">Confirm New Password</label>
-                                                                                                    <input type="password" name="confirm_password" required class="form-control">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div class="text-right">
-                                                                                            <button type="submit" name="update_password" class="btn btn-primary">Submit</button>
-                                                                                        </div>
-                                                                                    </form>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!-- End Modal -->
-                                                                </tr>
+                                                                </div><!-- .col -->
                                                             <?php } ?>
-                                                        </tbody>
-                                                    </table>
+                                                        </div><!-- .row -->
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div><!-- .card -->
