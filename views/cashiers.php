@@ -261,7 +261,7 @@ require_once('../partials/head.php');
                                                                                     <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                                                     <div class="dropdown-menu dropdown-menu-right">
                                                                                         <ul class="link-list-opt no-bdr">
-                                                                                            <li><a href="cashier?view=<?php echo $cashiers->user_id; ?>"><em class="icon ni ni-focus"></em><span>Quick View</span></a></li>
+                                                                                            <li><a data-toggle="modal" href="#change-password<?php echo $cashiers->user_id; ?>"><em class="icon ni ni-lock"></em><span>Change Password</span></a></li>
                                                                                             <li><a data-toggle="modal" href="#update-<?php echo $cashiers->user_id; ?>"><em class="icon ni ni-edit"></em><span>Update Profile</span></a></li>
                                                                                             <li><a data-toggle="modal" href="#delete-<?php echo $cashiers->user_id; ?>"><em class="icon ni ni-trash"></em><span>Delete Account</span></a></li>
                                                                                         </ul>
@@ -329,6 +329,40 @@ require_once('../partials/head.php');
                                                                                     <p>Heads Up, You are about to delete <?php echo $cashiers->user_name; ?> Details. This action is irrevisble.</p>
                                                                                     <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
                                                                                     <a href="cashiers?delete=<?php echo $cashiers->user_id; ?>" class="text-center btn btn-danger"> Delete </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- End Modal -->
+                                                                    <!-- Change Password Modal -->
+                                                                    <div class="modal fade" id="change-password-<?php echo $cashiers->user_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title" id="exampleModalLabel">Change <?php echo $cashiers->user_name; ?> Password</h5>
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                        <span aria-hidden="true">&times;</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <form method="post" enctype="multipart/form-data" role="form">
+                                                                                        <div class="card-body">
+                                                                                            <div class="row">
+                                                                                                <div class="form-group col-md-12">
+                                                                                                    <label for="">New Password</label>
+                                                                                                    <input type="password" required name="new_password" class="form-control">
+                                                                                                    <input type="hidden" required name="user_id" value="<?php echo $cashiers->user_id; ?>" class="form-control">
+                                                                                                </div>
+                                                                                                <div class="form-group col-md-12">
+                                                                                                    <label for="">Confirm New Password</label>
+                                                                                                    <input type="password" name="confirm_password" required class="form-control">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="text-right">
+                                                                                            <button type="submit" name="update_password" class="btn btn-primary">Submit</button>
+                                                                                        </div>
+                                                                                    </form>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
