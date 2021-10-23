@@ -26,7 +26,7 @@
                         </a>
                     </li><!-- .nk-menu-item -->
                     <li class="nk-menu-item">
-                        <a href="" class="nk-menu-link">
+                        <a href="students" class="nk-menu-link">
                             <span class="nk-menu-icon"><em class="fas fa-users"></em></span>
                             <span class="nk-menu-text">Students</span>
                         </a>

@@ -65,9 +65,8 @@ require_once('../config/config.php');
 require_once('../config/checklogin.php');
 require_once('../config/codeGen.php');
 checklogin();
-
-/* Handle Add Cashier */
-if (isset($_POST['add_cashier'])) {
+/* Handle Add Student */
+if (isset($_POST['add_student'])) {
     $user_id = $sys_gen_id;
     $user_number = $_POST['user_number'];
     $user_name = $_POST['user_name'];
@@ -75,19 +74,19 @@ if (isset($_POST['add_cashier'])) {
     $user_phone_no = $_POST['user_phone_no'];
     $user_password = sha1(md5($_POST['user_password']));
     $confirm_password = sha1(md5($_POST['confirm_password']));
-    $user_access_level = 'cashier';
+    $user_access_level = 'student';
     $user_date_created = date('d M Y');
     /* Check If These MFs Match */
     if ($user_password != $confirm_password) {
         $err = "Passwords Does Not Match";
     } else {
-        /* Check If Theres Another Cashier With These Records Which Match */
+        /* Check If Theres Another Student With These Records Which Match */
         $sql = "SELECT * FROM  users  WHERE user_phone_no ='$user_phone_no' || user_email = '$user_email' ";
         $res = mysqli_query($mysqli, $sql);
         if (mysqli_num_rows($res) > 0) {
             $row = mysqli_fetch_assoc($res);
             if ($user_phone_no == $row['user_phone_no'] || $user_email == $row['user_email']) {
-                $err = 'A Cashier Account With That Phone Number Or Email  Already Exists';
+                $err = 'A Student Account With That Phone Number Or Email  Already Exists';
             }
         } else {
             /* Insert This Data */
@@ -105,8 +104,8 @@ if (isset($_POST['add_cashier'])) {
     }
 }
 
-/* Handle Update Cashier */
-if (isset($_POST['update_cashier'])) {
+/* Handle Update Student */
+if (isset($_POST['update_student'])) {
     $user_id = $_POST['user_id'];
     $user_name  = $_POST['user_name'];
     $user_phone_no = $_POST['user_phone_no'];
@@ -147,7 +146,7 @@ if (isset($_POST['update_password'])) {
     }
 }
 
-/* Handle Delete Cashier */
+/* Handle Delete Student */
 if (isset($_GET['delete'])) {
     $delete = $_GET['delete'];
     /* Wipe This MF */
@@ -155,7 +154,7 @@ if (isset($_GET['delete'])) {
     $delete_sql_stmt = $mysqli->prepare($delete_sql);
     $delete_sql_stmt->execute();
     if ($delete_sql_stmt) {
-        $success = "Deleted" && header("refresh:1; url=cashiers");
+        $success = "Deleted" && header("refresh:1; url=students");
     } else {
         $err  = "Failed!, Please Try Again Later";
     }
