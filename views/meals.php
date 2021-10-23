@@ -121,16 +121,16 @@ if (isset($_POST['update_meal'])) {
 if (isset($_POST['update_meal_image'])) {
     $meal_id = $_POST['meal_id'];
     $temp = explode('.', $_FILES['meal_img']['name']);
-    $newfilename = 'Meal_IMG' . (round(microtime(true)) . '.' . end($temp));
+    $newfilename = 'Meal_IMG_' . (round(microtime(true)) . '.' . end($temp));
     move_uploaded_file(
-        $_FILES['staff_profile_image']['tmp_name'],
+        $_FILES['meal_img']['tmp_name'],
         '../public/backend_assets/images/' . $newfilename
     );
 
     /* Persist This Change To Database */
     $sql = "UPDATE meals SET meal_img = ? WHERE meal_id =?";
     $sql_stmt = $mysqli->prepare($sql);
-    $sql_rc = $sql_stmt->bind_param('ss', $meal_img, $meal_id);
+    $sql_rc = $sql_stmt->bind_param('ss', $newfilename, $meal_id);
     $sql_stmt->execute();
     if ($sql_stmt) {
         $success = "Image Uploaded";
@@ -390,7 +390,7 @@ require_once('../partials/head.php');
                                                                                             <div class="row">
                                                                                                 <div class="form-group col-md-12">
                                                                                                     <div class="custom-file">
-                                                                                                        <input type="file" name="meal_img" required multiple class="custom-file-input" id="customFile">
+                                                                                                        <input type="file" accept=".png, .jpeg, .jpg" name="meal_img" required multiple class="custom-file-input" id="customFile">
                                                                                                         <label class="custom-file-label" for="customFile">Choose file</label>
                                                                                                     </div>
                                                                                                     <input type="hidden" required name="meal_id" value="<?php echo $meals->meal_id; ?>" class="form-control">
