@@ -32,49 +32,49 @@
                         </a>
                     </li><!-- .nk-menu-item -->
                     <li class="nk-menu-item">
-                        <a href="" class="nk-menu-link">
+                        <a href="meal_categories" class="nk-menu-link">
                             <span class="nk-menu-icon"><em class="fas fa-utensils"></em></span>
                             <span class="nk-menu-text">Meal Categories</span>
                         </a>
                     </li><!-- .nk-menu-item -->
                     <li class="nk-menu-item">
-                        <a href="" class="nk-menu-link">
+                        <a href="meals" class="nk-menu-link">
                             <span class="nk-menu-icon"><em class="fas fa-cheese"></em></span>
                             <span class="nk-menu-text">Meals</span>
                         </a>
                     </li><!-- .nk-menu-item -->
                     <li class="nk-menu-item">
-                        <a href="" class="nk-menu-link">
+                        <a href="meal_cards" class="nk-menu-link">
                             <span class="nk-menu-icon"><em class="fas fa-id-card"></em></span>
                             <span class="nk-menu-text">Meal Cards</span>
                         </a>
                     </li><!-- .nk-menu-item -->
                     <li class="nk-menu-item">
-                        <a href="" class="nk-menu-link">
+                        <a href="orders" class="nk-menu-link">
                             <span class="nk-menu-icon"><em class="fas fa-file-signature"></em></span>
                             <span class="nk-menu-text">Orders</span>
                         </a>
                     </li><!-- .nk-menu-item -->
                     <li class="nk-menu-item">
-                        <a href="" class="nk-menu-link">
+                        <a href="payments" class="nk-menu-link">
                             <span class="nk-menu-icon"><em class="fas fa-hand-holding-usd"></em></span>
                             <span class="nk-menu-text">Payments</span>
                         </a>
                     </li><!-- .nk-menu-item -->
                     <li class="nk-menu-item">
-                        <a href="" class="nk-menu-link">
+                        <a href="reports" class="nk-menu-link">
                             <span class="nk-menu-icon"><em class="fas fa-copy"></em></span>
                             <span class="nk-menu-text">Reports</span>
                         </a>
                     </li><!-- .nk-menu-item -->
                     <li class="nk-menu-item">
-                        <a href="" class="nk-menu-link">
+                        <a href="system_settings" class="nk-menu-link">
                             <span class="nk-menu-icon"><em class="fas fa-cogs"></em></span>
                             <span class="nk-menu-text">System Settings</span>
                         </a>
                     </li><!-- .nk-menu-item -->
                     <li class="nk-menu-item">
-                        <a href="" class="nk-menu-link">
+                        <a href="logout" class="nk-menu-link">
                             <span class="nk-menu-icon"><em class="fas fa-power-off"></em></span>
                             <span class="nk-menu-text">Log Out</span>
                         </a>
