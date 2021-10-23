@@ -67,6 +67,44 @@ require_once('../config/codeGen.php');
 checklogin();
 require_once('../partials/analytics.php');
 /* Handle Add Cashier */
+if (isset($_POST['add_cashier'])) {
+    $user_id = $sys_gen_id;
+    $user_number = $_POST['user_number'];
+    $user_name = $_POST['user_name'];
+    $user_email = $_POST['user_email'];
+    $user_phone_no = $_POST['user_phone_no'];
+    $user_password = sha1(md5($_POST['user_password']));
+    $confirm_password = sha1(md5($_POST['confirm_password']));
+    $user_access_level = 'cashier';
+    $user_date_created = date('d M Y');
+    /* Check If These MFs Match */
+    if ($user_password != $confirm_password) {
+        $err = "Passwords Does Not Match";
+    } else {
+        /* Check If Theres Another Cashier With These Records Which Match */
+        $sql = "SELECT * FROM  users  WHERE user_phone_no ='$user_phone_no' || user_email = '$user_email' ";
+        $res = mysqli_query($mysqli, $sql);
+        if (mysqli_num_rows($res) > 0) {
+            $row = mysqli_fetch_assoc($res);
+            if ($user_phone_no == $row['user_phone_no'] || $user_email == $row['user_email']) {
+                $err = 'A Cashier Account With That Phone Number Or Email  Already Exists';
+            }
+        } else {
+            /* Insert This Data */
+            $insert = "INSERT INTO users (user_id, user_number, user_name, user_email, user_phone_no, user_password, user_access_level, user_date_created )
+            VALUES(?,?,?,?,?,?,?,?)";
+            $insert_stmt = $mysqli->prepare($insert);
+            $insert_rc  = $insert_stmt->bind_param('ssssssss', $user_id, $user_number, $user_name, $user_phone_no, $user_password, $user_access_level, $user_date_created);
+            $insert_stmt->execute();
+            if ($insert_stmt) {
+                $success = "$user_name, Account Created";
+            } else {
+                $err = "Failed!, Please Try Again Later";
+            }
+        }
+    }
+}
+
 /* Handle Update Cashier */
 /* Handle Delete Cashier */
 require_once('../partials/head.php');
