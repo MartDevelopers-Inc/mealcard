@@ -66,28 +66,29 @@ require_once('../config/checklogin.php');
 require_once('../config/codeGen.php');
 checklogin();
 
-/* Handle Meal Category Add */
-if (isset($_POST['add_meal_category'])) {
-    $category_id = $sys_gen_id;
-    $category_name = $_POST['category_name'];
-    $category_details = $_POST['category_details'];
+/* Handle Meal  Add */
+if (isset($_POST['add_meal'])) {
+    $meal_id = $sys_gen_id;
+    $meal_category_id = $_POST['meal_category_id'];
+    $meal_name = $_POST['meal_name'];
+    $meal_details = $_POST['meal_details'];
 
-    /* Check If Theres Another Another Category With These Records Which Match */
-    $sql = "SELECT * FROM  meal_categories  WHERE category_name ='$category_name' ";
+    /* Check If Theres Another Meal With These Records Which Match */
+    $sql = "SELECT * FROM  meals  WHERE meal_name ='$meal_name' ";
     $res = mysqli_query($mysqli, $sql);
     if (mysqli_num_rows($res) > 0) {
         $row = mysqli_fetch_assoc($res);
-        if ($category_name == $row['category_name']) {
-            $err = 'A Meal Category With This Name Already Exists';
+        if ($meal_name == $row['meal_name']) {
+            $err = 'A Meal  With This Name Already Exists';
         }
     } else {
         /* Insert This Data */
-        $insert = "INSERT INTO meal_categories(category_id, category_name, category_details) VALUES(?,?,?)";
+        $insert = "INSERT INTO meal(meal_id, meal_category_id, meal_name, meal_details, meal_price) VALUES(?,?,?,?,?)";
         $insert_stmt = $mysqli->prepare($insert);
-        $insert_rc  = $insert_stmt->bind_param('sss', $category_id, $category_name, $category_details);
+        $insert_rc  = $insert_stmt->bind_param('sssss', $meal_id, $meal_category_id, $meal_name, $meal_details, $meal_price);
         $insert_stmt->execute();
         if ($insert_stmt) {
-            $success = "$category_name, Added";
+            $success = "$meal_name, Added";
         } else {
             $err = "Failed!, Please Try Again Later";
         }
@@ -95,20 +96,21 @@ if (isset($_POST['add_meal_category'])) {
 }
 
 
-/* Handle Update Meal Category */
-if (isset($_POST['update_meal_category'])) {
-    $category_id = $_POST['category_id'];
-    $category_name  = $_POST['category_name'];
-    $category_details = $_POST['category_details'];
+/* Handle Update Meal  */
+if (isset($_POST['update_meal'])) {
+    $meal_id = $_POST['meal_id'];
+    $meal_name  = $_POST['meal_name'];
+    $meal_details = $_POST['meal_details'];
+    $meal_price = $_POST['meal_price'];
 
     /* Persist Update On Details */
-    $update_sql = "UPDATE meal_categories SET category_name =?, category_details = ? WHERE category_id = ?";
+    $update_sql = "UPDATE meals SET meal_name =?, meal_details = ?, meal_price  WHERE meal_id = ?";
     $update_sql_stmt = $mysqli->prepare($update_sql);
-    $update_rc = $update_sql_stmt->bind_param('sss', $category_name, $category_details,  $category_id);
+    $update_rc = $update_sql_stmt->bind_param('ssss', $meal_name, $meal_details,  $meal_price, $meal_id);
     $update_sql_stmt->execute();
 
     if ($update_sql_stmt) {
-        $success = "$category_name, Category Updated";
+        $success = "$meal_name, Updated";
     } else {
         $err = "Failed!, Please Try Again Later";
     }
@@ -118,11 +120,11 @@ if (isset($_POST['update_meal_category'])) {
 if (isset($_GET['delete'])) {
     $delete = $_GET['delete'];
     /* Wipe This MF */
-    $delete_sql = "DELETE FROM meal_categories WHERE category_id = '$delete'";
+    $delete_sql = "DELETE FROM meals WHERE meal_id = '$delete'";
     $delete_sql_stmt = $mysqli->prepare($delete_sql);
     $delete_sql_stmt->execute();
     if ($delete_sql_stmt) {
-        $success = "Deleted" && header("refresh:1; url=meal_categories");
+        $success = "Deleted" && header("refresh:1; url=meals");
     } else {
         $err  = "Failed!, Please Try Again Later";
     }
