@@ -65,6 +65,7 @@ require_once('../config/config.php');
 require_once('../config/checklogin.php');
 require_once('../config/codeGen.php');
 checklogin();
+
 /* Handle Add Student */
 if (isset($_POST['add_student'])) {
     $user_id = $sys_gen_id;
