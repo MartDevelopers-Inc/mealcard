@@ -72,6 +72,7 @@ if (isset($_POST['add_meal'])) {
     $meal_category_id = $_POST['meal_category_id'];
     $meal_name = $_POST['meal_name'];
     $meal_details = $_POST['meal_details'];
+    $meal_price = $_POST['meal_price'];
 
     /* Check If Theres Another Meal With These Records Which Match */
     $sql = "SELECT * FROM  meals  WHERE meal_name ='$meal_name' ";
@@ -83,7 +84,7 @@ if (isset($_POST['add_meal'])) {
         }
     } else {
         /* Insert This Data */
-        $insert = "INSERT INTO meal(meal_id, meal_category_id, meal_name, meal_details, meal_price) VALUES(?,?,?,?,?)";
+        $insert = "INSERT INTO meals (meal_id, meal_category_id, meal_name, meal_details, meal_price) VALUES(?,?,?,?,?)";
         $insert_stmt = $mysqli->prepare($insert);
         $insert_rc  = $insert_stmt->bind_param('sssss', $meal_id, $meal_category_id, $meal_name, $meal_details, $meal_price);
         $insert_stmt->execute();
@@ -104,13 +105,35 @@ if (isset($_POST['update_meal'])) {
     $meal_price = $_POST['meal_price'];
 
     /* Persist Update On Details */
-    $update_sql = "UPDATE meals SET meal_name =?, meal_details = ?, meal_price  WHERE meal_id = ?";
+    $update_sql = "UPDATE meals SET meal_name =?, meal_details = ?, meal_price=?  WHERE meal_id = ?";
     $update_sql_stmt = $mysqli->prepare($update_sql);
     $update_rc = $update_sql_stmt->bind_param('ssss', $meal_name, $meal_details,  $meal_price, $meal_id);
     $update_sql_stmt->execute();
 
     if ($update_sql_stmt) {
         $success = "$meal_name, Updated";
+    } else {
+        $err = "Failed!, Please Try Again Later";
+    }
+}
+
+/* Update Meal Image */
+if (isset($_POST['update_meal_image'])) {
+    $meal_id = $_POST['meal_id'];
+    $temp = explode('.', $_FILES['meal_img']['name']);
+    $newfilename = 'Meal_IMG' . (round(microtime(true)) . '.' . end($temp));
+    move_uploaded_file(
+        $_FILES['staff_profile_image']['tmp_name'],
+        '../public/backend_assets/images/' . $newfilename
+    );
+
+    /* Persist This Change To Database */
+    $sql = "UPDATE meals SET meal_img = ? WHERE meal_id =?";
+    $sql_stmt = $mysqli->prepare($sql);
+    $sql_rc = $sql_stmt->bind_param('ss', $meal_img, $meal_id);
+    $sql_stmt->execute();
+    if ($sql_stmt) {
+        $success = "Image Uploaded";
     } else {
         $err = "Failed!, Please Try Again Later";
     }
@@ -194,7 +217,17 @@ require_once('../partials/head.php');
                                                                     </div>
                                                                     <div class="form-group col-md-4">
                                                                         <label for="">Category Name</label>
-                                                                        <input type="text" required name="meal_category_id" class="form-control">
+                                                                        <select name="meal_category_id" class="form-select form-control form-control-lg" data-search="on">
+                                                                            <?php
+                                                                            $ret = "SELECT * FROM meal_categories ORDER BY category_name ASC";
+                                                                            $stmt = $mysqli->prepare($ret);
+                                                                            $stmt->execute(); //ok
+                                                                            $res = $stmt->get_result();
+                                                                            while ($category = $res->fetch_object()) {
+                                                                            ?>
+                                                                                <option value="<?php echo $category->category_id; ?>"><?php echo $category->category_name; ?></option>
+                                                                            <?php } ?>
+                                                                        </select>
                                                                     </div>
                                                                     <div class="form-group col-md-4">
                                                                         <label for="">Meal Price(Ksh)</label>
@@ -269,8 +302,10 @@ require_once('../partials/head.php');
                                                                                     <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                                                     <div class="dropdown-menu dropdown-menu-right">
                                                                                         <ul class="link-list-opt no-bdr">
-                                                                                            <li><a data-toggle="modal" href="#update-<?php echo $meals->meal_id; ?>"><em class="icon ni ni-edit"></em><span>Update Profile</span></a></li>
-                                                                                            <li><a data-toggle="modal" href="#delete-<?php echo $meals->meal_id; ?>"><em class="icon ni ni-trash"></em><span>Delete Account</span></a></li>
+                                                                                            <li><a href="meal?view=<?php echo $meals->meal_id; ?>"><em class="icon ni ni-focus"></em><span>Meal Details</span></a></li>
+                                                                                            <li><a data-toggle="modal" href="#image-<?php echo $meals->meal_id; ?>"><em class="icon ni ni-file-img"></em><span>Add Image</span></a></li>
+                                                                                            <li><a data-toggle="modal" href="#update-<?php echo $meals->meal_id; ?>"><em class="icon ni ni-edit"></em><span>Update Meal</span></a></li>
+                                                                                            <li><a data-toggle="modal" href="#delete-<?php echo $meals->meal_id; ?>"><em class="icon ni ni-trash"></em><span>Delete Meal</span></a></li>
                                                                                         </ul>
                                                                                     </div>
                                                                                 </div>
@@ -294,7 +329,7 @@ require_once('../partials/head.php');
                                                                                                 <div class="form-group col-md-6">
                                                                                                     <label for="">Meal Name</label>
                                                                                                     <input type="text" required name="meal_name" value="<?php echo $meals->meal_name; ?>" class="form-control">
-                                                                                                    <input type="text" required name="meal_id" value="<?php echo $meals->meal_id; ?>" class="form-control">
+                                                                                                    <input type="hidden" required name="meal_id" value="<?php echo $meals->meal_id; ?>" class="form-control">
                                                                                                 </div>
 
                                                                                                 <div class="form-group col-md-6">
@@ -318,7 +353,7 @@ require_once('../partials/head.php');
                                                                     <!-- End Modal -->
 
                                                                     <!-- Delete Modal -->
-                                                                    <div class="modal fade" id="delete-<?php echo $meal->meal_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                    <div class="modal fade" id="delete-<?php echo $meals->meal_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                                                             <div class="modal-content">
                                                                                 <div class="modal-header">
@@ -330,9 +365,43 @@ require_once('../partials/head.php');
                                                                                 <div class="modal-body text-center text-danger">
                                                                                     <h4>Delete <?php echo $meals->meal_name; ?> Details ?</h4>
                                                                                     <br>
-                                                                                    <p>Heads Up, You are about to delete <?php echo $meal->meal_name; ?> Details. This action is irrevisble.</p>
+                                                                                    <p>Heads Up, You are about to delete <?php echo $meals->meal_name; ?> Details. This action is irrevisble.</p>
                                                                                     <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
-                                                                                    <a href="meals?delete=<?php echo $meal->meal_id; ?>" class="text-center btn btn-danger"> Delete </a>
+                                                                                    <a href="meals?delete=<?php echo $meals->meal_id; ?>" class="text-center btn btn-danger"> Delete </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- End Modal -->
+
+                                                                    <!--Add Image Modal -->
+                                                                    <div class="modal fade" id="image-<?php echo $meals->meal_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title" id="exampleModalLabel">Upload Meal Photo</h5>
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                        <span aria-hidden="true">&times;</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <form method="post" enctype="multipart/form-data" role="form">
+                                                                                        <div class="card-body">
+                                                                                            <div class="row">
+                                                                                                <div class="form-group col-md-12">
+                                                                                                    <div class="custom-file">
+                                                                                                        <input type="file" name="meal_img" required multiple class="custom-file-input" id="customFile">
+                                                                                                        <label class="custom-file-label" for="customFile">Choose file</label>
+                                                                                                    </div>
+                                                                                                    <input type="hidden" required name="meal_id" value="<?php echo $meals->meal_id; ?>" class="form-control">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="text-right">
+                                                                                            <button type="submit" name="update_meal_image" class="btn btn-primary">Submit</button>
+                                                                                        </div>
+                                                                                    </form>
+
                                                                                 </div>
                                                                             </div>
                                                                         </div>
