@@ -262,9 +262,8 @@ require_once('../partials/head.php');
                                                                                     <div class="dropdown-menu dropdown-menu-right">
                                                                                         <ul class="link-list-opt no-bdr">
                                                                                             <li><a href="cashier?view=<?php echo $cashiers->user_id; ?>"><em class="icon ni ni-focus"></em><span>Quick View</span></a></li>
-                                                                                            <li class="divider"></li>
-                                                                                            <li><a data-target="modal" href="#update-<?php echo $cashiers->user_id; ?>"><em class="icon ni ni-edit"></em><span>Update Profile</span></a></li>
-                                                                                            <li><a data-target="modal" href="#delete-<?php echo $cashiers->user_id; ?>"><em class="icon ni ni-trash"></em><span>Delete Account</span></a></li>
+                                                                                            <li><a data-toggle="modal" href="#update-<?php echo $cashiers->user_id; ?>"><em class="icon ni ni-edit"></em><span>Update Profile</span></a></li>
+                                                                                            <li><a data-toggle="modal" href="#delete-<?php echo $cashiers->user_id; ?>"><em class="icon ni ni-trash"></em><span>Delete Account</span></a></li>
                                                                                         </ul>
                                                                                     </div>
                                                                                 </div>
@@ -288,7 +287,7 @@ require_once('../partials/head.php');
                                                                                                 <div class="form-group col-md-8">
                                                                                                     <label for="">Full Name</label>
                                                                                                     <input type="text" required name="user_name" value="<?php echo $cashiers->user_name; ?>" class="form-control">
-                                                                                                    <input type="text" required name="user_id" value="<?php echo $cashiers->user_id; ?>" class="form-control">
+                                                                                                    <input type="hidden" required name="user_id" value="<?php echo $cashiers->user_id; ?>" class="form-control">
                                                                                                 </div>
                                                                                                 <div class="form-group col-md-4">
                                                                                                     <label for="">User Number</label>
@@ -315,7 +314,7 @@ require_once('../partials/head.php');
                                                                     <!-- End Modal -->
 
                                                                     <!-- Delete Modal -->
-                                                                    <div class="modal fade" id="delete-<?php echo $cashiers->cashier_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                    <div class="modal fade" id="delete-<?php echo $cashiers->user_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                                                             <div class="modal-content">
                                                                                 <div class="modal-header">
