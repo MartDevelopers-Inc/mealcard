@@ -302,6 +302,25 @@ require_once('../partials/head.php');
 
 
                                                                 <!-- Delete Modals -->
+                                                                <div class="modal fade" id="delete-<?php echo $meal_categories->category_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title" id="exampleModalLabel">CONFIRM DELETION</h5>
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                    <span aria-hidden="true">&times;</span>
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="modal-body text-center text-danger">
+                                                                                <h4>Delete <?php echo $meal_categories->category_name; ?> Details ?</h4>
+                                                                                <br>
+                                                                                <p>Heads Up, You are about to delete <?php echo $meal_categories->category_name; ?> Details. This action is irrevisble.</p>
+                                                                                <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
+                                                                                <a href="meal_categories?delete=<?php echo $meal_categories->category_id; ?>" class="text-center btn btn-danger"> Delete </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
 
                                                                 <!-- End Modals -->
                                                             <?php } ?>
