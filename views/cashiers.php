@@ -98,16 +98,66 @@ require_once('../partials/head.php');
                                                 <p>You Have Total <?php echo $cashiers; ?> Cashiers</p>
                                             </div>
                                         </div><!-- .nk-block-head-content -->
+
                                         <div class="nk-block-head-content">
                                             <div class="toggle-wrap nk-block-tools-toggle">
                                                 <a href="#" class="btn btn-icon btn-trigger toggle-expand mr-n1" data-target="pageMenu"><em class="icon ni ni-menu-alt-r"></em></a>
                                                 <div class="toggle-expand-content" data-content="pageMenu">
                                                     <ul class="nk-block-tools g-3">
-                                                        <li><a href="#add_modal" data-target="modal" class="btn btn-white btn-outline-light"><em class="icon ni ni-user-add"></em><span>Add New Cashier</span></a></li>
+                                                        <li><a href="#add_modal" data-toggle="modal" class="btn btn-white btn-outline-light"><em class="icon ni ni-user-add"></em><span>Add New Cashier</span></a></li>
                                                     </ul>
                                                 </div>
                                             </div><!-- .toggle-wrap -->
                                         </div><!-- .nk-block-head-content -->
+                                        <!-- Add Modal -->
+                                        <div class="modal fade" id="add_modal">
+                                            <div class="modal-dialog  modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Register New Cashier</h4>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form method="post" enctype="multipart/form-data" role="form">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="form-group col-md-8">
+                                                                        <label for="">Full Name</label>
+                                                                        <input type="text" required name="user_name" class="form-control">
+                                                                    </div>
+                                                                    <div class="form-group col-md-4">
+                                                                        <label for="">User Number</label>
+                                                                        <input type="text" readonly value="<?php echo $a . $b; ?>" required name="user_number" class="form-control">
+                                                                    </div>
+                                                                    <div class="form-group col-md-6">
+                                                                        <label for="">Email Address</label>
+                                                                        <input type="text" required name="user_email" class="form-control">
+                                                                    </div>
+                                                                    <div class="form-group col-md-6">
+                                                                        <label for="">Phone Number</label>
+                                                                        <input type="text" required name="user_phone_no" class="form-control">
+                                                                    </div>
+                                                                    <div class="form-group col-md-6">
+                                                                        <label for="">Login Password</label>
+                                                                        <input type="text" required name="user_password" class="form-control">
+                                                                    </div>
+                                                                    <div class="form-group col-md-6">
+                                                                        <label for="">Confirm Login Password</label>
+                                                                        <input type="text" required name="confirm_password" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-right">
+                                                                <button type="submit" name="add_cashier" class="btn btn-primary">Submit</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Modal -->
                                     </div><!-- .nk-block-between -->
                                 </div><!-- .nk-block-head -->
                                 <div class="nk-block">
@@ -168,20 +218,22 @@ require_once('../partials/head.php');
                                                                                     <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                                                     <div class="dropdown-menu dropdown-menu-right">
                                                                                         <ul class="link-list-opt no-bdr">
-                                                                                            <li><a href="#"><em class="icon ni ni-focus"></em><span>Quick View</span></a></li>
-                                                                                            <li><a href="#"><em class="icon ni ni-eye"></em><span>View Details</span></a></li>
-                                                                                            <li><a href="#"><em class="icon ni ni-repeat"></em><span>Transaction</span></a></li>
-                                                                                            <li><a href="#"><em class="icon ni ni-activity-round"></em><span>Activities</span></a></li>
+                                                                                            <li><a href="cashier?view=<?php echo $cashiers->user_id; ?>"><em class="icon ni ni-focus"></em><span>Quick View</span></a></li>
                                                                                             <li class="divider"></li>
-                                                                                            <li><a href="#"><em class="icon ni ni-shield-star"></em><span>Reset Pass</span></a></li>
-                                                                                            <li><a href="#"><em class="icon ni ni-shield-off"></em><span>Reset 2FA</span></a></li>
-                                                                                            <li><a href="#"><em class="icon ni ni-na"></em><span>Suspend User</span></a></li>
+                                                                                            <li><a href="#update-<?php echo $cashiers->user_id; ?>"><em class="icon ni ni-edit"></em><span>Update Profile</span></a></li>
+                                                                                            <li><a href="#delete-<?php echo $cashiers->user_id; ?>"><em class="icon ni ni-trash"></em><span>Delete Account</span></a></li>
                                                                                         </ul>
                                                                                     </div>
                                                                                 </div>
                                                                             </li>
                                                                         </ul>
                                                                     </td>
+                                                                    <!-- Edit Profile Modal -->
+                                                                    <!-- End Modal -->
+
+
+                                                                    <!-- Delete Modal -->
+                                                                    <!-- End Modal -->
                                                                 </tr>
                                                             <?php } ?>
                                                         </tbody>
