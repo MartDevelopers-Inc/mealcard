@@ -263,8 +263,8 @@ require_once('../partials/head.php');
                                                                                         <ul class="link-list-opt no-bdr">
                                                                                             <li><a href="cashier?view=<?php echo $cashiers->user_id; ?>"><em class="icon ni ni-focus"></em><span>Quick View</span></a></li>
                                                                                             <li class="divider"></li>
-                                                                                            <li><a href="#update-<?php echo $cashiers->user_id; ?>"><em class="icon ni ni-edit"></em><span>Update Profile</span></a></li>
-                                                                                            <li><a href="#delete-<?php echo $cashiers->user_id; ?>"><em class="icon ni ni-trash"></em><span>Delete Account</span></a></li>
+                                                                                            <li><a data-target="modal" href="#update-<?php echo $cashiers->user_id; ?>"><em class="icon ni ni-edit"></em><span>Update Profile</span></a></li>
+                                                                                            <li><a data-target="modal" href="#delete-<?php echo $cashiers->user_id; ?>"><em class="icon ni ni-trash"></em><span>Delete Account</span></a></li>
                                                                                         </ul>
                                                                                     </div>
                                                                                 </div>
@@ -272,10 +272,68 @@ require_once('../partials/head.php');
                                                                         </ul>
                                                                     </td>
                                                                     <!-- Edit Profile Modal -->
+                                                                    <div class="modal fade" id="update-<?php echo $cashiers->user_id; ?>">
+                                                                        <div class="modal-dialog  modal-lg">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h4 class="modal-title">Update <?php echo $cashiers->user_name; ?> Details</h4>
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                        <span aria-hidden="true">&times;</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <form method="post" enctype="multipart/form-data" role="form">
+                                                                                        <div class="card-body">
+                                                                                            <div class="row">
+                                                                                                <div class="form-group col-md-8">
+                                                                                                    <label for="">Full Name</label>
+                                                                                                    <input type="text" required name="user_name" value="<?php echo $cashiers->user_name; ?>" class="form-control">
+                                                                                                    <input type="text" required name="user_id" value="<?php echo $cashiers->user_id; ?>" class="form-control">
+                                                                                                </div>
+                                                                                                <div class="form-group col-md-4">
+                                                                                                    <label for="">User Number</label>
+                                                                                                    <input type="text" readonly value="<?php echo $cashiers->user_number; ?>" required name="user_number" class="form-control">
+                                                                                                </div>
+                                                                                                <div class="form-group col-md-6">
+                                                                                                    <label for="">Email Address</label>
+                                                                                                    <input type="text" required value="<?php echo $cashiers->user_email; ?>" name="user_email" class="form-control">
+                                                                                                </div>
+                                                                                                <div class="form-group col-md-6">
+                                                                                                    <label for="">Phone Number</label>
+                                                                                                    <input type="text" required value="<?php echo $cashiers->user_phone_no; ?>" name="user_phone_no" class="form-control">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="text-right">
+                                                                                            <button type="submit" name="update_cashier" class="btn btn-primary">Submit</button>
+                                                                                        </div>
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                     <!-- End Modal -->
 
-
                                                                     <!-- Delete Modal -->
+                                                                    <div class="modal fade" id="delete-<?php echo $cashiers->cashier_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title" id="exampleModalLabel">CONFIRM DELETION</h5>
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                        <span aria-hidden="true">&times;</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body text-center text-danger">
+                                                                                    <h4>Delete <?php echo $cashiers->user_name; ?> Details ?</h4>
+                                                                                    <br>
+                                                                                    <p>Heads Up, You are about to delete <?php echo $cashiers->user_name; ?> Details. This action is irrevisble.</p>
+                                                                                    <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
+                                                                                    <a href="cashiers?delete=<?php echo $cashiers->user_id; ?>" class="text-center btn btn-danger"> Delete </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                     <!-- End Modal -->
                                                                 </tr>
                                                             <?php } ?>
