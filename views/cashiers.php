@@ -124,7 +124,28 @@ if (isset($_POST['update_cashier'])) {
         $err = "Failed!, Please Try Again Later";
     }
 }
+
 /* Update Password */
+if (isset($_POST['update_password'])) {
+    $user_id = $_POST['user_id'];
+    $new_password = sha1(md5($_POST['new_password']));
+    $confirm_password = sha1(md5($_POST['confirm_password']));
+    /* Check If They Match */
+    if ($confirm_password != $new_password) {
+        $err = "Passwords Does Not Match";
+    } else {
+        /* Persist Password Update */
+        $update = "UPDATE users SET user_password = ? WHERE user_id =?";
+        $update_stmt = $mysqli->prepare($update);
+        $update_rc = $update_stmt->bind_param('ss', $confirm_password, $user_id);
+        $update_stmt->execute();
+        if ($update_stmt) {
+            $success = "Password Updated";
+        } else {
+            $err = "Failed!, Please Try Again Later";
+        }
+    }
+}
 
 /* Handle Delete Cashier */
 if (isset($_GET['delete'])) {
