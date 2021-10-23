@@ -91,10 +91,10 @@ if (isset($_POST['add_cashier'])) {
             }
         } else {
             /* Insert This Data */
-            $insert = "INSERT INTO users (user_id, user_number, user_name, user_email, user_phone_no, user_password, user_access_level, user_date_created )
+            $insert = "INSERT INTO users (user_id, user_number, user_name, user_email, user_phone_no, user_password, user_access_level, user_date_created)
             VALUES(?,?,?,?,?,?,?,?)";
             $insert_stmt = $mysqli->prepare($insert);
-            $insert_rc  = $insert_stmt->bind_param('ssssssss', $user_id, $user_number, $user_name, $user_phone_no, $user_password, $user_access_level, $user_date_created);
+            $insert_rc  = $insert_stmt->bind_param('ssssssss', $user_id, $user_number, $user_name, $user_email, $user_phone_no, $user_password, $user_access_level, $user_date_created);
             $insert_stmt->execute();
             if ($insert_stmt) {
                 $success = "$user_name, Account Created";
@@ -133,7 +133,12 @@ require_once('../partials/head.php');
                                         <div class="nk-block-head-content">
                                             <h3 class="nk-block-title page-title">Cashiers</h3>
                                             <div class="nk-block-des text-soft">
-                                                <p>You Have Total <?php echo $cashiers; ?> Cashiers</p>
+                                                <nav>
+                                                    <ul class="breadcrumb breadcrumb-arrow">
+                                                        <li class="breadcrumb-item"><a href="dashboard">Home</a></li>
+                                                        <li class="breadcrumb-item active">Cashiers</li>
+                                                    </ul>
+                                                </nav>
                                             </div>
                                         </div><!-- .nk-block-head-content -->
 
@@ -219,7 +224,7 @@ require_once('../partials/head.php');
                                                         <tbody>
                                                             <?php
                                                             /* Pop All Cashiers */
-                                                            $ret = "SELECT * FROM  users WHERE user_access_level  != 'cashier'  ";
+                                                            $ret = "SELECT * FROM  users WHERE user_access_level  = 'cashier'  ";
                                                             $stmt = $mysqli->prepare($ret);
                                                             $stmt->execute(); //ok
                                                             $res = $stmt->get_result();
@@ -229,7 +234,7 @@ require_once('../partials/head.php');
                                                                     <td class="nk-tb-col">
                                                                         <div class="user-card">
                                                                             <div class="user-avatar bg-dim-primary d-none d-sm-flex">
-                                                                                <span><?php echo substr($cashiers->user_name, 0, 3); ?></span>
+                                                                                <span><?php echo substr($cashiers->user_name, 0, 2); ?></span>
                                                                             </div>
                                                                             <div class="user-info">
                                                                                 <span class="tb-lead"><?php echo $cashiers->user_name; ?></span>
