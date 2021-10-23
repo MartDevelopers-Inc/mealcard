@@ -106,7 +106,39 @@ if (isset($_POST['add_cashier'])) {
 }
 
 /* Handle Update Cashier */
+if (isset($_POST['update_cashier'])) {
+    $user_id = $_POST['user_id'];
+    $user_name  = $_POST['user_name'];
+    $user_phone_no = $_POST['user_phone_no'];
+    $user_email = $_POST['user_email'];
+
+    /* Persist Update On Details */
+    $update_sql = "UPDATE users SET user_name =?, user_email =?, user_phone_no =? WHERE user_id = ?";
+    $update_sql_stmt = $mysqli->prepare($update_sql);
+    $update_rc = $update_sql_stmt->bind_param('ssss', $user_name, $user_email, $user_phone_no, $user_id);
+    $update_sql_stmt->execute();
+
+    if ($update_sql_stmt) {
+        $success = "$user_name, Account Updated";
+    } else {
+        $err = "Failed!, Please Try Again Later";
+    }
+}
+/* Update Password */
+
 /* Handle Delete Cashier */
+if (isset($_GET['delete'])) {
+    $delete = $_GET['delete'];
+    /* Wipe This MF */
+    $delete_sql = "DELETE FROM users WHERE user_id = '$delete'";
+    $delete_sql_stmt = $mysqli->prepare($delete_sql);
+    $delete_sql_stmt->execute();
+    if ($delete_sql_stmt) {
+        $success = "Deleted" && header("refresh:1; url=cashiers");
+    } else {
+        $err  = "Failed!, Please Try Again Later";
+    }
+}
 require_once('../partials/head.php');
 
 ?>
@@ -261,7 +293,7 @@ require_once('../partials/head.php');
                                                                                     <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                                                     <div class="dropdown-menu dropdown-menu-right">
                                                                                         <ul class="link-list-opt no-bdr">
-                                                                                            <li><a data-toggle="modal" href="#change-password<?php echo $cashiers->user_id; ?>"><em class="icon ni ni-lock"></em><span>Change Password</span></a></li>
+                                                                                            <li><a data-toggle="modal" href="#change-password-<?php echo $cashiers->user_id; ?>"><em class="icon ni ni-lock"></em><span>Change Password</span></a></li>
                                                                                             <li><a data-toggle="modal" href="#update-<?php echo $cashiers->user_id; ?>"><em class="icon ni ni-edit"></em><span>Update Profile</span></a></li>
                                                                                             <li><a data-toggle="modal" href="#delete-<?php echo $cashiers->user_id; ?>"><em class="icon ni ni-trash"></em><span>Delete Account</span></a></li>
                                                                                         </ul>
