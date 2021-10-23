@@ -237,11 +237,11 @@ require_once('../partials/head.php');
                                                                     </div>
                                                                     <div class="form-group col-md-6">
                                                                         <label for="">Login Password</label>
-                                                                        <input type="text" required name="user_password" class="form-control">
+                                                                        <input type="password" required name="user_password" class="form-control">
                                                                     </div>
                                                                     <div class="form-group col-md-6">
                                                                         <label for="">Confirm Login Password</label>
-                                                                        <input type="text" required name="confirm_password" class="form-control">
+                                                                        <input type="password" required name="confirm_password" class="form-control">
                                                                     </div>
                                                                 </div>
                                                             </div>
