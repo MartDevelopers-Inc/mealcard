@@ -123,6 +123,25 @@ if (isset($_POST['update_card'])) {
 
 
 /* Delete Meal Card */
+if (isset($_GET['delete'])) {
+    $delete = $_GET['delete'];
+    $card_holder = $_GET['card_owner'];
+    /* Wipe This MF */
+    $delete_sql = "DELETE FROM meal_cards WHERE card_id = '$delete'";
+    $user_sql = "UPDATE users SET user_has_card = 'No' WHERE user_id = '$card_holder'";
+
+    $delete_sql_stmt = $mysqli->prepare($delete_sql);
+    $user_sql_stmt = $mysqli->prepare($user_sql);
+
+    $delete_sql_stmt->execute();
+    $user_sql_stmt->execute();
+
+    if ($delete_sql_stmt &&  $user_sql_stmt) {
+        $success = "Deleted" && header("refresh:1; url=meal_cards");
+    } else {
+        $err  = "Failed!, Please Try Again Later";
+    }
+}
 
 /* Revoke Meal Card */
 
