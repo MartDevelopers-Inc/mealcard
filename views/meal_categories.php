@@ -267,7 +267,7 @@ require_once('../partials/head.php');
                                                                                     $stmt->fetch();
                                                                                     $stmt->close();
                                                                                     ?>
-                                                                                    <a class="btn btn-primary" href="available_meals?view<?php echo $meal_categories->category_id; ?>"><em class="icon ni ni-focus"></em><span> Available Meals <?php echo $meal_count; ?> </span></a>
+                                                                                    <a class="btn btn-primary" href="available_meals?view=<?php echo $meal_categories->category_id; ?>"><em class="icon ni ni-focus"></em><span> Available Meals <?php echo $meal_count; ?> </span></a>
                                                                                     <a class="btn btn-primary" data-toggle="modal" href="#update-<?php echo $meal_categories->category_id; ?>"><em class="icon ni ni-edit"></em><span> Edit </span></a>
                                                                                     <a class="btn btn-danger" data-toggle="modal" href="#delete-<?php echo $meal_categories->category_id; ?>"><em class="icon ni ni-trash"></em><span> Delete </span></a>
                                                                                 </div>
