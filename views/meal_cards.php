@@ -327,7 +327,7 @@ require_once('../partials/head.php');
                                                                                         <ul class="link-list-opt no-bdr">
                                                                                             <li><a href="meal_card?view=<?php echo $cards->card_id; ?>"><em class="icon ni ni-focus"></em><span>Card Details</span></a></li>
                                                                                             <li><a data-toggle="modal" href="#update-<?php echo $cards->card_id; ?>"><em class="icon ni ni-edit"></em><span>Update Card</span></a></li>
-                                                                                            <li><a data-toggle="modal" href="#update-<?php echo $cards->card_id; ?>"><em class="icon ni ni-shield-alert-fill"></em><span>Update Card Status</span></a></li>
+                                                                                            <li><a data-toggle="modal" href="#status-<?php echo $cards->card_id; ?>"><em class="icon ni ni-shield-alert-fill"></em><span>Update Card Status</span></a></li>
                                                                                             <li><a data-toggle="modal" href="#delete-<?php echo $cards->card_id; ?>"><em class="icon ni ni-trash"></em><span>Delete Card</span></a></li>
                                                                                         </ul>
                                                                                     </div>
@@ -389,7 +389,33 @@ require_once('../partials/head.php');
                                                                     <!-- End Modal -->
 
                                                                     <!-- Update Card Status -->
-
+                                                                    <div class="modal fade" id="status-<?php echo $cards->card_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title" id="exampleModalLabel">CONFIRM CARD STATUS UPDATE</h5>
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                        <span aria-hidden="true">&times;</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body text-center text-danger">
+                                                                                    <h4>Change <?php echo $cards->card_code_number; ?> Status?</h4>
+                                                                                    <?php
+                                                                                    /* Card Status */
+                                                                                    if ($cards->card_status == 'Active') {
+                                                                                        $new_status = 'Revoked';
+                                                                                    } else {
+                                                                                        $new_status = 'Active';
+                                                                                    }
+                                                                                    ?>
+                                                                                    <br>
+                                                                                    <p>Heads Up, You are about to change <?php echo $cards->user_name; ?> meal card status to <?php echo $new_status; ?>. </p>
+                                                                                    <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
+                                                                                    <a href="meal_cards?revoke_card=<?php echo $cards->card_id; ?>&card_status=<?php echo $new_status; ?>" class="text-center btn btn-danger"> Yes </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                     <!-- End Modal -->
                                                                 </tr>
                                                             <?php } ?>
