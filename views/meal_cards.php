@@ -73,32 +73,38 @@ if (isset($_POST['new_card'])) {
     $card_code_number = $a . $b;
     $card_loaded_amount = $_POST['card_loaded_amount'];
 
-    /* Check If This MF Has Already Meal Card - Prevent Double Entry */
-    $sql = "SELECT * FROM  meal_cards  WHERE card_owner_id ='$card_owner_id' ";
-    $res = mysqli_query($mysqli, $sql);
-    if (mysqli_num_rows($res) > 0) {
-        $row = mysqli_fetch_assoc($res);
-        if ($card_owner_id == $row['card_owner_id']) {
-            $err = 'Student Already Has  A Meal Card';
-        }
+    /* Prevent Posting Null Value */
+    if (empty($_POST['card_owner_id'])) {
+        $err = "Please Select Student Admission Number";
     } else {
-        /* Persist This  */
-        $sql = "INSERT INTO meal_cards (card_id, card_owner_id, card_code_number, card_loaded_amount) VALUES(?,?,?,?)";
-        $sql_1 = "UPDATE users SET user_has_card = 'Yes' WHERE user_id = ?";
 
-        $sql_stmt = $mysqli->prepare($sql);
-        $sql_1_stmt = $mysqli->prepare($sql_1);
-
-        $rc = $sql_stmt->bind_param('ssss', $card_id, $card_owner_id, $card_code_number, $card_loaded_amount);
-        $rc = $sql_1_stmt->bind_param('s', $card_owner_id);
-
-        $sql_stmt->execute();
-        $sql_1_stmt->execute();
-
-        if ($sql_stmt && $sql_1_stmt) {
-            $success = "Student Meal Card Posted";
+        /* Check If This MF Has Already Meal Card - Prevent Double Entry */
+        $sql = "SELECT * FROM  meal_cards  WHERE card_owner_id ='$card_owner_id' ";
+        $res = mysqli_query($mysqli, $sql);
+        if (mysqli_num_rows($res) > 0) {
+            $row = mysqli_fetch_assoc($res);
+            if ($card_owner_id == $row['card_owner_id']) {
+                $err = 'Student Already Has  A Meal Card';
+            }
         } else {
-            $err = "Failed!, Please Try Again Later";
+            /* Persist This  */
+            $sql = "INSERT INTO meal_cards (card_id, card_owner_id, card_code_number, card_loaded_amount) VALUES(?,?,?,?)";
+            $sql_1 = "UPDATE users SET user_has_card = 'Yes' WHERE user_id = ?";
+
+            $sql_stmt = $mysqli->prepare($sql);
+            $sql_1_stmt = $mysqli->prepare($sql_1);
+
+            $rc = $sql_stmt->bind_param('ssss', $card_id, $card_owner_id, $card_code_number, $card_loaded_amount);
+            $rc = $sql_1_stmt->bind_param('s', $card_owner_id);
+
+            $sql_stmt->execute();
+            $sql_1_stmt->execute();
+
+            if ($sql_stmt && $sql_1_stmt) {
+                $success = "Student Meal Card Posted";
+            } else {
+                $err = "Failed!, Please Try Again Later";
+            }
         }
     }
 }
@@ -154,7 +160,7 @@ if (isset($_GET['revoke_card'])) {
     $rc = $stmt->bind_param('ss', $card_status, $card_id);
     $stmt->execute();
     if ($stmt) {
-        $success = "Meal Card Status Updated To : $card_status";
+        $success = "Updated" && header("refresh:1; url=meal_cards");
     } else {
         $err = "Failed!, Please Try Again Later";
     }
