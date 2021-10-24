@@ -125,7 +125,7 @@ if (isset($_POST['update_card'])) {
 /* Delete Meal Card */
 if (isset($_GET['delete'])) {
     $delete = $_GET['delete'];
-    $card_holder = $_GET['card_owner'];
+    $card_holder = $_GET['owner'];
     /* Wipe This MF */
     $delete_sql = "DELETE FROM meal_cards WHERE card_id = '$delete'";
     $user_sql = "UPDATE users SET user_has_card = 'No' WHERE user_id = '$card_holder'";
@@ -381,7 +381,7 @@ require_once('../partials/head.php');
                                                                                     <br>
                                                                                     <p>Heads Up, You are about to delete <?php echo $cards->user_name; ?> meal card. This action is irrevisble.</p>
                                                                                     <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
-                                                                                    <a href="meal_cards?delete=<?php echo $cards->card_id; ?>" class="text-center btn btn-danger"> Delete </a>
+                                                                                    <a href="meal_cards?delete=<?php echo $cards->card_id; ?>&owner=<?php echo $cards->card_owner_id; ?>" class="text-center btn btn-danger"> Delete </a>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
