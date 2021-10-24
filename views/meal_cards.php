@@ -144,6 +144,21 @@ if (isset($_GET['delete'])) {
 }
 
 /* Revoke Meal Card */
+if (isset($_GET['revoke_card'])) {
+    $card_id = $_GET['revoke_card'];
+    $card_status  = $_GET['card_status'];
+
+    /* Revoke / Unrevoke Card */
+    $sql = "UPDATE meal_cards SET card_status = ? WHERE card_id = ?";
+    $stmt = $mysqli->prepare($sql);
+    $rc = $stmt->bind_param('ss', $card_status, $card_id);
+    $stmt->execute();
+    if ($stmt) {
+        $success = "Meal Card Status Updated To : $card_status";
+    } else {
+        $err = "Failed!, Please Try Again Later";
+    }
+}
 
 require_once('../partials/head.php');
 
