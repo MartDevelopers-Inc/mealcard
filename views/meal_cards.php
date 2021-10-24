@@ -102,7 +102,25 @@ if (isset($_POST['new_card'])) {
         }
     }
 }
+
 /* Update Meal Card */
+if (isset($_POST['update_card'])) {
+    $card_id = $_POST['card_id'];
+    $card_loaded_amount = $_POST['card_loaded_amount'];
+
+    /* Persist This */
+    $update = "UPDATE meal_cards SET card_loaded_amount =? WHERE card_id =?";
+    $update_stmt = $mysqli->prepare($update);
+    $rc = $update_stmt->bind_param('ss', $card_loaded_amount, $card_id);
+    $update_stmt->execute();
+
+    if ($update_stmt) {
+        $success = "Student Meal Details Update";
+    } else {
+        $err = "Failed!, Please Try Again Later";
+    }
+}
+
 
 /* Delete Meal Card */
 
