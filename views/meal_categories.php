@@ -221,6 +221,7 @@ require_once('../partials/head.php');
                                                             $stmt->execute(); //ok
                                                             $res = $stmt->get_result();
                                                             while ($meal_categories = $res->fetch_object()) {
+
                                                             ?>
                                                                 <div class="col-md-6">
                                                                     <div class="card card-bordered card-full">
@@ -257,6 +258,16 @@ require_once('../partials/head.php');
                                                                             <div class="nk-wg1-action">
                                                                                 <br>
                                                                                 <div class="text-center">
+                                                                                    <?php
+                                                                                    /* Pop A Real Meal Count Real Quick */
+                                                                                    $query = "SELECT COUNT(*) FROM meals WHERE meal_category_id = '$meal_categories->category_id' ";
+                                                                                    $stmt = $mysqli->prepare($query);
+                                                                                    $stmt->execute();
+                                                                                    $stmt->bind_result($meal_count);
+                                                                                    $stmt->fetch();
+                                                                                    $stmt->close();
+                                                                                    ?>
+                                                                                    <a class="btn btn-primary" href="available_meals?view<?php echo $meal_categories->category_id; ?>"><em class="icon ni ni-focus"></em><span> Available Meals <?php echo $meal_count; ?> </span></a>
                                                                                     <a class="btn btn-primary" data-toggle="modal" href="#update-<?php echo $meal_categories->category_id; ?>"><em class="icon ni ni-edit"></em><span> Edit </span></a>
                                                                                     <a class="btn btn-danger" data-toggle="modal" href="#delete-<?php echo $meal_categories->category_id; ?>"><em class="icon ni ni-trash"></em><span> Delete </span></a>
                                                                                 </div>
@@ -321,7 +332,6 @@ require_once('../partials/head.php');
                                                                         </div>
                                                                     </div>
                                                                 </div>
-
                                                                 <!-- End Modals -->
                                                             <?php } ?>
                                                         </div><!-- .row -->

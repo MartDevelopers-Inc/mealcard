@@ -79,7 +79,7 @@ require_once('../partials/head.php');
                 <?php require_once('../partials/header.php');
                 /* Pop Logged In User Session */
                 $user_id = $_SESSION['user_id'];
-                $ret = "SELECT * FROM  users  ";
+                $ret = "SELECT * FROM  users WHERE user_id = '$user_id'  ";
                 $stmt = $mysqli->prepare($ret);
                 $stmt->execute(); //ok
                 $res = $stmt->get_result();
@@ -188,7 +188,7 @@ require_once('../partials/head.php');
         <!-- main @e -->
     </div>
     <!-- app-root @e -->
-    
+
     <?php require_once('../partials/scripts.php'); ?>
 </body>
 
