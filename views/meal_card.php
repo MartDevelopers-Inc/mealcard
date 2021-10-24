@@ -154,6 +154,45 @@ require_once('../partials/head.php');
 
                                                         </div>
                                                         <div class="tab-pane" id="tabItem6">
+                                                            <table class="datatable-init nk-tb-list nk-tb-ulist" data-auto-responsive="false">
+                                                                <thead>
+                                                                    <tr class="nk-tb-item nk-tb-head">
+                                                                        <th class="nk-tb-col"><span class="sub-text">Meal Details</span></th>
+                                                                        <th class="nk-tb-col tb-col-mb"><span class="sub-text">Order Details</span></th>
+                                                                        <th class="nk-tb-col tb-col-md"><span class="sub-text">Payment Details</span></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <?php
+                                                                    /* Pop This Partial With All Meals Orders And Payments Done On This Card */
+                                                                    $ret = "SELECT * FROM payments p
+                                                                    INNER JOIN orders o ON o.order_id  = p.payment_order_id
+                                                                    INNER JOIN meals m ON m.meal_id = o.order_meal_id
+                                                                    INNER JOIN meal_categories mc ON mc.category_id = m.meal_category_id";
+                                                                    $stmt = $mysqli->prepare($ret);
+                                                                    $stmt->execute(); //ok
+                                                                    $res = $stmt->get_result();
+                                                                    while ($card_history = $res->fetch_object()) {
+                                                                    ?>
+                                                                        <tr class="nk-tb-item">
+                                                                            <td class="nk-tb-col tb-col-mb">
+                                                                                <span class="tb-amount">Name : <?php echo $card_history->meal_name; ?></span>
+                                                                                <span class="tb-amount">Category : <?php echo $card_history->category_name; ?></span>
+                                                                                <span class="tb-amount">Price : Ksh <?php echo $card_history->meal_price; ?></span>
+                                                                            </td>
+                                                                            <td class="nk-tb-col tb-col-mb">
+                                                                                <span class="tb-amount">Quantity : <?php echo $card_history->order_quanty; ?></span>
+                                                                                <span class="tb-amount">Date Posted : <?php echo date('d M Y g:ia', strtotime($card_history->order_date_posted)); ?></span>
+                                                                            </td>
+                                                                            <td class="nk-tb-col tb-col-mb">
+                                                                                <span class="tb-amount">Txn ID : <?php echo $card_history->payment_confirmation_code; ?></span>
+                                                                                <span class="tb-amount">Amount Paid : Ksh <?php echo $card_history->payment_amount; ?></span>
+                                                                                <span class="tb-amount">Date Posted : <?php echo date('d M Y g:ia', strtotime($card_history->payment_date_posted)); ?></span>
+                                                                            </td>
+                                                                        </tr>
+                                                                    <?php } ?>
+                                                                </tbody>
+                                                            </table>
                                                         </div>
                                                     </div>
                                                 </div><!-- .card-aside-wrap -->
