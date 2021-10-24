@@ -184,12 +184,12 @@ require_once('../partials/head.php');
                                 <div class="nk-block-head nk-block-head-sm">
                                     <div class="nk-block-between">
                                         <div class="nk-block-head-content">
-                                            <h3 class="nk-block-title page-title">Meals</h3>
+                                            <h3 class="nk-block-title page-title">Meal Cards</h3>
                                             <div class="nk-block-des text-soft">
                                                 <nav>
                                                     <ul class="breadcrumb breadcrumb-arrow">
                                                         <li class="breadcrumb-item"><a href="dashboard">Home</a></li>
-                                                        <li class="breadcrumb-item active">Meals</li>
+                                                        <li class="breadcrumb-item active">Meal Cards</li>
                                                     </ul>
                                                 </nav>
                                             </div>
@@ -200,7 +200,7 @@ require_once('../partials/head.php');
                                                 <a href="#" class="btn btn-icon btn-trigger toggle-expand mr-n1" data-target="pageMenu"><em class="icon ni ni-menu-alt-r"></em></a>
                                                 <div class="toggle-expand-content" data-content="pageMenu">
                                                     <ul class="nk-block-tools g-3">
-                                                        <li><a href="#add_modal" data-toggle="modal" class="btn btn-white btn-outline-light"><em class="icon ni ni-plus"></em><span>Add Meal</span></a></li>
+                                                        <li><a href="#add_modal" data-toggle="modal" class="btn btn-white btn-outline-light"><em class="icon ni ni-plus"></em><span>Add Meal Card</span></a></li>
                                                     </ul>
                                                 </div>
                                             </div><!-- .toggle-wrap -->
@@ -210,7 +210,7 @@ require_once('../partials/head.php');
                                             <div class="modal-dialog  modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title">Register New Meal</h4>
+                                                        <h4 class="modal-title">Register New Meal Card</h4>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
@@ -219,36 +219,40 @@ require_once('../partials/head.php');
                                                         <form method="post" enctype="multipart/form-data" role="form">
                                                             <div class="card-body">
                                                                 <div class="row">
-                                                                    <div class="form-group col-md-4">
-                                                                        <label for="">Meal Name</label>
-                                                                        <input type="text" required name="meal_name" class="form-control">
-                                                                    </div>
-                                                                    <div class="form-group col-md-4">
-                                                                        <label for="">Category Name</label>
-                                                                        <select name="meal_category_id" class="form-select form-control form-control-lg" data-search="on">
+                                                                    <div class="form-group col-md-6">
+                                                                        <label for="">Card Owner (Student)</label>
+                                                                        <select name="card_owner_id" class="form-select form-control form-control-lg" data-search="on">
                                                                             <?php
-                                                                            $ret = "SELECT * FROM meal_categories ORDER BY category_name ASC";
+                                                                            $ret = "SELECT * FROM users 
+                                                                            WHERE user_access_level = 'student' 
+                                                                            AND user_has_card = 'NO' 
+                                                                            ORDER BY user_number ASC";
                                                                             $stmt = $mysqli->prepare($ret);
                                                                             $stmt->execute(); //ok
                                                                             $res = $stmt->get_result();
-                                                                            while ($category = $res->fetch_object()) {
+                                                                            while ($card_owner = $res->fetch_object()) {
                                                                             ?>
-                                                                                <option value="<?php echo $category->category_id; ?>"><?php echo $category->category_name; ?></option>
+                                                                                <option value="<?php echo $card_owner->user_id; ?>"><?php echo $card_owner->user_number; ?></option>
                                                                             <?php } ?>
                                                                         </select>
                                                                     </div>
-                                                                    <div class="form-group col-md-4">
-                                                                        <label for="">Meal Price(Ksh)</label>
-                                                                        <input type="text" required name="meal_price" class="form-control">
-                                                                    </div>
-                                                                    <div class="form-group col-md-12">
-                                                                        <label for="">Meal Details</label>
-                                                                        <textarea type="text" rows="2" required name="meal_details" class="form-control"></textarea>
+                                                                    <div class="form-group col-md-6">
+                                                                        <label for="">Meal Card Standard Loaded Amount (Ksh)</label>
+                                                                        <?php
+                                                                        /* Pop System Settings */
+                                                                        $ret = "SELECT * FROM system_settings";
+                                                                        $stmt = $mysqli->prepare($ret);
+                                                                        $stmt->execute(); //ok
+                                                                        $res = $stmt->get_result();
+                                                                        while ($sys = $res->fetch_object()) {
+                                                                        ?>
+                                                                            <input type="text" required name="card_loaded_amount" value="<?php echo $sys->sys_standard_amount_loaded; ?>" class="form-control">
+                                                                        <?php } ?>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="text-right">
-                                                                <button type="submit" name="add_meal" class="btn btn-primary">Submit</button>
+                                                                <button type="submit" name="new_card" class="btn btn-primary">Submit</button>
                                                             </div>
                                                         </form>
                                                     </div>
