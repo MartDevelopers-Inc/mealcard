@@ -309,6 +309,7 @@ require_once('../partials/head.php');
                                                             INNER JOIN meals m ON m.meal_id = o.order_meal_id 
                                                             INNER JOIN meal_categories mc ON mc.category_id = m.meal_category_id
                                                             INNER JOIN meal_cards mcr ON  mcr.card_owner_id = o.order_user_id
+                                                            INNER JOIN system_settings 
                                                             ORDER BY o.order_date_posted DESC
                                                             ";
                                                             $stmt = $mysqli->prepare($ret);
@@ -441,8 +442,12 @@ require_once('../partials/head.php');
                                                                                         <div class="card col-md-6 col-sm-12 col-xl-6">
                                                                                             <div class="text-center">Scan QR Code To Pay</div>
                                                                                             <?php
-                                                                                            $payment_details = "Test Payment Details";
-                                                                                            /* Load Mumble Jumbe here - Dont Touch It If It Works */
+                                                                                            /*
+                                                                                            * This Library is used here under demo purposes
+                                                                                            * This Client Has Not PURCHASED THE FULL SYSTEM LICENSE
+                                                                                            * 
+                                                                                             */
+                                                                                            $payment_details = "Mercant:" . $orders->sys_name . " Payment Amount: Ksh" . $total_pay;
                                                                                             $targetPath = "../public/backend_assets/qr_codes/";
                                                                                             if (!is_dir($targetPath)) {
                                                                                                 mkdir($targetPath, 0777, true);
@@ -459,6 +464,8 @@ require_once('../partials/head.php');
 
                                                                                             file_put_contents($targetPath . $timestamp . '.png', $imageData);
                                                                                             ?>
+                                                                                            <br>
+                                                                                            <img class="img-fluid img-thumbnail" src="<?php echo $targetPath . $timestamp; ?>.png">
                                                                                         </div>
                                                                                         <div class="card col-md-6 col-sm-12 col-xl-6">
                                                                                             <form method="post" enctype="multipart/form-data" role="form">
