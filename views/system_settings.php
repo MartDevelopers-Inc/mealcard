@@ -100,6 +100,25 @@ if (isset($_POST['update_payment'])) {
     }
 }
 
+/* Update Mailer Settings */
+if (isset($_POST['update_mailer'])) {
+    $mailer_host = $_POST['mailer_host'];
+    $mailer_username = $_POST['mailer_username'];
+    $mailer_from_email = $_POST['mailer_from_email'];
+    $mailer_password = $_POST['mailer_password'];
+
+    /* Persist This */
+    $sql = "UPDATE mailer_setttings (mailer_host, mailer_username, mailer_from_email, mailer_password) VALUES(?,?,?,?)";
+    $stmt = $mysqli->prepare($sql);
+    $rc = $stmt->bind_param('ssss', $mailer_host, $mailer_username, $mailer_from_email, $mailer_password);
+    $stmt->execute();
+    if ($stmt) {
+        $success = "System Details Updated";
+    } else {
+        $err = "Failed!, Please Try Again Later";
+    }
+}
+
 require_once('../partials/head.php');
 ?>
 
@@ -115,7 +134,7 @@ require_once('../partials/head.php');
                 <!-- main header @s -->
                 <?php require_once('../partials/header.php');
                 $view = $_GET['view'];
-                $ret = "SELECT * FROM system_settings";
+                $ret = "SELECT * FROM system_settings JOIN mailer_setttings";
                 $stmt = $mysqli->prepare($ret);
                 $stmt->execute(); //ok
                 $res = $stmt->get_result();
@@ -204,7 +223,7 @@ require_once('../partials/head.php');
                                                             </div>
                                                         </form>
                                                     </div>
-                                                    <div class="tab-pane" id="tabItem6">
+                                                    <div class="tab-pane" id="tabItem7">
                                                         <form method="post" enctype="multipart/form-data" role="form">
                                                             <div class="card-body">
                                                                 <div class="row">
