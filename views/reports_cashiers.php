@@ -168,7 +168,7 @@ while ($sys = $res->fetch_object()) {
         <body style="margin:1px;">
             <div class="footer">
                 <hr>
-                <i>' . $sys->sys_name . ' | ' . $sys->sys_tagine . ' Students Report Generated On ' . date('d, M Y') . '</i>
+                <i>' . $sys->sys_name . ' | ' . $sys->sys_tagine . ' Cashiers Report Generated On ' . date('d, M Y') . '</i>
             </div>
 
             <h3 class="list_header" align="center">
@@ -181,36 +181,36 @@ while ($sys = $res->fetch_object()) {
                 </h3>
                 <hr style="width:100%" , color="blue">
                 <hr class="yellow">
-                <h4>Students Reports</h4>
+                <h4>Cashiers Reports</h4>
             </h3>
 
             <table border="1" cellspacing="0" width="98%" style="font-size:9pt">
             <thead>
             <tr>
                 <th>#</th>
-                <th>Student Name</th>
-                <th>Admission No</th>
+                <th>Full Name</th>
+                <th>Staff No</th>
                 <th>Contacts</th>
                 <th>Email</th>
                 <th>Date Added</th>
             </tr>
         </thead>
             ';
-    $ret = "SELECT * FROM  users WHERE user_access_level  = 'student'  ";
+    $ret = "SELECT * FROM  users WHERE user_access_level  = 'cashier'  ";
     $stmt = $mysqli->prepare($ret);
     $stmt->execute(); //ok
     $res = $stmt->get_result();
     $cnt = 1;
-    while ($students = $res->fetch_object()) {
+    while ($users = $res->fetch_object()) {
         $html .=
             '
                 <tr>
                     <td>' . $cnt . '</td>
-                    <td width="100%">' . $students->user_name . '</td>
-                    <td width="90%">' . $students->user_number . '</td>
-                    <td width="90%">' . $students->user_phone_no . '</td>
-                    <td width="90%">' . $students->user_email . '</td>
-                    <td width="90%">' . $students->user_date_created . '</td>
+                    <td width="100%">' . $users->user_name . '</td>
+                    <td width="90%">' . $users->user_number . '</td>
+                    <td width="90%">' . $users->user_phone_no . '</td>
+                    <td width="90%">' . $users->user_email . '</td>
+                    <td width="90%">' . $users->user_date_created . '</td>
                 </tr>
                 ';
         $cnt = $cnt + 1;
@@ -225,7 +225,7 @@ while ($sys = $res->fetch_object()) {
     $dompdf->set_paper('A4');
     $dompdf->set_option('isHtml5ParserEnabled', true);
     $dompdf->render();
-    $dompdf->stream('Student Reports', array("Attachment" => 1));
+    $dompdf->stream('Cashiers Reports', array("Attachment" => 1));
     $options = $dompdf->getOptions();
     $options->setDefaultFont('');
     $dompdf->setOptions($options);
