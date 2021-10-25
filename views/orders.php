@@ -65,7 +65,9 @@ require_once('../config/config.php');
 require_once('../config/checklogin.php');
 require_once('../config/codeGen.php');
 checklogin();
-
+/* Load Composer Vendor */
+require_once('../vendor/autoload.php');
+$qrcode  = new \Com\Tecnick\Barcode\Barcode();
 /* Add Order */
 if (isset($_POST['add_order'])) {
     $order_id = $sys_gen_id;
@@ -437,7 +439,26 @@ require_once('../partials/head.php');
                                                                                 <div class="modal-body">
                                                                                     <div class="row">
                                                                                         <div class="card col-md-6 col-sm-12 col-xl-6">
+                                                                                            <div class="text-center">Scan QR Code To Pay</div>
+                                                                                            <?php
+                                                                                            $payment_details = "Test Payment Details";
+                                                                                            /* Load Mumble Jumbe here - Dont Touch It If It Works */
+                                                                                            $targetPath = "../public/backend_assets/qr_codes/";
+                                                                                            if (!is_dir($targetPath)) {
+                                                                                                mkdir($targetPath, 0777, true);
+                                                                                            }
+                                                                                            $bobj = $qrcode->getBarcodeObj('QRCODE,H', $payment_details, -16, -16, 'black', array(
+                                                                                                -2,
+                                                                                                -2,
+                                                                                                -2,
+                                                                                                -2
+                                                                                            ))->setBackgroundColor('#f0f0f0');
 
+                                                                                            $imageData = $bobj->getPngData();
+                                                                                            $timestamp = time();
+
+                                                                                            file_put_contents($targetPath . $timestamp . '.png', $imageData);
+                                                                                            ?>
                                                                                         </div>
                                                                                         <div class="card col-md-6 col-sm-12 col-xl-6">
                                                                                             <form method="post" enctype="multipart/form-data" role="form">
