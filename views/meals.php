@@ -390,7 +390,7 @@ require_once('../partials/head.php');
                                                                                             <div class="row">
                                                                                                 <div class="form-group col-md-12">
                                                                                                     <div class="custom-file">
-                                                                                                        <input type="file" accept=".png, .jpeg, .jpg" name="meal_img" required multiple class="custom-file-input" id="customFile">
+                                                                                                        <input type="file" accept=".png, .jpeg, .jpg, .webp" name="meal_img" required multiple class="custom-file-input" id="customFile">
                                                                                                         <label class="custom-file-label" for="customFile">Choose file</label>
                                                                                                     </div>
                                                                                                     <input type="hidden" required name="meal_id" value="<?php echo $meals->meal_id; ?>" class="form-control">
