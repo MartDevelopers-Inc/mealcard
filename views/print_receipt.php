@@ -116,9 +116,11 @@ require_once('../partials/head.php');
                                         <div class="nk-block">
                                             <div class="invoice">
                                                 <div class="invoice-action">
-                                                    <a class="btn btn-icon btn-lg btn-white btn-dim btn-outline-primary" href="invoice-print.html" target="_blank"><em class="icon ni ni-printer-fill"></em></a>
+                                                    <button class="btn btn-icon btn-lg btn-white btn-dim btn-outline-primary" id="print" onclick="printContent('Print_Receipt');">
+                                                        <em class="icon ni ni-printer-fill"></em>
+                                                    </button>
                                                 </div><!-- .invoice-actions -->
-                                                <div class="invoice-wrap">
+                                                <div class="invoice-wrap" id="Print_Receipt">
                                                     <div class="invoice-brand text-center">
                                                         <img src="../public/backend_assets/images/logo.png" alt="">
                                                         <br>
