@@ -84,6 +84,7 @@ require_once('../partials/head.php');
 
 ?>
 
+
 <body class="nk-body bg-lighter npc-general has-sidebar ">
     <div class="nk-app-root">
         <!-- main @s -->
@@ -94,105 +95,133 @@ require_once('../partials/head.php');
             <!-- wrap @s -->
             <div class="nk-wrap ">
                 <!-- main header @s -->
-                <?php require_once('../partials/header.php');
-                $view = $_GET['view'];
-                $ret = "SELECT * FROM meal_categories WHERE category_id = '$view' ";
-                $stmt = $mysqli->prepare($ret);
-                $stmt->execute(); //ok
-                $res = $stmt->get_result();
-                while ($meal_category = $res->fetch_object()) {
-                ?>
-                    <!-- main header @e -->
-                    <!-- content @s -->
-                    <div class="nk-content ">
-                        <div class="container-fluid">
-                            <div class="nk-content-inner">
-                                <div class="nk-content-body">
-                                    <div class="nk-block-head nk-block-head-sm">
-                                        <div class="nk-block-between">
-                                            <div class="nk-block-head-content">
-                                                <h3 class="nk-block-title page-title">Available Meals In : <?php echo $meal_category->category_name; ?> Category</h3>
-                                                <div class="nk-block-des text-soft">
-                                                    <nav>
-                                                        <ul class="breadcrumb breadcrumb-arrow">
-                                                            <li class="breadcrumb-item"><a href="dashboard">Home</a></li>
-                                                            <li class="breadcrumb-item"><a href="meal_categories">Meal Categories</a></li>
-                                                            <li class="breadcrumb-item active"><?php echo $meal_category->category_name; ?></li>
-                                                        </ul>
-                                                    </nav>
-                                                </div>
-                                            </div><!-- .nk-block-head-content -->
-                                        </div><!-- .nk-block-between -->
-                                    </div><!-- .nk-block-head -->
-                                    <div class="nk-block">
-                                        <div class="card card-bordered card-stretch">
-                                            <div class="card-inner-group">
-                                                <div class="card-preview">
-                                                    <div class="card-inner">
-                                                        <div class="nk-block">
-                                                            <table class="datatable-init nk-tb-list nk-tb-ulist" data-auto-responsive="false">
-                                                                <thead>
-                                                                    <tr class="nk-tb-item nk-tb-head">
-                                                                        <th class="nk-tb-col"><span class="sub-text">Meal Name</span></th>
-                                                                        <th class="nk-tb-col tb-col-md"><span class="sub-text">Meal Price (Ksh)</span></th>
-                                                                        <th class="nk-tb-col nk-tb-col-tools text-right">
-                                                                            <span class="sub-text">Action</span>
-                                                                        </th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    <?php
-                                                                    /* Pop This Partial With All Meals */
-                                                                    $ret = "SELECT * FROM meals WHERE meal_category_id = '$view'";
-                                                                    $stmt = $mysqli->prepare($ret);
-                                                                    $stmt->execute(); //ok
-                                                                    $res = $stmt->get_result();
-                                                                    while ($meals = $res->fetch_object()) {
-                                                                    ?>
-                                                                        <tr class="nk-tb-item">
-                                                                            <td class="nk-tb-col">
-                                                                                <div class="user-card">
-                                                                                    <div class="user-avatar bg-dim-primary d-none d-sm-flex">
-                                                                                        <span><?php echo substr($meals->meal_name, 0, 2); ?></span>
-                                                                                    </div>
-                                                                                    <div class="user-info">
-                                                                                        <span class="tb-lead"><?php echo $meals->meal_name; ?></span>
+                <?php require_once('../partials/header.php'); ?>
+                <!-- main header @e -->
+                <!-- content @s -->
+                <div class="nk-content ">
+                    <div class="container-fluid">
+                        <div class="nk-content-inner">
+                            <div class="nk-content-body">
+                                <div class="nk-block-head nk-block-head-sm">
+                                    <div class="nk-block-between">
+                                        <div class="nk-block-head-content">
+                                            <h3 class="nk-block-title page-title">Student Meal Orders Payments</h3>
+                                            <div class="nk-block-des text-soft">
+                                                <nav>
+                                                    <ul class="breadcrumb breadcrumb-arrow">
+                                                        <li class="breadcrumb-item"><a href="dashboard">Home</a></li>
+                                                        <li class="breadcrumb-item active">Orders Payments</li>
+                                                    </ul>
+                                                </nav>
+                                            </div>
+                                        </div><!-- .nk-block-head-content -->
+
+
+                                    </div><!-- .nk-block-between -->
+                                </div><!-- .nk-block-head -->
+                                <div class="nk-block">
+                                    <div class="card card-bordered card-stretch">
+                                        <div class="card-inner-group">
+                                            <div class="card-preview">
+                                                <div class="card-inner">
+                                                    <table class="datatable-init nk-tb-list nk-tb-ulist" data-auto-responsive="false">
+                                                        <thead>
+                                                            <tr class="nk-tb-item nk-tb-head">
+                                                                <th class="nk-tb-col"><span class="sub-text">Student Details</span></th>
+                                                                <th class="nk-tb-col tb-col-mb"><span class="sub-text">Order Details</span></th>
+                                                                <th class="nk-tb-col tb-col-md"><span class="sub-text">Payment Details</span></th>
+                                                                <th class="nk-tb-col nk-tb-col-tools text-right">
+                                                                    <span class="sub-text">Action</span>
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php
+                                                            /* Pop This Partial With All Meal Cards */
+                                                            $ret = "SELECT * FROM payments p
+                                                            INNER JOIN orders o ON o.order_id = p.payment_order_id
+                                                            INNER JOIN meals m ON m.meal_id = o.order_meal_id
+                                                            INNER JOIN users s ON s.user_id  = o.order_user_id
+                                                            ";
+                                                            $stmt = $mysqli->prepare($ret);
+                                                            $stmt->execute(); //ok
+                                                            $res = $stmt->get_result();
+                                                            while ($payments = $res->fetch_object()) {
+                                                            ?>
+                                                                <tr class="nk-tb-item">
+                                                                    <td class="nk-tb-col">
+                                                                        <div class="user-card">
+                                                                            <div class="user-avatar bg-dim-primary d-none d-sm-flex">
+                                                                                <span><?php echo substr($payments->user_name, 0, 2); ?></span>
+                                                                            </div>
+                                                                            <div class="user-info">
+                                                                                <span class="tb-lead"><?php echo $payments->user_name; ?></span>
+                                                                                <span class=""><?php echo $payments->user_number; ?></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td class="nk-tb-col tb-col-md">
+                                                                        <span>Meal: <?php echo $payments->meal_name; ?></span><br>
+                                                                        <span>Qty: <?php echo $payments->order_quantity; ?></span><br>
+                                                                        <span>Date: <?php echo date('d M Y g:ia', strtotime($payments->order_date_posted)); ?></span>
+                                                                    </td>
+                                                                    <td class="nk-tb-col tb-col-md">
+                                                                        <span>Trxn ID: <?php echo $payments->payment_confirmation_code; ?></span><br>
+                                                                        <span>Amount: <?php echo $payments->payment_amount; ?></span><br>
+                                                                        <span>Date Paid: <?php echo date('d M Y g:ia', strtotime($payments->payment_date_posted)); ?></span>
+                                                                    </td>
+
+                                                                    <td class="nk-tb-col nk-tb-col-tools">
+                                                                        <ul class="nk-tb-actions gx-1">
+                                                                            <li>
+                                                                                <div class="drodown">
+                                                                                    <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                                                        <ul class="link-list-opt no-bdr">
+                                                                                            <li><a href="print_receipt?view=<?php echo $payments->payment_id; ?>"><em class="icon ni ni-print"></em><span>Update Order</span></a></li>
+                                                                                            <li><a data-toggle="modal" href="#delete-<?php echo $payments->payment_id; ?>"><em class="icon ni ni-trash"></em><span>Delete Order</span></a></li>
+                                                                                        </ul>
                                                                                     </div>
                                                                                 </div>
-                                                                            </td>
-                                                                            <td class="nk-tb-col tb-col-md">
-                                                                                <span>Ksh <?php echo $meals->meal_price; ?></span>
-                                                                            </td>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
 
-                                                                            <td class="nk-tb-col nk-tb-col-tools">
-                                                                                <ul class="nk-tb-actions gx-1">
-                                                                                    <li>
-                                                                                        <div class="drodown">
-                                                                                            <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
-                                                                                            <div class="dropdown-menu dropdown-menu-right">
-                                                                                                <ul class="link-list-opt no-bdr">
-                                                                                                    <li><a href="meal?view=<?php echo $meals->meal_id; ?>"><em class="icon ni ni-focus"></em><span>Meal Details</span></a></li>
-                                                                                                </ul>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </li>
-                                                                                </ul>
-                                                                            </td>
-                                                                        </tr>
-                                                                    <?php } ?>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
+
+                                                                    <!-- Delete Modal -->
+                                                                    <div class="modal fade" id="delete-<?php echo $payments->payment_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <h5 class="modal-title" id="exampleModalLabel">CONFIRM DELETION</h5>
+                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                        <span aria-hidden="true">&times;</span>
+                                                                                    </button>
+                                                                                </div>
+                                                                                <div class="modal-body text-center text-danger">
+                                                                                    <h4>Delete Payment Record : <?php echo $payments->payment_confirmation_code; ?> ?</h4>
+                                                                                    <br>
+                                                                                    <p>Heads Up, You are about to delete this payment record, This action is irrevisble.</p>
+                                                                                    <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
+                                                                                    <a href="payments?delete=<?php echo $payments->payment_order_id; ?>" class="text-center btn btn-danger"> Delete </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- End Modal -->
+                                                                </tr>
+                                                            <?php } ?>
+                                                        </tbody>
+                                                    </table>
                                                 </div>
-                                            </div><!-- .card -->
-                                        </div><!-- .nk-block -->
-                                    </div>
+                                            </div>
+                                        </div><!-- .card -->
+                                    </div><!-- .nk-block -->
                                 </div>
                             </div>
                         </div>
                     </div>
-                <?php } ?>
+                </div>
                 <!-- content @e -->
                 <!-- footer @s -->
                 <?php require_once('../partials/footer.php'); ?>
