@@ -159,9 +159,6 @@ require_once('../partials/head.php');
                                                                     <th class="nk-tb-col"><span class="sub-text">Student Details</span></th>
                                                                     <th class="nk-tb-col tb-col-mb"><span class="sub-text">Quantity Ordered</span></th>
                                                                     <th class="nk-tb-col tb-col-md"><span class="sub-text">Date Ordered</span></th>
-                                                                    <th class="nk-tb-col nk-tb-col-tools text-right">
-                                                                        <span class="sub-text">Action</span>
-                                                                    </th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
@@ -185,29 +182,21 @@ require_once('../partials/head.php');
                                                                             <div class="user-card">
                                                                                 <div class="user-avatar bg-dim-primary d-none d-sm-flex">
                                                                                     <span><?php echo substr($orders->user_name, 0, 2); ?></span>
-                                                                                    <span class="sub-text"><?php echo $orders->user_number; ?></span>
                                                                                 </div>
                                                                                 <div class="user-info">
-                                                                                    <span class="tb-lead"><?php echo $orders->order_quanty; ?></span>
+                                                                                    <span class="tb-lead"><?php echo $orders->user_name; ?></span>
+                                                                                    <span class="sub-text"><?php echo $orders->user_number; ?></span>
                                                                                 </div>
+
+                                                                            </div>
+                                                                        </td>
+                                                                        <td class="nk-tb-col tb-col-mb">
+                                                                            <div class="user-info">
+                                                                                <span class="tb-lead"><?php echo $orders->order_quantity; ?></span>
                                                                             </div>
                                                                         </td>
                                                                         <td class="nk-tb-col tb-col-mb">
                                                                             <span class="tb-amount"><?php echo date('d M Y g:ia', strtotime($orders->order_date_posted)); ?></span>
-                                                                        </td>
-                                                                        <td class="nk-tb-col nk-tb-col-tools">
-                                                                            <ul class="nk-tb-actions gx-1">
-                                                                                <li>
-                                                                                    <div class="drodown">
-                                                                                        <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
-                                                                                        <div class="dropdown-menu dropdown-menu-right">
-                                                                                            <ul class="link-list-opt no-bdr">
-                                                                                                <li><a href="order?view=<?php echo $orders->order_id; ?>"><em class="icon ni ni-focus"></em><span>Order Details</span></a></li>
-                                                                                            </ul>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </li>
-                                                                            </ul>
                                                                         </td>
                                                                     </tr>
                                                                 <?php } ?>

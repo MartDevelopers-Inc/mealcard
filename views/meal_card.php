@@ -168,7 +168,8 @@ require_once('../partials/head.php');
                                                                     $ret = "SELECT * FROM payments p
                                                                     INNER JOIN orders o ON o.order_id  = p.payment_order_id
                                                                     INNER JOIN meals m ON m.meal_id = o.order_meal_id
-                                                                    INNER JOIN meal_categories mc ON mc.category_id = m.meal_category_id";
+                                                                    INNER JOIN meal_categories mc ON mc.category_id = m.meal_category_id
+                                                                    WHERE o.order_user_id = '$card->card_owner_id'";
                                                                     $stmt = $mysqli->prepare($ret);
                                                                     $stmt->execute(); //ok
                                                                     $res = $stmt->get_result();
@@ -181,7 +182,7 @@ require_once('../partials/head.php');
                                                                                 <span class="tb-amount">Price : Ksh <?php echo $card_history->meal_price; ?></span>
                                                                             </td>
                                                                             <td class="nk-tb-col tb-col-mb">
-                                                                                <span class="tb-amount">Quantity : <?php echo $card_history->order_quanty; ?></span>
+                                                                                <span class="tb-amount">Quantity : <?php echo $card_history->order_quantity; ?></span>
                                                                                 <span class="tb-amount">Date Posted : <?php echo date('d M Y g:ia', strtotime($card_history->order_date_posted)); ?></span>
                                                                             </td>
                                                                             <td class="nk-tb-col tb-col-mb">

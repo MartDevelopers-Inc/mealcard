@@ -233,7 +233,7 @@ require_once('../partials/head.php');
                                                 <div class="card-inner border-bottom">
                                                     <div class="card-title-group">
                                                         <div class="card-title">
-                                                            <h6 class="title"><?Php echo date('d M Y'); ?> Meal Orders</h6>
+                                                            <h6 class="title">Recent Meal Orders</h6>
                                                         </div>
                                                         <div class="card-tools">
                                                             <a href="orders" class="link">View All</a>
@@ -246,7 +246,9 @@ require_once('../partials/head.php');
                                                     $ret = "SELECT * FROM  orders o
                                                     INNER JOIN users s ON s.user_id = o.order_user_id
                                                     INNER JOIN meals m ON m.meal_id = o.order_meal_id 
-                                                    WHERE  o.order_date_posted = CURDATE()";
+                                                    ORDER BY o.order_date_posted DESC
+                                                    LIMIT 15
+                                                    ";
                                                     $stmt = $mysqli->prepare($ret);
                                                     $stmt->execute(); //ok
                                                     $res = $stmt->get_result();
@@ -259,7 +261,7 @@ require_once('../partials/head.php');
                                                             </div>
                                                             <div class="nk-activity-data">
                                                                 <div class="label">
-                                                                    <?php echo $orders->user_name; ?> Has Ordered <?php echo $orders->meal_name . '. Quantity: ' . $orders->order_quanty; ?>
+                                                                    <?php echo $orders->user_name; ?> Has Ordered <?php echo $orders->meal_name . '. Quantity: ' . $orders->order_quantity; ?>
                                                                 </div>
                                                                 <span class="time"><?php echo date('d M Y, g:ia', strtotime($orders->order_date_posted)); ?></span>
                                                             </div>
@@ -276,10 +278,10 @@ require_once('../partials/head.php');
                                                 <div class="card-inner border-bottom">
                                                     <div class="card-title-group">
                                                         <div class="card-title">
-                                                            <h6 class="title"><?Php echo date('d M Y'); ?> Orders Payment Logs</h6>
+                                                            <h6 class="title">Recent Orders Payment Logs</h6>
                                                         </div>
                                                         <div class="card-tools">
-                                                            <a href="html/subscription/tickets.html" class="link">View All</a>
+                                                            <a href="payments" class="link">View All</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -291,7 +293,9 @@ require_once('../partials/head.php');
                                                             INNER JOIN orders o ON o.order_id  = p.payment_order_id
                                                             INNER JOIN users s ON s.user_id = o.order_user_id
                                                             INNER JOIN meals m ON m.meal_id = o.order_meal_id 
-                                                            WHERE  p.payment_date_posted  = CURDATE()";
+                                                            ORDER BY p.payment_date_posted DESC
+                                                            LIMIT 15
+                                                            ";
                                                             $stmt = $mysqli->prepare($ret);
                                                             $stmt->execute(); //ok
                                                             $res = $stmt->get_result();
@@ -300,8 +304,7 @@ require_once('../partials/head.php');
                                                             ?>
                                                                 <li class="timeline-item">
                                                                     <div class="timeline-status bg-primary is-outline"></div>
-                                                                    <div class="timeline-date"><?php echo date('d M Y', strtotime($payments->payment_date_posted)); ?>
-                                                                        <em class="icon ni ni-check"></em></div>
+                                                                    <div class="timeline-date"><?php echo date('d M Y g:ia', strtotime($payments->payment_date_posted)); ?></div>
                                                                     <div class="timeline-data">
                                                                         <h6 class="timeline-title"><?php echo $payments->payment_confirmation_code; ?> Confirmed</h6>
                                                                         <div class="timeline-des">
