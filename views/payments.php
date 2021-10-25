@@ -167,7 +167,7 @@ require_once('../partials/head.php');
                                                                     </td>
                                                                     <td class="nk-tb-col tb-col-md">
                                                                         <span>Trxn ID: <?php echo $payments->payment_confirmation_code; ?></span><br>
-                                                                        <span>Amount: <?php echo $payments->payment_amount; ?></span><br>
+                                                                        <span>Amount: Ksh <?php echo $payments->payment_amount; ?></span><br>
                                                                         <span>Date Paid: <?php echo date('d M Y g:ia', strtotime($payments->payment_date_posted)); ?></span>
                                                                     </td>
 
@@ -178,8 +178,8 @@ require_once('../partials/head.php');
                                                                                     <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
                                                                                     <div class="dropdown-menu dropdown-menu-right">
                                                                                         <ul class="link-list-opt no-bdr">
-                                                                                            <li><a href="print_receipt?view=<?php echo $payments->payment_id; ?>"><em class="icon ni ni-print"></em><span>Update Order</span></a></li>
-                                                                                            <li><a data-toggle="modal" href="#delete-<?php echo $payments->payment_id; ?>"><em class="icon ni ni-trash"></em><span>Delete Order</span></a></li>
+                                                                                            <li><a href="print_receipt?view=<?php echo $payments->payment_id; ?>"><em class="icon ni ni-printer"></em><span>Print Receipt</span></a></li>
+                                                                                            <li><a data-toggle="modal" href="#delete-<?php echo $payments->payment_id; ?>"><em class="icon ni ni-trash"></em><span>Delete Payment</span></a></li>
                                                                                         </ul>
                                                                                     </div>
                                                                                 </div>
