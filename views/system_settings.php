@@ -154,7 +154,7 @@ require_once('../partials/head.php');
                                                         <a class="nav-link" data-toggle="tab" href="#tabItem6"><em class="icon ni ni-money"></em><span>System Payment Gateway Settings</span></a>
                                                     </li>
                                                     <li class="nav-item">
-                                                        <a class="nav-link" data-toggle="tab" href="#tabItem6"><em class="icon ni ni-emails"></em><span>System Mailer Settings</span></a>
+                                                        <a class="nav-link" data-toggle="tab" href="#tabItem7"><em class="icon ni ni-emails"></em><span>System Mailer Settings</span></a>
                                                     </li>
                                                 </ul>
                                                 <div class="tab-content">
@@ -186,7 +186,50 @@ require_once('../partials/head.php');
                                                         </form>
                                                     </div>
                                                     <div class="tab-pane" id="tabItem6">
-
+                                                        <form method="post" enctype="multipart/form-data" role="form">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="form-group col-md-6">
+                                                                        <label for="">System Paybill Number</label>
+                                                                        <input type="text" required name="sys_paybill_no" value="<?php echo $sys->sys_paybill_no; ?>" class="form-control">
+                                                                    </div>
+                                                                    <div class="form-group col-md-6">
+                                                                        <label for="">Default Amount Loaded To Each Meal Card (KSH)</label>
+                                                                        <input type="text" required value="<?php echo $sys->sys_standard_amount_loaded; ?>" name="sys_standard_amount_loaded" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-right">
+                                                                <button type="submit" name="update_payment" class="btn btn-primary">Submit</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <div class="tab-pane" id="tabItem6">
+                                                        <form method="post" enctype="multipart/form-data" role="form">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="form-group col-md-6">
+                                                                        <label for="">STMP Host</label>
+                                                                        <input type="text" required name="mailer_host" value="<?php echo $sys->mailer_host; ?>" class="form-control">
+                                                                    </div>
+                                                                    <div class="form-group col-md-6">
+                                                                        <label for="">STMP Username</label>
+                                                                        <input type="text" required value="<?php echo $sys->mailer_username; ?>" name="mailer_username" class="form-control">
+                                                                    </div>
+                                                                    <div class="form-group col-md-6">
+                                                                        <label for="">STMP Mail From</label>
+                                                                        <input type="text" required value="<?php echo $sys->mailer_from_email; ?>" name="mailer_from_email" class="form-control">
+                                                                    </div>
+                                                                    <div class="form-group col-md-6">
+                                                                        <label for="">STMP Password</label>
+                                                                        <input type="password" required value="<?php echo $sys->mailer_password; ?>" name="mailer_password" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="text-right">
+                                                                <button type="submit" name="update_mailer" class="btn btn-primary">Submit</button>
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div><!-- .card-aside-wrap -->
