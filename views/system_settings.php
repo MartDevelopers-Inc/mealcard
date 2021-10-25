@@ -108,7 +108,7 @@ if (isset($_POST['update_mailer'])) {
     $mailer_password = $_POST['mailer_password'];
 
     /* Persist This */
-    $sql = "UPDATE mailer_setttings (mailer_host, mailer_username, mailer_from_email, mailer_password) VALUES(?,?,?,?)";
+    $sql = "UPDATE mailer_setttings SET mailer_host =?, mailer_username =?, mailer_from_email =?, mailer_password =? ";
     $stmt = $mysqli->prepare($sql);
     $rc = $stmt->bind_param('ssss', $mailer_host, $mailer_username, $mailer_from_email, $mailer_password);
     $stmt->execute();
