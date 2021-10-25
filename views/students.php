@@ -14,7 +14,7 @@
  *
  * 1. GRANT OF LICENSE
  * MartDevelopers Inc hereby grants to you (an individual) the revocable, personal, non-exclusive, and nontransferable right to
- * install and activate this system on two separated computers solely for your personal and non-commercial use,
+ * install and activaate this system on two separated computers solely for your personal and non-commercial use,
  * unless you have purchased a commercial license from MartDevelopers. Sharing this Software with other individuals, 
  * or allowing other individuals to view the contents of this Software, is in violation of this license.
  * You may not make the Software available on a network, or in any way provide the Software to multiple users
