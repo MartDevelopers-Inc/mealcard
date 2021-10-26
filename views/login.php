@@ -85,6 +85,8 @@ if (isset($_POST['sign_in'])) {
         header("location:dashboard");
     } else if ($rs && $_SESSION['user_access_level'] == 'student') {
         header("location:home");
+    } else if ($rs && $_SESSION['user_access_level'] == 'cashier') {
+        header("location:cashier_dashboard");
     } else {
         $err = "Access Denied Please Check Your Email Or Password";
     }

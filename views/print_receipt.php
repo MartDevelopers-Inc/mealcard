@@ -123,6 +123,8 @@ require_once('../partials/head.php');
                                                 <div class="invoice-wrap" id="Print_Receipt">
                                                     <div class="invoice-brand text-center">
                                                         <img src="../public/backend_assets/images/logo.png" alt="">
+                                                        <br>
+                                                        <br>
                                                         <h5>
                                                             <?php echo $payments->sys_name; ?><br>
                                                             <?php echo $payments->sys_paypal_email; ?> <br>

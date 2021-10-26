@@ -93,6 +93,22 @@ $stmt->bind_result($orders);
 $stmt->fetch();
 $stmt->close();
 
+/* Pending Payment oRDERS */
+$query = "SELECT COUNT(*) FROM orders WHERE order_payment_status = 'Pending'  ";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($pending_orders);
+$stmt->fetch();
+$stmt->close();
+
+/* Paid Orders */
+$query = "SELECT COUNT(*) FROM orders WHERE order_payment_status = 'Paid'  ";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($paid_orders);
+$stmt->fetch();
+$stmt->close();
+
 
 /* All Meal Cards Allocated Funds */
 $query = "SELECT SUM(card_loaded_amount) FROM meal_cards ";
