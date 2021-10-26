@@ -96,7 +96,7 @@ require_once('../partials/head.php');
                                             </div>
                                         </div>
                                         <div class="text-right">
-                                            <a href="my_payment_records"  class="btn btn-white btn-outline-primary"><em class="icon ni ni-printer"></em><span>Print Payment Records</span></a>
+                                            <a href="my_payment_records"  class="btn btn-white btn-outline-primary"><em class="icon ni ni-download"></em><span>Download Payment Records</span></a>
                                             <br>
                                         </div>
                                     </div><!-- .nk-block-head -->

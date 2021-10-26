@@ -183,7 +183,7 @@ while ($sys = $res->fetch_object()) {
                 </h3>
                 <hr style="width:100%" , color="blue">
                 <hr class="yellow">
-                <h4>Order Payment Reports</h4>
+                <h4>'.$sys->user_name.' <br> '.$sys->user_number.' <br>  Payment Reports</h4>
             </h3>
 
             <table border="1" cellspacing="0" width="98%" style="font-size:9pt">
@@ -191,7 +191,7 @@ while ($sys = $res->fetch_object()) {
             <tr>
                 <th>#</th>
                 <th>Student Details</th>
-                <th>Order Details</th>
+                <th>Order & Meal Details</th>
                 <th>Payment Details</th>
             </tr>
         </thead>
@@ -224,6 +224,7 @@ while ($sys = $res->fetch_object()) {
                     <td width="90%">
                         Trxn ID: ' . $payments->payment_confirmation_code . '<br>
                         Amount: Ksh ' . $payments->payment_amount . '<br>
+                        Payment Means:  ' . $payments->payment_means . '<br>
                         Date Paid: ' . date('d M Y g:ia', strtotime($payments->payment_date_posted)) . '
                     </td>
                     
@@ -241,7 +242,7 @@ while ($sys = $res->fetch_object()) {
     $dompdf->set_paper('A4');
     $dompdf->set_option('isHtml5ParserEnabled', true);
     $dompdf->render();
-    $dompdf->stream($sys->user_name.'-'. $sys->user_number.' Payment Records', array("Attachment" => 1));
+    $dompdf->stream($sys->user_name.' Payment Records', array("Attachment" => 1));
     $options = $dompdf->getOptions();
     $options->setDefaultFont('');
     $dompdf->setOptions($options);
