@@ -100,21 +100,6 @@ if (isset($_POST['update_order'])) {
     }
 }
 
-
-if (isset($_GET['delete'])) {
-    $delete = $_GET['delete'];
-    $adn = "DELETE FROM  orders WHERE order_id = ? ";
-    $stmt = $mysqli->prepare($adn);
-    $stmt->bind_param('s', $delete);
-    $stmt->execute();
-    $stmt->close();
-    if ($stmt) {
-        $success = "Deleted" && header("refresh:1; url=my_orders");
-    } else {
-        $info = "Please Try Again Or Try Later";
-    }
-}
-
 require_once('../partials/head.php');
 ?>
 
@@ -218,7 +203,7 @@ require_once('../partials/head.php');
                                                         INNER JOIN meals m ON m.meal_id = o.order_meal_id 
                                                         INNER JOIN meal_categories mc ON mc.category_id = m.meal_category_id
                                                         INNER JOIN meal_cards mcr ON  mcr.card_owner_id = o.order_user_id
-                                                        WHERE s.user_id = '$user_id' AND o.order_status !='Cancelled'
+                                                        WHERE s.user_id = '$user_id' 
                                                         ORDER BY o.order_date_posted DESC
                                                         ";
                                                         $stmt = $mysqli->prepare($ret);
@@ -265,7 +250,6 @@ require_once('../partials/head.php');
                                                                                     <div class="dropdown-menu dropdown-menu-right">
                                                                                         <ul class="link-list-opt no-bdr">
                                                                                             <li><a data-toggle="modal" href="#update-<?php echo $orders->order_id; ?>"><em class="icon ni ni-edit"></em><span>Update Order</span></a></li>
-                                                                                            <li><a data-toggle="modal" href="#delete-<?php echo $orders->order_id; ?>"><em class="icon ni ni-trash"></em><span>Delete Order</span></a></li>
                                                                                         </ul>
                                                                                     </div>
                                                                                 </div>
@@ -304,27 +288,6 @@ require_once('../partials/head.php');
                                                                 </div>
                                                                 <!-- End Modal -->
 
-                                                                <!-- Delete Modal -->
-                                                                <div class="modal fade" id="delete-<?php echo $orders->order_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <h5 class="modal-title" id="exampleModalLabel">CONFIRM DELETION</h5>
-                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                    <span aria-hidden="true">&times;</span>
-                                                                                </button>
-                                                                            </div>
-                                                                            <div class="modal-body text-center text-danger">
-                                                                                <h4>Delete <?php echo $orders->user_name; ?> Meal Order?</h4>
-                                                                                <br>
-                                                                                <p>Heads Up, You are about to delete this order, This action is irrevisble.</p>
-                                                                                <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
-                                                                                <a href=my_orders?delete=<?php echo $orders->order_id; ?>" class="text-center btn btn-danger"> Delete </a>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- End Modal -->
                                                             </tr>
                                                         <?php } ?>
                                                     </tbody>
