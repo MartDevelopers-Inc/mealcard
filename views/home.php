@@ -62,7 +62,7 @@
 session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
-require_once('../partials/analytics.php');
+require_once('../partials/student_analytics.php');
 checklogin();
 require_once('../partials/head.php');
 ?>
@@ -116,7 +116,7 @@ require_once('../partials/head.php');
                                                                             </div>
                                                                             <div class="align-end flex-sm-wrap g-4 flex-md-nowrap">
                                                                                 <div class="nk-sale-data">
-                                                                                    <span class="amount"><?php echo $orders; ?></span>
+                                                                                    <span class="amount"><?php echo $my_orders; ?></span>
                                                                                 </div>
                                                                                 <div class="nk-sales-ck text-right">
                                                                                     <i class="fas fa-file-signature fa-4x"></i>
@@ -136,7 +136,7 @@ require_once('../partials/head.php');
                                                                             </div>
                                                                             <div class="align-end flex-sm-wrap g-4 flex-md-nowrap">
                                                                                 <div class="nk-sale-data">
-                                                                                    <span class="amount">Ksh <?php echo $allocated_funds; ?></span>
+                                                                                    <span class="amount">Ksh <?php echo $my_current_funds; ?></span>
                                                                                 </div>
                                                                                 <div class="nk-sales-ck text-right">
                                                                                     <i class="fas fa-id-card fa-4x"></i>
@@ -155,7 +155,7 @@ require_once('../partials/head.php');
                                                                             </div>
                                                                             <div class="align-end flex-sm-wrap g-4 flex-md-nowrap">
                                                                                 <div class="nk-sale-data">
-                                                                                    <span class="amount">Ksh <?php echo $overall_income; ?></span>
+                                                                                    <span class="amount">Ksh <?php echo $overall_expenditure; ?></span>
                                                                                 </div>
                                                                                 <div class="nk-sales-ck text-right">
                                                                                     <i class="fas fa-money-bill-alt fa-4x"></i>
