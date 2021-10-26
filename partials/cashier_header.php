@@ -94,109 +94,37 @@ while ($cashier = $res->fetch_object()) {
                     <!-- Menu -->
                     <ul class="nk-menu nk-menu-main">
                         <li class="nk-menu-item">
-                            <a href="html/invest/index.html" class="nk-menu-link">
-                                <span class="nk-menu-text">Overview</span>
+                            <a href="cashier_meals" class="nk-menu-link">
+                                <span class="nk-menu-text">Meals</span>
                             </a>
                         </li>
                         <li class="nk-menu-item">
-                            <a href="html/invest/schemes.html" class="nk-menu-link">
-                                <span class="nk-menu-text">MY Plan</span>
+                            <a href="cashier_orders" class="nk-menu-link">
+                                <span class="nk-menu-text">Orders</span>
                             </a>
                         </li>
                         <li class="nk-menu-item">
-                            <a href="html/invest/invest.html" class="nk-menu-link">
-                                <span class="nk-menu-text">Invest</span>
+                            <a href="cashier_payments" class="nk-menu-link">
+                                <span class="nk-menu-text">Payments</span>
                             </a>
                         </li>
-                        <li class="nk-menu-item">
-                            <a href="html/invest/profile.html" class="nk-menu-link">
-                                <span class="nk-menu-text">Profile</span>
-                            </a>
-                        </li>
+
                         <li class="nk-menu-item active has-sub">
                             <a href="#" class="nk-menu-link nk-menu-toggle">
-                                <span class="nk-menu-text">Pages</span>
+                                <span class="nk-menu-text">Reports</span>
                             </a>
                             <ul class="nk-menu-sub">
                                 <li class="nk-menu-item">
-                                    <a href="html/invest/welcome.html" class="nk-menu-link">
-                                        <span class="nk-menu-text">Welcome / Intro</span>
+                                    <a href="cashier_order_reports" class="nk-menu-link">
+                                        <span class="nk-menu-text">Orders</span>
                                     </a>
                                 </li>
                                 <li class="nk-menu-item">
-                                    <a href="html/invest/invest-form.html" class="nk-menu-link">
-                                        <span class="nk-menu-text">Investment Process</span>
+                                    <a href="cashier_payments_reports" class="nk-menu-link">
+                                        <span class="nk-menu-text">Payments</span>
                                     </a>
                                 </li>
-                                <li class="nk-menu-item">
-                                    <a href="html/invest/scheme-details.html" class="nk-menu-link">
-                                        <span class="nk-menu-text">Investment Details</span>
-                                    </a>
-                                </li>
-                                <li class="nk-menu-item">
-                                    <a href="html/invest/kyc-application.html" class="nk-menu-link">
-                                        <span class="nk-menu-text">KYC - Get Started</span>
-                                    </a>
-                                </li>
-                                <li class="nk-menu-item">
-                                    <a href="html/invest/kyc-form.html" class="nk-menu-link">
-                                        <span class="nk-menu-text">KYC - Application Form</span>
-                                    </a>
-                                </li>
-                                <li class="nk-menu-item has-sub">
-                                    <a href="#" class="nk-menu-link nk-menu-toggle">
-                                        <span class="nk-menu-text">Auth Pages <em class="icon ni ni-external"></em> </span>
-                                    </a>
-                                    <ul class="nk-menu-sub">
-                                        <li class="nk-menu-item">
-                                            <a href="html/general/pages/auths/auth-login.html" target="_blank" class="nk-menu-link">
-                                                <span class="nk-menu-text">Login / Sign in</span>
-                                            </a>
-                                        </li>
-                                        <li class="nk-menu-item">
-                                            <a href="html/general/pages/auths/auth-register.html" target="_blank" class="nk-menu-link">
-                                                <span class="nk-menu-text">Register / Sign up</span>
-                                            </a>
-                                        </li>
-                                        <li class="nk-menu-item">
-                                            <a href="html/general/pages/auths/auth-reset.html" target="_blank" class="nk-menu-link">
-                                                <span class="nk-menu-text">Forgot Password</span>
-                                            </a>
-                                        </li>
-                                        <li class="nk-menu-item">
-                                            <a href="html/general/pages/auths/auth-success.html" target="_blank" class="nk-menu-link">
-                                                <span class="nk-menu-text">Success / Confirm</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                <li class="nk-menu-item has-sub">
-                                    <a href="#" class="nk-menu-link nk-menu-toggle">
-                                        <span class="nk-menu-text">Dashboard <em class="icon ni ni-external"></em> </span>
-                                    </a>
-                                    <ul class="nk-menu-sub">
-                                        <li class="nk-menu-item">
-                                            <a href="html/crypto/index.html" target="_blank" class="nk-menu-link">
-                                                <span class="nk-menu-text">Crypto - Buy Sell</span>
-                                            </a>
-                                        </li>
-                                        <li class="nk-menu-item">
-                                            <a href="html/general/index.html" target="_blank" class="nk-menu-link">
-                                                <span class="nk-menu-text">General Dashboard</span>
-                                            </a>
-                                        </li>
-                                        <li class="nk-menu-item">
-                                            <a href="html/subscription/index.html" target="_blank" class="nk-menu-link">
-                                                <span class="nk-menu-text">Subscription - SaaS</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="nk-menu-item">
-                                    <a href="html/general/components.html" class="nk-menu-link">
-                                        <span class="nk-menu-icon"><em class="icon ni ni-layers-fill"></em></span>
-                                        <span class="nk-menu-text">Components</span>
-                                    </a>
-                                </li>
+
                             </ul>
                         </li>
                     </ul>
