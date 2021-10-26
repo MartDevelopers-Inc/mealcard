@@ -104,7 +104,7 @@ if (isset($_POST['update_order'])) {
 if (isset($_GET['delete'])) {
     $order_id = $_GET['delete'];
     /* Persist this delete */
-    $del = "DELETE FROM orders WHERE order_id = '$order_id'";
+    $del = "DELETE FROM orders WHERE order_id = 'd737d39bd3ff80ed61a2a6b1923d7a9f2b59c36ea5'";
     $stmt = $mysqli->prepare($del);
     //$rc = $stmt->bind_param('s', $order_id);
     if ($stmt) {
