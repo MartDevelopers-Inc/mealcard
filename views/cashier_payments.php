@@ -122,10 +122,10 @@ require_once('../partials/head.php');
                                                                         <?php
                                                                         /* Pop This Partial With All Meal Cards */
                                                                         $ret = "SELECT * FROM payments p
-                                                            INNER JOIN orders o ON o.order_id = p.payment_order_id
-                                                            INNER JOIN meals m ON m.meal_id = o.order_meal_id
-                                                            INNER JOIN users s ON s.user_id  = o.order_user_id
-                                                            ";
+                                                                        INNER JOIN orders o ON o.order_id = p.payment_order_id
+                                                                        INNER JOIN meals m ON m.meal_id = o.order_meal_id
+                                                                        INNER JOIN users s ON s.user_id  = o.order_user_id
+                                                                        ";
                                                                         $stmt = $mysqli->prepare($ret);
                                                                         $stmt->execute(); //ok
                                                                         $res = $stmt->get_result();

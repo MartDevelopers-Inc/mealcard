@@ -100,7 +100,57 @@ require_once('../partials/head.php');
                                     <div class="nk-block">
                                         <div class="card card-bordered sp-plan">
                                             <div class="card-body">
-                                            
+                                                <table class="datatable-init nk-tb-list nk-tb-ulist" data-auto-responsive="false">
+                                                    <thead>
+                                                        <tr class="nk-tb-item nk-tb-head">
+                                                            <th class="nk-tb-col"><span class="sub-text">Student Details</span></th>
+                                                            <th class="nk-tb-col tb-col-mb"><span class="sub-text">Order & Meal Details</span></th>
+                                                            <th class="nk-tb-col tb-col-md"><span class="sub-text">Payment Details</span></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php
+                                                        /* Pop This Partial With All Meal Cards */
+                                                        $user_id = $_SESSION['user_id'];
+                                                        $ret = "SELECT * FROM payments p
+                                                        INNER JOIN orders o ON o.order_id = p.payment_order_id
+                                                        INNER JOIN meals m ON m.meal_id = o.order_meal_id
+                                                        INNER JOIN users s ON s.user_id  = o.order_user_id
+                                                        WHERE s.user_id = '$user_id'
+                                                        ";
+                                                        $stmt = $mysqli->prepare($ret);
+                                                        $stmt->execute(); //ok
+                                                        $res = $stmt->get_result();
+                                                        while ($payments = $res->fetch_object()) {
+                                                        ?>
+                                                            <tr class="nk-tb-item">
+                                                                <td class="nk-tb-col">
+                                                                    <div class="user-card">
+                                                                        <div class="user-avatar bg-dim-primary d-none d-sm-flex">
+                                                                            <span><?php echo substr($payments->user_name, 0, 2); ?></span>
+                                                                        </div>
+                                                                        <div class="user-info">
+                                                                            <span class="tb-lead"><?php echo $payments->user_name; ?></span>
+                                                                            <span class=""><?php echo $payments->user_number; ?></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td class="nk-tb-col tb-col-md">
+                                                                    <span>Meal: <?php echo $payments->meal_name; ?></span><br>
+                                                                    <span>Qty: <?php echo $payments->order_quantity; ?></span><br>
+                                                                    <span>Date: <?php echo date('d M Y g:ia', strtotime($payments->order_date_posted)); ?></span>
+                                                                </td>
+                                                                <td class="nk-tb-col tb-col-md">
+                                                                    <span>Trxn ID: <?php echo $payments->payment_confirmation_code; ?></span><br>
+                                                                    <span>Amount: Ksh <?php echo $payments->payment_amount; ?></span><br>
+                                                                    <span>Payment Means: <?php echo $payments->payment_means; ?></span><br>
+                                                                    <span>Date Paid: <?php echo date('d M Y g:ia', strtotime($payments->payment_date_posted)); ?></span>
+                                                                </td>
+
+                                                            </tr>
+                                                        <?php } ?>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div><!-- .nk-block -->
