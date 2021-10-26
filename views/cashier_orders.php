@@ -368,6 +368,19 @@ require_once('../partials/head.php');
                                                                                                 </div>
                                                                                             </li>
                                                                                         </ul>
+                                                                                    <?php } else { ?>
+                                                                                        <ul class="nk-tb-actions gx-1">
+                                                                                            <li>
+                                                                                                <div class="drodown">
+                                                                                                    <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                                                                        <ul class="link-list-opt no-bdr">
+                                                                                                            <li><a href="cashier_print_receipt?order=<?php echo $orders->order_id; ?>"><em class="icon ni ni-printer"></em><span>Print Receipt</span></a></li>
+                                                                                                        </ul>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </li>
+                                                                                        </ul>
                                                                                     <?php } ?>
                                                                                 </td>
                                                                                 <!-- Edit Profile Modal -->

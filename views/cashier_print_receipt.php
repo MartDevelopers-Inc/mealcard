@@ -75,6 +75,7 @@ require_once('../partials/head.php');
             <?php
             require_once('../partials/cashier_header.php');
             $view = $_GET['view'];
+            $order = $_GET['order'];
             $ret =
                 "SELECT * FROM payments p
             INNER JOIN orders o ON o.order_id = p.payment_order_id
@@ -82,7 +83,7 @@ require_once('../partials/head.php');
             INNER JOIN meal_categories mc ON mc.category_id = m.meal_category_id
             INNER JOIN users s ON s.user_id  = o.order_user_id
             INNER JOIN system_settings
-            WHERE p.payment_id = '$view'";
+            WHERE p.payment_id = '$view' OR p.payment_order_id = '$order'";
             $stmt = $mysqli->prepare($ret);
             $stmt->execute(); //ok
             $res = $stmt->get_result();
