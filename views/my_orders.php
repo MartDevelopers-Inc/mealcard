@@ -264,6 +264,7 @@ require_once('../partials/head.php');
                                                                                     <div class="dropdown-menu dropdown-menu-right">
                                                                                         <ul class="link-list-opt no-bdr">
                                                                                             <li><a data-toggle="modal" href="#update-<?php echo $orders->order_id; ?>"><em class="icon ni ni-edit"></em><span>Update Order</span></a></li>
+                                                                                            <li><a class="text-danger" data-toggle="modal" href="#delete-<?php echo $orders->order_id; ?>"><em class="icon ni ni-trash"></em><span>Delete Order</span></a></li>
                                                                                         </ul>
                                                                                     </div>
                                                                                 </div>
