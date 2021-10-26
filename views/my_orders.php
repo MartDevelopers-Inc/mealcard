@@ -100,6 +100,20 @@ if (isset($_POST['update_order'])) {
     }
 }
 
+/* Delete My order */
+if (isset($_GET['delete'])) {
+    $order_id = $_GET['delete'];
+    /* Persist this delete */
+    $del = "DELETE FROM orders WHERE order_id = ?";
+    $stmt = $mysqli->prepare($del);
+    $rc = $stmt->bind_param('s', $order_id);
+    if ($stmt) {
+        $success = "Order Deleted" && header('refresh:1; my_orders');
+    } else {
+        $err = "Failed!, Please Try Again Later";
+    }
+}
+
 require_once('../partials/head.php');
 ?>
 
