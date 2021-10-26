@@ -95,8 +95,11 @@ require_once('../partials/head.php');
                                                 <h2 class="nk-block-title fw-normal">My Payment Records</h2>
                                             </div>
                                         </div>
+                                        <div class="text-right">
+                                            <a href="my_payment_records"  class="btn btn-white btn-outline-primary"><em class="icon ni ni-printer"></em><span>Print Payment Records</span></a>
+                                            <br>
+                                        </div>
                                     </div><!-- .nk-block-head -->
-
                                     <div class="nk-block">
                                         <div class="card card-bordered sp-plan">
                                             <div class="card-body">
