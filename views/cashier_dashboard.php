@@ -74,196 +74,183 @@ require_once('../partials/head.php');
             <!-- main header @s -->
             <?php
             require_once('../partials/cashier_header.php');
-            $user_id = $_SESSION['user_id'];
-            $ret = "SELECT * FROM  users WHERE user_id = '$user_id'  ";
-            $stmt = $mysqli->prepare($ret);
-            $stmt->execute(); //ok
-            $res = $stmt->get_result();
-            while ($cashier = $res->fetch_object()) {
             ?>
-                <!-- main header @e -->
-                <!-- content @s -->
-                <div class="nk-content nk-content-lg nk-content-fluid">
-                    <div class="container-xl wide-lg">
-                        <div class="nk-content-inner">
-                            <div class="nk-content-body">
-                                <div class="nk-block-head">
-                                    <div class="nk-block-between-md g-3">
-                                        <div class="nk-block-head-content">
-                                            <div class="nk-block-head-sub"><span>Welcome Back!</span></div>
-                                            <div class="align-center flex-wrap pb-2 gx-4 gy-3">
-                                                <div>
-                                                    <h2 class="nk-block-title fw-normal"><?php echo $cashier->user_name; ?></h2>
-                                                </div>
-                                                <div>
-                                                </div>
-                                                <div class="text-right">
-                                                    <p>At a glance summary of meal sales, orders and payments on : <?php echo date('d M Y'); ?></p>
-                                                </div>
-                                            </div><!-- .nk-block-head-content -->
-                                        </div><!-- .nk-block-between -->
-                                    </div><!-- .nk-block-head -->
-                                    <div class="nk-block">
-                                        <div class="row gy-gs">
-                                            <div class="col-md-6 col-lg-4">
-                                                <div class="nk-wg-card is-dark card card-bordered">
-                                                    <div class="card-inner">
-                                                        <div class="nk-iv-wg2">
-                                                            <div class="nk-iv-wg2-title">
-                                                                <h6 class="title">Total Income</h6>
-                                                            </div>
-                                                            <div class="nk-iv-wg2-text">
-                                                                <div class="nk-iv-wg2-amount"> Ksh <?php echo $overall_income; ?></span>
-                                                                </div>
+            <!-- main header @e -->
+            <!-- content @s -->
+            <div class="nk-content nk-content-lg nk-content-fluid">
+                <div class="container-xl wide-lg">
+                    <div class="nk-content-inner">
+                        <div class="nk-content-body">
+                            <div class="nk-block-head">
+                                <div class="nk-block-between-md g-3">
+                                    <div class="nk-block-head-content">
+                                        <div class="align-center flex-wrap pb-2 gx-4 gy-3">
+                                            <div>
+                                                <h2 class="nk-block-title fw-normal">Cashier Dashboard</h2>
+                                            </div>
+                                        </div><!-- .nk-block-head-content -->
+                                    </div><!-- .nk-block-between -->
+                                </div><!-- .nk-block-head -->
+                                <div class="nk-block">
+                                    <div class="row gy-gs">
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="nk-wg-card is-dark card card-bordered">
+                                                <div class="card-inner">
+                                                    <div class="nk-iv-wg2">
+                                                        <div class="nk-iv-wg2-title">
+                                                            <h6 class="title">Total Income</h6>
+                                                        </div>
+                                                        <div class="nk-iv-wg2-text">
+                                                            <div class="nk-iv-wg2-amount"> Ksh <?php echo $overall_income; ?></span>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div><!-- .card -->
-                                            </div><!-- .col -->
-                                            <div class="col-md-6 col-lg-4">
-                                                <div class="nk-wg-card is-s1 card card-bordered">
-                                                    <div class="card-inner">
-                                                        <div class="nk-iv-wg2">
-                                                            <div class="nk-iv-wg2-title">
-                                                                <h6 class="title">Pending Payment Orders </h6>
-                                                            </div>
-                                                            <div class="nk-iv-wg2-text">
-                                                                <div class="nk-iv-wg2-amount"> <?php echo $pending_orders; ?> <span class="change up"><span class="sign"></span>2.8%</span>
-                                                                </div>
+                                                </div>
+                                            </div><!-- .card -->
+                                        </div><!-- .col -->
+                                        <div class="col-md-6 col-lg-4">
+                                            <div class="nk-wg-card is-s1 card card-bordered">
+                                                <div class="card-inner">
+                                                    <div class="nk-iv-wg2">
+                                                        <div class="nk-iv-wg2-title">
+                                                            <h6 class="title">Pending Payment Orders </h6>
+                                                        </div>
+                                                        <div class="nk-iv-wg2-text">
+                                                            <div class="nk-iv-wg2-amount"> <?php echo $pending_orders; ?> </span>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div><!-- .card -->
-                                            </div><!-- .col -->
-                                            <div class="col-md-12 col-lg-4">
-                                                <div class="nk-wg-card is-s3 card card-bordered">
-                                                    <div class="card-inner">
-                                                        <div class="nk-iv-wg2">
-                                                            <div class="nk-iv-wg2-title">
-                                                                <h6 class="title">Paid Orders </h6>
-                                                            </div>
-                                                            <div class="nk-iv-wg2-text">
-                                                                <div class="nk-iv-wg2-amount"> <?php echo $paid_orders; ?> <span class="change down"><span class="sign"></span>1.4%</span>
-                                                                </div>
+                                                </div>
+                                            </div><!-- .card -->
+                                        </div><!-- .col -->
+                                        <div class="col-md-12 col-lg-4">
+                                            <div class="nk-wg-card is-s3 card card-bordered">
+                                                <div class="card-inner">
+                                                    <div class="nk-iv-wg2">
+                                                        <div class="nk-iv-wg2-title">
+                                                            <h6 class="title">Paid Orders </h6>
+                                                        </div>
+                                                        <div class="nk-iv-wg2-text">
+                                                            <div class="nk-iv-wg2-amount"> <?php echo $paid_orders; ?></span>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div><!-- .card -->
-                                            </div><!-- .col -->
-                                        </div><!-- .row -->
-                                    </div><!-- .nk-block -->
-                                    <div class="nk-block">
-                                        <div class="row gy-gs">
-                                            <div class="col-md-6 col-lg-6">
-                                                <div class="nk-wg-card card card-bordered h-100">
-                                                    <div class="card-inner h-100">
-                                                        <div class="nk-iv-wg2">
-                                                            <div class="nk-iv-wg2-title">
-                                                                <h6 class="title">Recent Orders </h6>
-                                                            </div>
-                                                            <div class="nk-iv-wg2-text">
-                                                                <div class="nk-iv-wg2-amount ui-v2"><?php echo $orders; ?></div>
+                                                </div>
+                                            </div><!-- .card -->
+                                        </div><!-- .col -->
+                                    </div><!-- .row -->
+                                </div><!-- .nk-block -->
+                                <div class="nk-block">
+                                    <div class="row gy-gs">
+                                        <div class="col-md-6 col-lg-6">
+                                            <div class="nk-wg-card card card-bordered h-100">
+                                                <div class="card-inner h-100">
+                                                    <div class="nk-iv-wg2">
+                                                        <div class="nk-iv-wg2-title">
+                                                            <h6 class="title">Recent Orders </h6>
+                                                        </div>
+                                                        <div class="nk-iv-wg2-text">
+                                                            <div class="nk-iv-wg2-amount ui-v2"><?php echo $orders; ?></div>
 
-                                                                <ul class="nk-activity">
-                                                                    <?php
-                                                                    /* Load Orders Logs */
-                                                                    $ret = "SELECT * FROM  orders o
+                                                            <ul class="nk-activity">
+                                                                <?php
+                                                                /* Load Orders Logs */
+                                                                $ret = "SELECT * FROM  orders o
                                                                     INNER JOIN users s ON s.user_id = o.order_user_id
                                                                     INNER JOIN meals m ON m.meal_id = o.order_meal_id 
                                                                     ORDER BY o.order_date_posted DESC
                                                                     LIMIT 15
                                                                     ";
-                                                                    $stmt = $mysqli->prepare($ret);
-                                                                    $stmt->execute(); //ok
-                                                                    $res = $stmt->get_result();
-                                                                    while ($orders = $res->fetch_object()) {
+                                                                $stmt = $mysqli->prepare($ret);
+                                                                $stmt->execute(); //ok
+                                                                $res = $stmt->get_result();
+                                                                while ($orders = $res->fetch_object()) {
 
-                                                                    ?>
-                                                                        <li class="nk-activity-item">
-                                                                            <div class="nk-activity-media user-avatar bg-success">
-                                                                                <?php echo substr($orders->user_name, 0, 2); ?>
+                                                                ?>
+                                                                    <li class="nk-activity-item">
+                                                                        <div class="nk-activity-media user-avatar bg-success">
+                                                                            <?php echo substr($orders->user_name, 0, 2); ?>
+                                                                        </div>
+                                                                        <div class="nk-activity-data">
+                                                                            <div class="label">
+                                                                                <?php echo $orders->user_name; ?> Has Ordered <?php echo $orders->meal_name . '. Quantity: ' . $orders->order_quantity; ?>
                                                                             </div>
-                                                                            <div class="nk-activity-data">
-                                                                                <div class="label">
-                                                                                    <?php echo $orders->user_name; ?> Has Ordered <?php echo $orders->meal_name . '. Quantity: ' . $orders->order_quantity; ?>
-                                                                                </div>
-                                                                                <span class="time"><?php echo date('d M Y, g:ia', strtotime($orders->order_date_posted)); ?></span>
-                                                                            </div>
-                                                                        </li>
-                                                                    <?php } ?>
-                                                                </ul>
-                                                            </div>
-                                                            <div class="nk-iv-wg2-cta">
-                                                                <a href="cashier_payments" class="btn btn-primary">View All</a>
-                                                            </div>
+                                                                            <span class="time"><?php echo date('d M Y, g:ia', strtotime($orders->order_date_posted)); ?></span>
+                                                                        </div>
+                                                                    </li>
+                                                                <?php } ?>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="nk-iv-wg2-cta">
+                                                            <a href="cashier_payments" class="btn btn-primary">View All</a>
                                                         </div>
                                                     </div>
-                                                </div><!-- .card -->
-                                            </div><!-- .col -->
-                                            <div class="col-md-6 col-lg-6">
-                                                <div class="nk-wg-card card card-bordered h-100">
-                                                    <div class="card-inner h-100">
-                                                        <div class="nk-iv-wg2">
-                                                            <div class="nk-iv-wg2-title">
-                                                                <h6 class="title">Orders Payments</h6>
-                                                            </div>
-                                                            <div class="nk-iv-wg2-text">
-                                                                <div class="nk-iv-wg2-amount ui-v2">Ksh <?php echo $overall_income; ?></div>
-                                                                <div class="timeline">
-                                                                    <ul class="timeline-list">
-                                                                        <?php
-                                                                        $ret = "SELECT * FROM  payments p
+                                                </div>
+                                            </div><!-- .card -->
+                                        </div><!-- .col -->
+                                        <div class="col-md-6 col-lg-6">
+                                            <div class="nk-wg-card card card-bordered h-100">
+                                                <div class="card-inner h-100">
+                                                    <div class="nk-iv-wg2">
+                                                        <div class="nk-iv-wg2-title">
+                                                            <h6 class="title">Orders Payments</h6>
+                                                        </div>
+                                                        <div class="nk-iv-wg2-text">
+                                                            <div class="nk-iv-wg2-amount ui-v2">Ksh <?php echo $overall_income; ?></div>
+                                                            <div class="timeline">
+                                                                <ul class="timeline-list">
+                                                                    <?php
+                                                                    $ret = "SELECT * FROM  payments p
                                                                         INNER JOIN orders o ON o.order_id  = p.payment_order_id
                                                                         INNER JOIN users s ON s.user_id = o.order_user_id
                                                                         INNER JOIN meals m ON m.meal_id = o.order_meal_id 
                                                                         ORDER BY p.payment_date_posted DESC
                                                                         LIMIT 15
                                                                         ";
-                                                                        $stmt = $mysqli->prepare($ret);
-                                                                        $stmt->execute(); //ok
-                                                                        $res = $stmt->get_result();
-                                                                        while ($payments = $res->fetch_object()) {
+                                                                    $stmt = $mysqli->prepare($ret);
+                                                                    $stmt->execute(); //ok
+                                                                    $res = $stmt->get_result();
+                                                                    while ($payments = $res->fetch_object()) {
 
-                                                                        ?>
-                                                                            <li class="timeline-item">
-                                                                                <div class="timeline-status bg-primary is-outline"></div>
-                                                                                <div class="timeline-date"><?php echo date('d M Y g:ia', strtotime($payments->payment_date_posted)); ?></div>
-                                                                                <div class="timeline-data">
-                                                                                    <h6 class="timeline-title"><?php echo $payments->payment_confirmation_code; ?> Confirmed</h6>
-                                                                                    <div class="timeline-des">
-                                                                                        <p>
-                                                                                            <?php echo $payments->user_name . '' . $user->user_number; ?> Paid Ksh <?php echo $payments->payment_amount; ?><br>
-                                                                                            Using <?php echo $payments->payment_means; ?> For <?php echo $payments->meal_name; ?>
-                                                                                        </p>
-                                                                                        <span class="time"><?php echo date('g:ia', strtotime($payments->payment_date_posted)); ?></span>
-                                                                                    </div>
+                                                                    ?>
+                                                                        <li class="timeline-item">
+                                                                            <div class="timeline-status bg-primary is-outline"></div>
+                                                                            <div class="timeline-date"><?php echo date('d M Y g:ia', strtotime($payments->payment_date_posted)); ?></div>
+                                                                            <div class="timeline-data">
+                                                                                <h6 class="timeline-title"><?php echo $payments->payment_confirmation_code; ?> Confirmed</h6>
+                                                                                <div class="timeline-des">
+                                                                                    <p>
+                                                                                        <?php echo $payments->user_name . '' . $user->user_number; ?> Paid Ksh <?php echo $payments->payment_amount; ?><br>
+                                                                                        Using <?php echo $payments->payment_means; ?> For <?php echo $payments->meal_name; ?>
+                                                                                    </p>
+                                                                                    <span class="time"><?php echo date('g:ia', strtotime($payments->payment_date_posted)); ?></span>
                                                                                 </div>
-                                                                            </li>
-                                                                        <?php } ?>
+                                                                            </div>
+                                                                        </li>
+                                                                    <?php } ?>
 
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                            <div class="nk-iv-wg2-cta">
-                                                                <a href="cashier_orders" class="btn btn-primary">View All</a>
+                                                                </ul>
                                                             </div>
                                                         </div>
+                                                        <div class="nk-iv-wg2-cta">
+                                                            <a href="cashier_orders" class="btn btn-primary">View All</a>
+                                                        </div>
                                                     </div>
-                                                </div><!-- .card -->
-                                            </div><!-- .col -->
-                                        </div><!-- .row -->
-                                    </div><!-- .nk-block -->
-                                </div>
+                                                </div>
+                                            </div><!-- .card -->
+                                        </div><!-- .col -->
+                                    </div><!-- .row -->
+                                </div><!-- .nk-block -->
                             </div>
                         </div>
                     </div>
-                <?php } ?>
+                </div>
                 <!-- content @e -->
                 <!-- footer @s -->
                 <?php require_once('../partials/cashier_footer.php'); ?>
                 <!-- footer @e -->
-                </div>
-                <!-- wrap @e -->
+            </div>
+            <!-- wrap @e -->
         </div>
         <!-- app-root @e -->
         <!-- JavaScript -->
