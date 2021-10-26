@@ -100,20 +100,6 @@ if (isset($_POST['update_order'])) {
     }
 }
 
-/* Delete My order */
-if (isset($_GET['delete'])) {
-    $order_id = $_GET['delete'];
-    /* Persist this delete */
-    $del = "DELETE FROM orders WHERE order_id = 'd737d39bd3ff80ed61a2a6b1923d7a9f2b59c36ea5'";
-    $stmt = $mysqli->prepare($del);
-    //$rc = $stmt->bind_param('s', $order_id);
-    if ($stmt) {
-        $success = "Order Deleted" && header('refresh:1; my_orders');
-    } else {
-        $err = "Failed!, Please Try Again Later";
-    }
-}
-
 require_once('../partials/head.php');
 ?>
 
@@ -264,7 +250,6 @@ require_once('../partials/head.php');
                                                                                     <div class="dropdown-menu dropdown-menu-right">
                                                                                         <ul class="link-list-opt no-bdr">
                                                                                             <li><a data-toggle="modal" href="#update-<?php echo $orders->order_id; ?>"><em class="icon ni ni-edit"></em><span>Update Order</span></a></li>
-                                                                                            <li><a data-toggle="modal" href="#delete-<?php echo $orders->order_id; ?>"><em class="icon ni ni-ban"></em><span>Cancel Order</span></a></li>
                                                                                         </ul>
                                                                                     </div>
                                                                                 </div>
@@ -303,27 +288,6 @@ require_once('../partials/head.php');
                                                                 </div>
                                                                 <!-- End Modal -->
 
-                                                                <!-- Delete Modal -->
-                                                                <div class="modal fade" id="delete-<?php echo $orders->order_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <h5 class="modal-title" id="exampleModalLabel">CONFIRM ORDER CANCELLATION</h5>
-                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                    <span aria-hidden="true">&times;</span>
-                                                                                </button>
-                                                                            </div>
-                                                                            <div class="modal-body text-center text-danger">
-                                                                                <h4>Cancel This Order?</h4>
-                                                                                <br>
-                                                                                <p>Hey there You About To Cancel This Order, This action is irrevisble.</p>
-                                                                                <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
-                                                                                <a href="my_orders?delete=<?php echo $orders->order_id; ?>" class="text-center btn btn-danger"> Cancel </a>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <!-- End Modal -->
                                                             </tr>
                                                         <?php } ?>
                                                     </tbody>
