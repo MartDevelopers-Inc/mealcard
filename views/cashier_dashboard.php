@@ -84,6 +84,13 @@ require_once('../partials/head.php');
                             <div class="nk-block-head">
                                 <div class="nk-block-between-md g-3">
                                     <div class="nk-block-head-content">
+                                        <nav>
+                                            <ul class="breadcrumb breadcrumb-arrow">
+                                                <li class="breadcrumb-item"><a href="cashier_dashboard">Home</a></li>
+                                                <li class="breadcrumb-item active">Dashboard</li>
+                                            </ul>
+                                        </nav>
+                                        <br>
                                         <div class="align-center flex-wrap pb-2 gx-4 gy-3">
                                             <div>
                                                 <h2 class="nk-block-title fw-normal">Cashier Dashboard</h2>

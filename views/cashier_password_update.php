@@ -106,7 +106,6 @@ require_once('../partials/head.php');
             $res = $stmt->get_result();
             while ($cashier = $res->fetch_object()) {
             ?>
-                <!-- main header @e -->
                 <!-- content @s -->
                 <div class="nk-content nk-content-lg nk-content-fluid">
                     <div class="container-xl wide-lg">
