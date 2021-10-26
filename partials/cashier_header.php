@@ -203,7 +203,6 @@ while ($cashier = $res->fetch_object()) {
                 </div><!-- .nk-header-menu -->
                 <div class="nk-header-tools">
                     <ul class="nk-quick-nav">
-                        <li class="hide-mb-sm"><a href="logout" class="nk-quick-nav-icon"><em class="icon ni ni-signout"></em></a></li>
                         <li class="dropdown user-dropdown order-sm-first">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <div class="user-toggle">
@@ -231,7 +230,7 @@ while ($cashier = $res->fetch_object()) {
 
                                 <div class="dropdown-inner">
                                     <ul class="link-list">
-                                        <li><a href="cashier_profile"><em class="icon ni ni-lock"></em><span>Change Password</span></a></li>
+                                        <li><a href="cashier_profile"><em class="icon ni ni-user"></em><span>Profile</span></a></li>
                                     </ul>
                                 </div>
                                 <div class="dropdown-inner">
