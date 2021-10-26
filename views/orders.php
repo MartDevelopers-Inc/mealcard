@@ -224,7 +224,7 @@ require_once('../partials/head.php');
                                             <div class="modal-dialog  modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title">Register New Meal Card</h4>
+                                                        <h4 class="modal-title">Register New Meal Order</h4>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
@@ -484,7 +484,7 @@ require_once('../partials/head.php');
                                                                                                             <input type="hidden" required name="card_id" value="<?php echo $orders->card_id; ?>" class="form-control">
                                                                                                         </div>
                                                                                                         <div class="form-group col-md-6">
-                                                                                                            <label for="">Payment Amount</label>
+                                                                                                            <label for="">Payment Amount (Ksh)</label>
                                                                                                             <input type="text" required name="payment_amount" value="<?php echo $total_pay; ?>" readonly class="form-control">
                                                                                                         </div>
                                                                                                         <div class="form-group col-md-6">

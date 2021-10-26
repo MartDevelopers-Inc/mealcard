@@ -103,7 +103,7 @@ require_once('../partials/head.php');
                                                 <ul class="breadcrumb breadcrumb-arrow">
                                                     <li class="breadcrumb-item"><a href="cashier_dashboard">Home</a></li>
                                                     <li class="breadcrumb-item"><a href="cashier_dashboard">Dashboard</a></li>
-                                                    <li class="breadcrumb-item"><a href="cashier_meals">Meal</a></li>
+                                                    <li class="breadcrumb-item"><a href="cashier_meals">Meals</a></li>
                                                     <li class="breadcrumb-item active"><?php echo $meal->meal_name; ?></li>
                                                 </ul>
                                             </nav>

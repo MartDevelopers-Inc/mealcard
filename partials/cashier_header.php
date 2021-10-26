@@ -94,6 +94,11 @@ while ($cashier = $res->fetch_object()) {
                     <!-- Menu -->
                     <ul class="nk-menu nk-menu-main">
                         <li class="nk-menu-item">
+                            <a href="cashier_dashboard" class="nk-menu-link">
+                                <span class="nk-menu-text">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nk-menu-item">
                             <a href="cashier_meals" class="nk-menu-link">
                                 <span class="nk-menu-text">Meals</span>
                             </a>
