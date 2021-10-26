@@ -446,7 +446,7 @@ require_once('../partials/head.php');
                                                                                             * This Library is used here under demo purposes
                                                                                             * This Client Has Not PURCHASED THE FULL SYSTEM LICENSE
                                                                                             * 
-                                                                                             */
+                                                                                            */
                                                                                             $payment_details = "Mercant:" . $orders->sys_name . " Payment Amount: Ksh" . $total_pay;
                                                                                             $targetPath = "../public/backend_assets/qr_codes/";
                                                                                             if (!is_dir($targetPath)) {

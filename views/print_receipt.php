@@ -123,8 +123,13 @@ require_once('../partials/head.php');
                                                 <div class="invoice-wrap" id="Print_Receipt">
                                                     <div class="invoice-brand text-center">
                                                         <img src="../public/backend_assets/images/logo.png" alt="">
-                                                        <br>
-                                                        <h3 class="title">Meal Order Payment Receipt</h3>
+                                                        <h5>
+                                                            <?php echo $payments->sys_name; ?><br>
+                                                            <?php echo $payments->sys_paypal_email; ?> <br>
+                                                            <?php echo $payments->sys_contacts; ?> <br>
+                                                        </h5>
+                                                        <hr>
+                                                        <h5 class="title">Meal Order Payment Receipt</h5>
                                                     </div>
                                                     <div class="invoice-head">
                                                         <div class="invoice-contact">
@@ -138,9 +143,9 @@ require_once('../partials/head.php');
                                                         </div>
                                                         <div class="invoice-desc">
                                                             <ul class="list-plain">
-                                                                <li class="invoice-id"><span>Receipt ID</span>:<span><?php echo $a . $b; ?></span></li>
+                                                                <li class="invoice-id"><span>Receipt #</span>:<span><?php echo $a . $b; ?></span></li>
                                                                 <li class="invoice-date"><span>Date</span>:<span><?php echo date('d, M Y'); ?></span></li>
-                                                                <li class="invoice-id"><span>TXN ID </span>:<span><?php echo $payments->payment_confirmation_code; ?></span></li>
+                                                                <li class="invoice-id"><span>TXN # </span>:<span><?php echo $payments->payment_confirmation_code; ?></span></li>
                                                             </ul>
                                                         </div>
                                                     </div><!-- .invoice-head -->
