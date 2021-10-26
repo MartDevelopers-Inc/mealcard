@@ -189,7 +189,7 @@ require_once('../partials/head.php');
                                                             </ul>
                                                         </div>
                                                         <div class="nk-iv-wg2-cta">
-                                                            <a href="cashier_payments" class="btn btn-primary">View All</a>
+                                                            <a href="cashier_orders" class="btn btn-primary">View All</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -240,7 +240,7 @@ require_once('../partials/head.php');
                                                             </div>
                                                         </div>
                                                         <div class="nk-iv-wg2-cta">
-                                                            <a href="cashier_orders" class="btn btn-primary">View All</a>
+                                                            <a href="cashier_payments" class="btn btn-primary">View All</a>
                                                         </div>
                                                     </div>
                                                 </div>
