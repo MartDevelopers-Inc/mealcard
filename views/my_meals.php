@@ -62,6 +62,7 @@
 session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
+require_once('../config/codeGen.php');
 checklogin();
 /* Order */
 /* Add Order */
@@ -191,7 +192,7 @@ require_once('../partials/head.php');
                                                                                             <div class="form-group col-md-12">
                                                                                                 <label for="">Order Quantity</label>
                                                                                                 <input type="text" required value="1" name="order_quantity" class="form-control">
-                                                                                                <input type="hidden" value="<?php echo $meal->meal_id; ?>" required name="order_meal_id" class="form-control">
+                                                                                                <input type="hidden" value="<?php echo $meals->meal_id; ?>" required name="order_meal_id" class="form-control">
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
