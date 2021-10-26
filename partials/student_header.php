@@ -101,7 +101,7 @@ while ($student = $res->fetch_object()) {
                                 <div class="dropdown-inner">
                                     <ul class="link-list">
                                         <li><a href="my_profile"><em class="icon ni ni-user-alt"></em><span>View Profile</span></a></li>
-                                        <li><a href="my_account_settings"><em class="icon ni ni-setting-alt"></em><span>Account Setting</span></a></li>
+                                        <li><a href="my_password_settings"><em class="icon ni ni-setting-alt"></em><span>Account Setting</span></a></li>
                                     </ul>
                                 </div>
                                 <div class="dropdown-inner">
