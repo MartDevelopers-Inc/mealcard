@@ -67,7 +67,7 @@ checklogin();
 /* Add Order */
 if (isset($_POST['add_order'])) {
     $order_id = $sys_gen_id;
-    $order_user_id = $_POST['order_user_id'];
+    $order_user_id = $_SESSION['user_id'];
     $order_meal_id = $_POST['order_meal_id'];
     $order_quantity = $_POST['order_quantity'];
 
@@ -77,7 +77,7 @@ if (isset($_POST['add_order'])) {
     $rc = $stmt->bind_param('ssss', $order_id, $order_user_id, $order_meal_id, $order_quantity);
     $stmt->execute();
     if ($stmt) {
-        $success = "Order Posted, Proceed To Pay";
+        $success = "Order Posted, Pay At Cafeteria Checkout Terminal";
     } else {
         $err = "Failed!, Please Try Again Later";
     }
@@ -100,18 +100,18 @@ if (isset($_POST['update_order'])) {
     }
 }
 
-/* Delete Order */
+
 if (isset($_GET['delete'])) {
     $delete = $_GET['delete'];
-    $deletesql  = "DELETE FROM orders WHERE order_id = ?";
-    $stmt = $mysqli->prepare($deletesql);
-    $rc = $stmt->bind_param('s', $delete);
+    $adn = "DELETE FROM  orders WHERE order_id = ? ";
+    $stmt = $mysqli->prepare($adn);
+    $stmt->bind_param('s', $delete);
     $stmt->execute();
-
+    $stmt->close();
     if ($stmt) {
-        $success = "Deleted" && header("refresh:1, my_orders");
+        $success = "Deleted" && header("refresh:1; url=my_orders");
     } else {
-        $err = "Failed!, Please Try Again Later";
+        $info = "Please Try Again Or Try Later";
     }
 }
 
@@ -151,10 +151,184 @@ require_once('../partials/head.php');
                                         <a href="#add_modal" data-toggle="modal" class="btn btn-white btn-outline-light"><em class="icon ni ni-plus"></em><span>Add Meal Order</span></a>
                                     </div>
                                     <br>
+                                    <div class="modal fade" id="add_modal">
+                                        <div class="modal-dialog  modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Select A Meal And Quantity To Order</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="post" enctype="multipart/form-data" role="form">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="">Meal Name</label>
+                                                                    <select name="order_meal_id" class="form-select form-control form-control-lg" data-search="on">
+                                                                        <?php
+                                                                        $ret = "SELECT * FROM meals
+                                                                            ORDER BY meal_name ASC";
+                                                                        $stmt = $mysqli->prepare($ret);
+                                                                        $stmt->execute(); //ok
+                                                                        $res = $stmt->get_result();
+                                                                        while ($meal = $res->fetch_object()) {
+                                                                        ?>
+                                                                            <option value="<?php echo $meal->meal_id; ?>"><?php echo $meal->meal_name; ?></option>
+                                                                        <?php } ?>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="">Order Quantity</label>
+                                                                    <input type="text" required value="1" name="order_quantity" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="text-right">
+                                                            <button type="submit" name="add_order" class="btn btn-primary">Submit</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="nk-block">
                                         <div class="card card-bordered sp-plan">
                                             <div class="card-body">
+                                                <table class="datatable-init nk-tb-list nk-tb-ulist" data-auto-responsive="false">
+                                                    <thead>
+                                                        <tr class="nk-tb-item nk-tb-head">
+                                                            <th class="nk-tb-col tb-col-mb"><span class="sub-text">Meal Ordered</span></th>
+                                                            <th class="nk-tb-col tb-col-md"><span class="sub-text">Quantity</span></th>
+                                                            <th class="nk-tb-col tb-col-md"><span class="sub-text">Amount</span></th>
+                                                            <th class="nk-tb-col tb-col-md"><span class="sub-text">Date Ordered</span></th>
+                                                            <th class="nk-tb-col tb-col-md"><span class="sub-text">Payment Status</span></th>
+                                                            <th class="nk-tb-col nk-tb-col-tools text-right">
+                                                                <span class="sub-text">Action</span>
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php
+                                                        $user_id = $_SESSION['user_id'];
+                                                        /* Pop This Partial With All Meal Cards */
+                                                        $ret = "SELECT * FROM  orders o
+                                                        INNER JOIN users s ON s.user_id = o.order_user_id
+                                                        INNER JOIN meals m ON m.meal_id = o.order_meal_id 
+                                                        INNER JOIN meal_categories mc ON mc.category_id = m.meal_category_id
+                                                        INNER JOIN meal_cards mcr ON  mcr.card_owner_id = o.order_user_id
+                                                        WHERE s.user_id = '$user_id' AND o.order_status !='Cancelled'
+                                                        ORDER BY o.order_date_posted DESC
+                                                        ";
+                                                        $stmt = $mysqli->prepare($ret);
+                                                        $stmt->execute(); //ok
+                                                        $res = $stmt->get_result();
+                                                        while ($orders = $res->fetch_object()) {
+                                                            /* Total Payment */
+                                                            $total_pay = ($orders->order_quantity) * ($orders->meal_price);
+                                                        ?>
+                                                            <tr class="nk-tb-item">
+                                                                <td class="nk-tb-col tb-col-md">
+                                                                    <span><?php echo $orders->meal_name; ?></span><br>
+                                                                    <span>Category: <?php echo $orders->category_name; ?></span>
+                                                                </td>
+                                                                <td class="nk-tb-col tb-col-md">
+                                                                    <span><?php echo $orders->order_quantity; ?></span>
+                                                                </td>
+                                                                <td class="nk-tb-col tb-col-md">
+                                                                    <span>Ksh <?php echo $total_pay; ?></span>
+                                                                </td>
+                                                                <td class="nk-tb-col tb-col-md">
+                                                                    <span><?php echo date('d M Y g:ia', strtotime($orders->order_date_posted)); ?></span>
+                                                                </td>
+                                                                <td class="nk-tb-col tb-col-md">
+                                                                    <span>
+                                                                        <?php
+                                                                        if ($orders->order_payment_status == 'Paid') {
+                                                                            echo '<span class="text-success">' . $orders->order_payment_status . '</span>';
+                                                                        } else {
+                                                                            echo '<span class="text-danger">' . $orders->order_payment_status . '</span>';
+                                                                        }
+                                                                        ?>
+                                                                    </span>
+                                                                </td>
+                                                                <td class="nk-tb-col nk-tb-col-tools">
+                                                                    <?php
+                                                                    /* Only Manage Unpaid Orders  */
+                                                                    if ($orders->order_payment_status != 'Paid') {
+                                                                    ?>
+                                                                        <ul class="nk-tb-actions gx-1">
+                                                                            <li>
+                                                                                <div class="drodown">
+                                                                                    <a href="#" class="dropdown-toggle btn btn-icon btn-trigger" data-toggle="dropdown"><em class="icon ni ni-more-h"></em></a>
+                                                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                                                        <ul class="link-list-opt no-bdr">
+                                                                                            <li><a data-toggle="modal" href="#update-<?php echo $orders->order_id; ?>"><em class="icon ni ni-edit"></em><span>Update Order</span></a></li>
+                                                                                            <li><a data-toggle="modal" href="#delete-<?php echo $orders->order_id; ?>"><em class="icon ni ni-trash"></em><span>Delete Order</span></a></li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
+                                                                        </ul>
+                                                                    <?php } ?>
+                                                                </td>
+                                                                <!-- Edit Profile Modal -->
+                                                                <div class="modal fade" id="update-<?php echo $orders->order_id; ?>">
+                                                                    <div class="modal-dialog  modal-lg">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h4 class="modal-title">Update <?php echo $orders->user_name; ?> Meal Order Details</h4>
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                    <span aria-hidden="true">&times;</span>
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <form method="post" enctype="multipart/form-data" role="form">
+                                                                                    <div class="card-body">
+                                                                                        <div class="row">
+                                                                                            <div class="form-group col-md-12">
+                                                                                                <label for="">Order Quantity</label>
+                                                                                                <input type="text" required name="order_quantity" value="<?php echo $orders->order_quantity; ?>" class="form-control">
+                                                                                                <input type="hidden" required name="order_id" value="<?php echo $orders->order_id; ?>" class="form-control">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="text-right">
+                                                                                        <button type="submit" name="update_order" class="btn btn-primary">Submit</button>
+                                                                                    </div>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- End Modal -->
 
+                                                                <!-- Delete Modal -->
+                                                                <div class="modal fade" id="delete-<?php echo $orders->order_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title" id="exampleModalLabel">CONFIRM DELETION</h5>
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                    <span aria-hidden="true">&times;</span>
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="modal-body text-center text-danger">
+                                                                                <h4>Delete <?php echo $orders->user_name; ?> Meal Order?</h4>
+                                                                                <br>
+                                                                                <p>Heads Up, You are about to delete this order, This action is irrevisble.</p>
+                                                                                <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
+                                                                                <a href=my_orders?delete=<?php echo $orders->order_id; ?>" class="text-center btn btn-danger"> Delete </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- End Modal -->
+                                                            </tr>
+                                                        <?php } ?>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div><!-- .nk-block -->
