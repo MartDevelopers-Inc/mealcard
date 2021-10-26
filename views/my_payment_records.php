@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Tue Oct 26 2021
+ * Created on Mon Oct 25 2021
  *
  *  MartDevelopers Inc - martdev.info 
  *
@@ -60,7 +60,6 @@
  * TORT OR ANY OTHER THEORY OF LIABILITY, EXCEED THE LICENSE FEE PAID BY YOU, IF ANY.
  */
 
-
 session_start();
 require_once '../config/config.php';
 require_once '../config/checklogin.php';
@@ -78,8 +77,10 @@ $type = pathinfo($path, PATHINFO_EXTENSION);
 $data = file_get_contents($path);
 $logo = 'data:image/' . $type . ';base64,' . base64_encode($data);
 
+$user_id  =$_SESSION['user_id'];
 /* Load System Settings */
-$ret = "SELECT * FROM  system_settings   ";
+$ret = "SELECT * FROM  system_settings 
+INNER JOIN users u WHERE u.user_id = '$user_id'  ";
 $stmt = $mysqli->prepare($ret);
 $stmt->execute(); //ok
 $res = $stmt->get_result();
@@ -169,7 +170,7 @@ while ($sys = $res->fetch_object()) {
         <body style="margin:1px;">
             <div class="footer">
                 <hr>
-                <i>' . $sys->sys_name . ' | ' . $sys->sys_tagine . ' Orders Report Generated On ' . date('d, M Y') . '</i>
+                <i>' . $sys->sys_name . ' | ' . $sys->sys_tagine . '  Order Payment Reports Generated On ' . date('d, M Y') . '</i>
             </div>
 
             <h3 class="list_header" align="center">
@@ -182,52 +183,56 @@ while ($sys = $res->fetch_object()) {
                 </h3>
                 <hr style="width:100%" , color="blue">
                 <hr class="yellow">
-                <h4>Orders Reports</h4>
+                <h4>'.$sys->user_name.' <br> '.$sys->user_number.' <br>  Payment Reports</h4>
             </h3>
 
             <table border="1" cellspacing="0" width="98%" style="font-size:9pt">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Student Details</th>
-                        <th>Meal Details</th>
-                        <th>Order Details</th>
-                        <th>Date Generated</td>
-                    </tr>
-                </thead>
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Student Details</th>
+                <th>Order & Meal Details</th>
+                <th>Payment Details</th>
+            </tr>
+        </thead>
+            ';
+            $ret = 
+            "SELECT * FROM payments p
+            INNER JOIN orders o ON o.order_id = p.payment_order_id
+            INNER JOIN meals m ON m.meal_id = o.order_meal_id
+            INNER JOIN users s ON s.user_id  = o.order_user_id
+            WHERE s.user_id = '$user_id'
+            ";
+            $stmt = $mysqli->prepare($ret);
+            $stmt->execute(); //ok
+            $res = $stmt->get_result();
+            $cnt = 1;
+            while ($payments = $res->fetch_object()) {
+                $html .=
+                    '
+                <tr>
+                    <td>' . $cnt . '</td>
+                    <td width="100%">
+                        Name: ' . $payments->user_name . ' <br>
+                        Adm No: ' . $payments->user_number . '
+                    </td>
+                    <td width="90%">
+                        Meal:  ' . $payments->meal_name . '<br>
+                        Qty:  ' . $payments->order_quantity . '<br>
+                        Date:  ' . date('d M Y g:ia', strtotime($payments->order_date_posted)) . '
+                    </td>
+                    <td width="90%">
+                        Trxn ID: ' . $payments->payment_confirmation_code . '<br>
+                        Amount: Ksh ' . $payments->payment_amount . '<br>
+                        Payment Means:  ' . $payments->payment_means . '<br>
+                        Date Paid: ' . date('d M Y g:ia', strtotime($payments->payment_date_posted)) . '
+                    </td>
+                    
+                </tr>
                 ';
-                $ret = "SELECT * FROM orders o
-                INNER JOIN  meals m ON m.meal_id = o.order_meal_id
-                INNER JOIN users s ON s.user_id = o.order_user_id
-                INNER JOIN  meal_categories mc ON mc.category_id = m.meal_category_id";
-                $stmt = $mysqli->prepare($ret);
-                $stmt->execute(); //ok
-                $res = $stmt->get_result();
-                $cnt = 1;
-                while ($orders = $res->fetch_object()) {
-                    $html .=
-                        '
-                    <tr>
-                        <td>' . $cnt . '</td>
-                        <td width="100%">
-                            Name: ' . $orders->user_name . ' <br>
-                            Adm No: ' . $orders->user_number . '
-                        </td>
-                        <td width="90%">
-                        Name: ' . $orders->meal_name . '<br>
-                        Price: Ksh' . $orders->meal_price . '<br>
-                        Category: ' . $orders->category_name . '
-                        </td>
-                        <td width="90%">
-                            Qty: ' . $orders->order_quantity  . ' <br>
-                            Payment Status : ' . $orders->order_payment_status . '
-                        </td>
-                        <td width="50%">' . date('d M Y g:ia', strtotime($orders->order_date_posted)) . '</td>
-                    </tr>
-                    ';
-                        $cnt = $cnt + 1;
-                    }
-                    $html .= '
+                $cnt = $cnt + 1;
+            }
+            $html .= '
             </table>
         </body>
     </html>';
@@ -237,7 +242,7 @@ while ($sys = $res->fetch_object()) {
     $dompdf->set_paper('A4');
     $dompdf->set_option('isHtml5ParserEnabled', true);
     $dompdf->render();
-    $dompdf->stream(date('d M Y, g:ia') . ' Orders Reports', array("Attachment" => 1));
+    $dompdf->stream($sys->user_name.' Payment Records', array("Attachment" => 1));
     $options = $dompdf->getOptions();
     $options->setDefaultFont('');
     $dompdf->setOptions($options);

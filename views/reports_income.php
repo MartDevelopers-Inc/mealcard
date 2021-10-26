@@ -191,7 +191,6 @@ while ($sys = $res->fetch_object()) {
                 <th>Student Details</th>
                 <th>Order Details</th>
                 <th>Payment Details</th>
-                <th>Card Current Balance (Ksh)</td>
             </tr>
         </thead>
             ';
@@ -218,9 +217,6 @@ while ($sys = $res->fetch_object()) {
                         Meal:  ' . $payments->meal_name . '<br>
                         Qty:  ' . $payments->order_quantity . '<br>
                         Date:  ' . date('d M Y g:ia', strtotime($payments->order_date_posted)) . '
-                    </td>
-                    <td width="90%">
-                        ' . $cards->card_status . '
                     </td>
                     <td width="90%">
                         Trxn ID: ' . $payments->payment_confirmation_code . '<br>

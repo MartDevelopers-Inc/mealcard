@@ -81,14 +81,22 @@ if (isset($_POST['sign_in'])) {
     $_SESSION['user_id'] = $user_id;
     $_SESSION['user_access_level'] = $user_access_level;
 
+    /* Weed Out Dashboards Based On Access Level */
     if ($rs && $_SESSION['user_access_level'] == 'admin') {
+        /* Admin -> dashboard */
         header("location:dashboard");
     } else if ($rs && $_SESSION['user_access_level'] == 'student') {
+        /* Student - > Home */
         header("location:home");
+    } else if ($rs && $_SESSION['user_access_level'] == 'cashier') {
+        /* Cashier -> cashier_dashboard */
+        header("location:cashier_dashboard");
     } else {
+        /* Well Just Throw Error */
         $err = "Access Denied Please Check Your Email Or Password";
     }
 }
+
 require_once('../partials/head.php');
 /* Pop System Settings Here */
 $ret = "SELECT * FROM  system_settings  ";

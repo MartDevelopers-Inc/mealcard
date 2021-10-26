@@ -65,7 +65,9 @@ require_once('../config/config.php');
 require_once('../config/checklogin.php');
 require_once('../config/codeGen.php');
 checklogin();
-
+/* Load Composer Vendor */
+require_once('../vendor/autoload.php');
+$qrcode  = new \Com\Tecnick\Barcode\Barcode();
 /* Add Order */
 if (isset($_POST['add_order'])) {
     $order_id = $sys_gen_id;
@@ -222,7 +224,7 @@ require_once('../partials/head.php');
                                             <div class="modal-dialog  modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title">Register New Meal Card</h4>
+                                                        <h4 class="modal-title">Register New Meal Order</h4>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
@@ -307,6 +309,7 @@ require_once('../partials/head.php');
                                                             INNER JOIN meals m ON m.meal_id = o.order_meal_id 
                                                             INNER JOIN meal_categories mc ON mc.category_id = m.meal_category_id
                                                             INNER JOIN meal_cards mcr ON  mcr.card_owner_id = o.order_user_id
+                                                            INNER JOIN system_settings 
                                                             ORDER BY o.order_date_posted DESC
                                                             ";
                                                             $stmt = $mysqli->prepare($ret);
@@ -426,7 +429,7 @@ require_once('../partials/head.php');
 
                                                                     <!-- Pay Order Modal -->
                                                                     <div class="modal fade" id="pay-<?php echo $orders->order_id; ?>">
-                                                                        <div class="modal-dialog  modal-lg">
+                                                                        <div class="modal-dialog  modal-xl">
                                                                             <div class="modal-content">
                                                                                 <div class="modal-header">
                                                                                     <h4 class="modal-title">Pay <?php echo $orders->user_name; ?> Meal Order</h4>
@@ -435,39 +438,71 @@ require_once('../partials/head.php');
                                                                                     </button>
                                                                                 </div>
                                                                                 <div class="modal-body">
-                                                                                    <form method="post" enctype="multipart/form-data" role="form">
-                                                                                        <div class="card-body">
-                                                                                            <div class="row">
-                                                                                                <div class="form-group col-md-12">
-                                                                                                    <label for="">Payment Confirmation Code</label>
-                                                                                                    <input type="text" required name="payment_confirmation_code" value="<?php echo $sys_gen_paycode; ?>" class="form-control">
-                                                                                                    <input type="hidden" required name="payment_order_id" value="<?php echo $orders->order_id; ?>" class="form-control">
-                                                                                                    <?php
-                                                                                                    /* Compute Existing Balance In Meal Card */
-                                                                                                    $initialbal = $orders->card_loaded_amount;
-                                                                                                    $new_bal  = $initialbal - $total_pay;
-                                                                                                    ?>
-                                                                                                    <input type="hidden" required name="new_balance" value="<?php echo $new_bal; ?>" class="form-control">
-                                                                                                    <input type="hidden" required name="card_id" value="<?php echo $orders->card_id; ?>" class="form-control">
-                                                                                                </div>
-                                                                                                <div class="form-group col-md-6">
-                                                                                                    <label for="">Payment Amount</label>
-                                                                                                    <input type="text" required name="payment_amount" value="<?php echo $total_pay; ?>" readonly class="form-control">
-                                                                                                </div>
-                                                                                                <div class="form-group col-md-6">
-                                                                                                    <label for="">Payment Means</label>
-                                                                                                    <select name="payment_means" class="form-select form-control form-control-lg" data-search="on">
-                                                                                                        <option>Meal Card Swipe</option>
-                                                                                                        <option>Mpesa</option>
-                                                                                                        <option>Cash</option>
-                                                                                                    </select>
-                                                                                                </div>
-                                                                                            </div>
+                                                                                    <div class="row">
+                                                                                        <div class="card col-md-6 col-sm-12 col-xl-6">
+                                                                                            <div class="text-center">Scan QR Code To Pay</div>
+                                                                                            <?php
+                                                                                            /*
+                                                                                            * This Library is used here under demo purposes
+                                                                                            * This Client Has Not PURCHASED THE FULL SYSTEM LICENSE
+                                                                                            * 
+                                                                                            */
+                                                                                            $payment_details = "Mercant:" . $orders->sys_name . " Payment Amount: Ksh" . $total_pay;
+                                                                                            $targetPath = "../public/backend_assets/qr_codes/";
+                                                                                            if (!is_dir($targetPath)) {
+                                                                                                mkdir($targetPath, 0777, true);
+                                                                                            }
+                                                                                            $bobj = $qrcode->getBarcodeObj('QRCODE,H', $payment_details, -16, -16, 'black', array(
+                                                                                                -2,
+                                                                                                -2,
+                                                                                                -2,
+                                                                                                -2
+                                                                                            ))->setBackgroundColor('#f0f0f0');
+
+                                                                                            $imageData = $bobj->getPngData();
+                                                                                            $timestamp = time();
+
+                                                                                            file_put_contents($targetPath . $timestamp . '.png', $imageData);
+                                                                                            ?>
+                                                                                            <br>
+                                                                                            <img class="img-fluid img-thumbnail" src="<?php echo $targetPath . $timestamp; ?>.png">
                                                                                         </div>
-                                                                                        <div class="text-right">
-                                                                                            <button type="submit" name="pay_order" class="btn btn-primary">Submit</button>
+                                                                                        <div class="card col-md-6 col-sm-12 col-xl-6">
+                                                                                            <form method="post" enctype="multipart/form-data" role="form">
+                                                                                                <div class="card-body">
+                                                                                                    <div class="row">
+                                                                                                        <div class="form-group col-md-12">
+                                                                                                            <label for="">Payment Confirmation Code</label>
+                                                                                                            <input type="text" required name="payment_confirmation_code" value="<?php echo $sys_gen_paycode; ?>" class="form-control">
+                                                                                                            <input type="hidden" required name="payment_order_id" value="<?php echo $orders->order_id; ?>" class="form-control">
+                                                                                                            <?php
+                                                                                                            /* Compute Existing Balance In Meal Card */
+                                                                                                            $initialbal = $orders->card_loaded_amount;
+                                                                                                            $new_bal  = $initialbal - $total_pay;
+                                                                                                            ?>
+                                                                                                            <input type="hidden" required name="new_balance" value="<?php echo $new_bal; ?>" class="form-control">
+                                                                                                            <input type="hidden" required name="card_id" value="<?php echo $orders->card_id; ?>" class="form-control">
+                                                                                                        </div>
+                                                                                                        <div class="form-group col-md-6">
+                                                                                                            <label for="">Payment Amount (Ksh)</label>
+                                                                                                            <input type="text" required name="payment_amount" value="<?php echo $total_pay; ?>" readonly class="form-control">
+                                                                                                        </div>
+                                                                                                        <div class="form-group col-md-6">
+                                                                                                            <label for="">Payment Means</label>
+                                                                                                            <select name="payment_means" class="form-select form-control form-control-lg" data-search="on">
+                                                                                                                <option>Meal Card Swipe</option>
+                                                                                                                <option>Mpesa</option>
+                                                                                                                <option>Cash</option>
+                                                                                                            </select>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="text-right">
+                                                                                                    <button type="submit" name="pay_order" class="btn btn-primary">Submit</button>
+                                                                                                </div>
+                                                                                            </form>
                                                                                         </div>
-                                                                                    </form>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
