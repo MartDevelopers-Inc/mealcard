@@ -302,6 +302,27 @@ require_once('../partials/head.php');
                                                                 </div>
                                                                 <!-- End Modal -->
 
+                                                                <!-- Delete Modal -->
+                                                                <div class="modal fade" id="delete-<?php echo $orders->order_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title" id="exampleModalLabel">CONFIRM DELETION</h5>
+                                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                    <span aria-hidden="true">&times;</span>
+                                                                                </button>
+                                                                            </div>
+                                                                            <div class="modal-body text-center text-danger">
+                                                                                <h4>Delete <?php echo $orders->user_name; ?> Meal Order?</h4>
+                                                                                <br>
+                                                                                <p>Heads Up, You are about to delete this order, This action is irrevisble.</p>
+                                                                                <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
+                                                                                <a href="my_orders?delete=<?php echo $orders->order_id; ?>" class="text-center btn btn-danger"> Delete </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- End Modal -->
                                                             </tr>
                                                         <?php } ?>
                                                     </tbody>
