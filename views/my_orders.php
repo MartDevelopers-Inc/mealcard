@@ -264,6 +264,7 @@ require_once('../partials/head.php');
                                                                                     <div class="dropdown-menu dropdown-menu-right">
                                                                                         <ul class="link-list-opt no-bdr">
                                                                                             <li><a data-toggle="modal" href="#update-<?php echo $orders->order_id; ?>"><em class="icon ni ni-edit"></em><span>Update Order</span></a></li>
+                                                                                            <li><a data-toggle="modal" href="#delete-<?php echo $orders->order_id; ?>"><em class="icon ni ni-ban"></em><span>Cancel Order</span></a></li>
                                                                                         </ul>
                                                                                     </div>
                                                                                 </div>
@@ -307,17 +308,17 @@ require_once('../partials/head.php');
                                                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                                                         <div class="modal-content">
                                                                             <div class="modal-header">
-                                                                                <h5 class="modal-title" id="exampleModalLabel">CONFIRM DELETION</h5>
+                                                                                <h5 class="modal-title" id="exampleModalLabel">CONFIRM ORDER CANCELLATION</h5>
                                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                                     <span aria-hidden="true">&times;</span>
                                                                                 </button>
                                                                             </div>
                                                                             <div class="modal-body text-center text-danger">
-                                                                                <h4>Delete <?php echo $orders->user_name; ?> Meal Order?</h4>
+                                                                                <h4>Cancel This Order?</h4>
                                                                                 <br>
-                                                                                <p>Heads Up, You are about to delete this order, This action is irrevisble.</p>
+                                                                                <p>Hey there You About To Cancel This Order, This action is irrevisble.</p>
                                                                                 <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
-                                                                                <a href="my_orders?delete=<?php echo $orders->order_id; ?>" class="text-center btn btn-danger"> Delete </a>
+                                                                                <a href="my_orders?delete=<?php echo $orders->order_id; ?>" class="text-center btn btn-danger"> Cancel </a>
                                                                             </div>
                                                                         </div>
                                                                     </div>
