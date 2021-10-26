@@ -164,6 +164,103 @@ require_once('../partials/head.php');
                                                                         </div>
                                                                     </div><!-- .card -->
                                                                 </div><!-- .col -->
+                                                                <div class="col-md-6 col-xxl-6">
+                                                                    <div class="card card-bordered card-full">
+                                                                        <div class="card-inner border-bottom">
+                                                                            <div class="card-title-group">
+                                                                                <div class="card-title">
+                                                                                    <h6 class="title">My Recent Meal Orders</h6>
+                                                                                </div>
+                                                                                <div class="card-tools">
+                                                                                    <a href="my_orders" class="link">View All</a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <ul class="nk-activity">
+                                                                            <?php
+                                                                            /* Load Orders Logs */
+                                                                            $ret = "SELECT * FROM  orders o
+                                                                            INNER JOIN users s ON s.user_id = o.order_user_id
+                                                                            INNER JOIN meals m ON m.meal_id = o.order_meal_id 
+                                                                            WHERE s.user_id = '$user_id'
+                                                                            ORDER BY o.order_date_posted DESC
+                                                                            LIMIT 15
+                                                                            ";
+                                                                            $stmt = $mysqli->prepare($ret);
+                                                                            $stmt->execute(); //ok
+                                                                            $res = $stmt->get_result();
+                                                                            while ($orders = $res->fetch_object()) {
+
+                                                                            ?>
+                                                                                <li class="nk-activity-item">
+                                                                                    <div class="nk-activity-media user-avatar bg-success">
+                                                                                        <?php echo substr($orders->user_name, 0, 2); ?>
+                                                                                    </div>
+                                                                                    <div class="nk-activity-data">
+                                                                                        <div class="label">
+                                                                                            <?php echo $orders->user_name; ?> Has Ordered <?php echo $orders->meal_name . '.<br> Meal Quantity: ' . $orders->order_quantity; ?>
+                                                                                        </div>
+                                                                                        <span class="time"><?php echo date('d M Y, g:ia', strtotime($orders->order_date_posted)); ?></span>
+                                                                                    </div>
+                                                                                </li>
+                                                                            <?php } ?>
+
+                                                                        </ul>
+                                                                    </div><!-- .card -->
+                                                                </div><!-- .col -->
+
+
+                                                                <div class="col-lg-6 col-xxl-6">
+                                                                    <div class="card card-bordered h-100">
+                                                                        <div class="card-inner border-bottom">
+                                                                            <div class="card-title-group">
+                                                                                <div class="card-title">
+                                                                                    <h6 class="title">Recent Orders Payment Logs</h6>
+                                                                                </div>
+                                                                                <div class="card-tools">
+                                                                                    <a href="my_payments" class="link">View All</a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="card-inner">
+                                                                            <div class="timeline">
+                                                                                <ul class="timeline-list">
+                                                                                    <?php
+                                                                                    $ret = "SELECT * FROM  payments p
+                                                                                    INNER JOIN orders o ON o.order_id  = p.payment_order_id
+                                                                                    INNER JOIN users s ON s.user_id = o.order_user_id
+                                                                                    INNER JOIN meals m ON m.meal_id = o.order_meal_id 
+                                                                                    WHERE s.user_id = '$user_id'
+                                                                                    ORDER BY p.payment_date_posted DESC
+                                                                                    LIMIT 15
+                                                                                    ";
+                                                                                    $stmt = $mysqli->prepare($ret);
+                                                                                    $stmt->execute(); //ok
+                                                                                    $res = $stmt->get_result();
+                                                                                    while ($payments = $res->fetch_object()) {
+
+                                                                                    ?>
+                                                                                        <li class="timeline-item">
+                                                                                            <div class="timeline-status bg-primary is-outline"></div>
+                                                                                            <div class="timeline-date"><?php echo date('d M Y g:ia', strtotime($payments->payment_date_posted)); ?></div>
+                                                                                            <div class="timeline-data">
+                                                                                                <h6 class="timeline-title"><?php echo $payments->payment_confirmation_code; ?> Confirmed</h6>
+                                                                                                <div class="timeline-des">
+                                                                                                    <p>
+                                                                                                        <?php echo $payments->user_name . '' . $user->user_number; ?> Paid Ksh <?php echo $payments->payment_amount; ?><br>
+                                                                                                        Using <?php echo $payments->payment_means; ?> For <?php echo $payments->meal_name; ?>
+                                                                                                    </p>
+                                                                                                    <span class="time"><?php echo date('g:ia', strtotime($payments->payment_date_posted)); ?></span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </li>
+                                                                                    <?php } ?>
+
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div><!-- .card -->
+                                                                </div><!-- .col -->
 
                                                             </div><!-- .row -->
                                                         </div><!-- .col -->
