@@ -444,7 +444,7 @@ require_once('../partials/head.php');
                                                                                             <?php
                                                                                             /*
                                                                                             * This Library is used here under demo purposes
-                                                                                            * This Client Has Not PURCHASED THE FULL SYSTEM LICENSE
+                                                                                            * This Client Is Running SandBox Mode
                                                                                             * 
                                                                                             */
                                                                                             $payment_details = "Mercant:" . $orders->sys_name . " Payment Amount: Ksh" . $total_pay;
