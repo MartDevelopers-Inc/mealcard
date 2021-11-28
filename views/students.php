@@ -148,14 +148,14 @@ if (isset($_POST['update_password'])) {
 }
 
 /* Handle Delete Student */
-if (isset($_GET['delete'])) {
-    $delete = $_GET['delete'];
+if (isset($_POST['delete'])) {
+    $user_id = $_POST['user_id'];
     /* Wipe This MF */
-    $delete_sql = "DELETE FROM users WHERE user_id = '$delete'";
+    $delete_sql = "DELETE FROM users WHERE user_id = '$user_id'";
     $delete_sql_stmt = $mysqli->prepare($delete_sql);
     $delete_sql_stmt->execute();
     if ($delete_sql_stmt) {
-        $success = "Deleted" && header("refresh:1; url=students");
+        $success = "Student Details Deleted";
     } else {
         $err  = "Failed!, Please Try Again Later";
     }
