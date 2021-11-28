@@ -377,11 +377,14 @@ require_once('../partials/head.php');
                                                                                     </button>
                                                                                 </div>
                                                                                 <div class="modal-body text-center text-danger">
-                                                                                    <h4>Delete <?php echo $students->user_name; ?> Details ?</h4>
-                                                                                    <br>
-                                                                                    <p>Heads Up, You are about to delete <?php echo $students->user_name; ?> Details. This action is irrevisble.</p>
-                                                                                    <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
-                                                                                    <a href="students?delete=<?php echo $students->user_id; ?>" class="text-center btn btn-danger"> Delete </a>
+                                                                                    <form method="POST">
+                                                                                        <h4>Delete <?php echo $students->user_name; ?> Details ?</h4>
+                                                                                        <br>
+                                                                                        <p>Heads Up, You are about to delete <?php echo $students->user_name; ?> Details. This action is irrevisble.</p>
+                                                                                        <input type="hidden" name="user_id" value="<?php echo $students->user_id; ?>">
+                                                                                        <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
+                                                                                        <input type="submit" name="delete" value="Delete" class="text-center btn btn-danger">
+                                                                                    </form>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
