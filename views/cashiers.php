@@ -148,14 +148,14 @@ if (isset($_POST['update_password'])) {
 }
 
 /* Handle Delete Cashier */
-if (isset($_GET['delete'])) {
-    $delete = $_GET['delete'];
+if (isset($_POST['delete'])) {
+    $delete = $_POST['delete'];
     /* Wipe This MF */
     $delete_sql = "DELETE FROM users WHERE user_id = '$delete'";
     $delete_sql_stmt = $mysqli->prepare($delete_sql);
     $delete_sql_stmt->execute();
     if ($delete_sql_stmt) {
-        $success = "Deleted" && header("refresh:1; url=cashiers");
+        $success = "Deleted";
     } else {
         $err  = "Failed!, Please Try Again Later";
     }
