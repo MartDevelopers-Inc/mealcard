@@ -149,13 +149,13 @@ if (isset($_POST['update_password'])) {
 
 /* Handle Delete Cashier */
 if (isset($_POST['delete'])) {
-    $delete = $_POST['delete'];
+    $user_id = $_POST['user_id'];
     /* Wipe This MF */
-    $delete_sql = "DELETE FROM users WHERE user_id = '$delete'";
+    $delete_sql = "DELETE FROM users WHERE user_id = '$user_id'";
     $delete_sql_stmt = $mysqli->prepare($delete_sql);
     $delete_sql_stmt->execute();
     if ($delete_sql_stmt) {
-        $success = "Deleted";
+        $success = "Cashier Details Deleted";
     } else {
         $err  = "Failed!, Please Try Again Later";
     }
@@ -382,7 +382,7 @@ require_once('../partials/head.php');
                                                                                         <br>
                                                                                         <p>Heads Up, You are about to delete <?php echo $cashiers->user_name; ?> Details. This action is irrevisble.</p>
                                                                                         <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
-                                                                                        <input type="hidden" name="delete" value="<?php echo $cashiers->user_id; ?>">
+                                                                                        <input type="hidden" name="user_id" value="<?php echo $cashiers->user_id; ?>">
                                                                                         <input type="submit" name="delete" value="Delete" class="text-center btn btn-danger">
                                                                                     </form>
                                                                                 </div>
