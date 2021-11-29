@@ -105,15 +105,15 @@ if (isset($_POST['update_order'])) {
 }
 
 /* Delete Order */
-if (isset($_GET['delete'])) {
-    $delete = $_GET['delete'];
+if (isset($_POST['delete'])) {
+    $order_id = $_POST['order_id'];
     $deletesql  = "DELETE FROM orders WHERE order_id = ?";
     $stmt = $mysqli->prepare($deletesql);
     $rc = $stmt->bind_param('s', $delete);
     $stmt->execute();
 
     if ($stmt) {
-        $success = "Deleted" && header("refresh:1, orders");
+        $success = "Order Deleted";
     } else {
         $err = "Failed!, Please Try Again Later";
     }
