@@ -66,14 +66,14 @@ require_once('../config/checklogin.php');
 require_once('../config/codeGen.php');
 checklogin();
 /* Reversal Payment */
-if (isset($_GET['delete'])) {
-    $delete  = $_GET['delete'];
+if (isset($_POST['delete'])) {
+    $order_id = $_POST['order_id'];
     /* Reverse Payment */
-    $reverse = "DELETE FROM orders WHERE order_id = '$delete'";
+    $reverse = "DELETE FROM orders WHERE order_id = '$order_id'";
     $stmt = $mysqli->prepare($reverse);
     $stmt->execute();
     if ($stmt) {
-        $success = "Payment Reversed" && header("refresh:1, url=payments");
+        $success = "Payment Reversed";
     } else {
         $err = "Failed!, Please Try Again Later";
     }
