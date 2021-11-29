@@ -369,7 +369,7 @@ require_once('../partials/head.php');
                                                                                         <p>Heads Up, You are about to delete <?php echo $meals->meal_name; ?> Details. This action is irrevisble.</p>
                                                                                         <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
                                                                                         <input type="hidden" value="<?php echo $meals->meal_id; ?>" name="meal_id">
-                                                                                        <input type="submit" name="delete" class="text-center btn btn-danger">
+                                                                                        <input type="submit" name="delete" value="Delete" class="text-center btn btn-danger">
                                                                                     </form>
                                                                                 </div>
                                                                             </div>
