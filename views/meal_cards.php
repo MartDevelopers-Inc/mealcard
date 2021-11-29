@@ -383,14 +383,14 @@ require_once('../partials/head.php');
                                                                                     </button>
                                                                                 </div>
                                                                                 <div class="modal-body text-center text-danger">
-                                                                                    <form action="POST">
+                                                                                    <form method="POST">
                                                                                         <h4>Delete <?php echo $cards->card_code_number; ?>?</h4>
                                                                                         <br>
                                                                                         <p>Heads Up, You are about to delete <?php echo $cards->user_name; ?> meal card. This action is irrevisble.</p>
                                                                                         <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
                                                                                         <input type="hidden" value="<?php echo $cards->card_id; ?>" name="card_id">
-                                                                                        <input type="hidden" value="<?php echo $cards->card_user_id; ?>" name="card_user_id">
-                                                                                        <input type="submit" name="delete" value="Delete" class="text-center btn btn-danger"> Delete </a>
+                                                                                        <input type="hidden" value="<?php echo $cards->card_owner_id; ?>" name="card_user_id">
+                                                                                        <input type="submit" name="delete" value="Delete" class="text-center btn btn-danger">
                                                                                     </form>
                                                                                 </div>
                                                                             </div>
