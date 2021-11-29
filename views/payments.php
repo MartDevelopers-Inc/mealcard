@@ -203,7 +203,7 @@ require_once('../partials/head.php');
                                                                                         <p>Heads Up, You are about to delete this payment record, This action is irrevisble.</p>
                                                                                         <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
                                                                                         <input type="hidden" value="<?php echo $payments->payment_order_id; ?>" name="order_id">
-                                                                                        <input type="submit" value="delete" name="Delete" class="text-center btn btn-danger">
+                                                                                        <input type="submit" value="Delete" name="delete" class="text-center btn btn-danger">
                                                                                     </form>
                                                                                 </div>
                                                                             </div>
