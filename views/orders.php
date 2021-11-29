@@ -105,15 +105,15 @@ if (isset($_POST['update_order'])) {
 }
 
 /* Delete Order */
-if (isset($_GET['delete'])) {
-    $delete = $_GET['delete'];
+if (isset($_POST['delete'])) {
+    $order_id = $_POST['order_id'];
     $deletesql  = "DELETE FROM orders WHERE order_id = ?";
     $stmt = $mysqli->prepare($deletesql);
-    $rc = $stmt->bind_param('s', $delete);
+    $rc = $stmt->bind_param('s', $order_id);
     $stmt->execute();
 
     if ($stmt) {
-        $success = "Deleted" && header("refresh:1, orders");
+        $success = "Order Deleted";
     } else {
         $err = "Failed!, Please Try Again Later";
     }
@@ -416,11 +416,14 @@ require_once('../partials/head.php');
                                                                                     </button>
                                                                                 </div>
                                                                                 <div class="modal-body text-center text-danger">
-                                                                                    <h4>Delete <?php echo $orders->user_name; ?> Meal Order?</h4>
-                                                                                    <br>
-                                                                                    <p>Heads Up, You are about to delete this order, This action is irrevisble.</p>
-                                                                                    <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
-                                                                                    <a href="orders?delete=<?php echo $orders->order_id; ?>" class="text-center btn btn-danger"> Delete </a>
+                                                                                    <form method="POST">
+                                                                                        <h4>Delete <?php echo $orders->user_name; ?> Meal Order?</h4>
+                                                                                        <br>
+                                                                                        <p>Heads Up, You are about to delete this order, This action is irrevisble.</p>
+                                                                                        <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
+                                                                                        <input type="hidden" name="order_id" value="<?php echo $orders->order_id; ?>">
+                                                                                        <input type="submit" name="delete" value="Delete" class="text-center btn btn-danger">
+                                                                                    </form>
                                                                                 </div>
                                                                             </div>
                                                                         </div>

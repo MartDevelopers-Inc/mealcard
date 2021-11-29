@@ -115,14 +115,14 @@ if (isset($_POST['update_meal_category'])) {
 }
 
 /* Handle Delete Meal Category */
-if (isset($_GET['delete'])) {
-    $delete = $_GET['delete'];
+if (isset($_POST['delete'])) {
+    $category_id = $_POST['category_id'];
     /* Wipe This MF */
-    $delete_sql = "DELETE FROM meal_categories WHERE category_id = '$delete'";
+    $delete_sql = "DELETE FROM meal_categories WHERE category_id = '$category_id'";
     $delete_sql_stmt = $mysqli->prepare($delete_sql);
     $delete_sql_stmt->execute();
     if ($delete_sql_stmt) {
-        $success = "Deleted" && header("refresh:1; url=meal_categories");
+        $success = "Category Details Deleted";
     } else {
         $err  = "Failed!, Please Try Again Later";
     }
@@ -323,11 +323,14 @@ require_once('../partials/head.php');
                                                                                 </button>
                                                                             </div>
                                                                             <div class="modal-body text-center text-danger">
-                                                                                <h4>Delete <?php echo $meal_categories->category_name; ?> Meal Category ?</h4>
-                                                                                <br>
-                                                                                <p>Heads Up, You are about to delete <?php echo $meal_categories->category_name; ?> Meal Category. This action is irrevisble.</p>
-                                                                                <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
-                                                                                <a href="meal_categories?delete=<?php echo $meal_categories->category_id; ?>" class="text-center btn btn-danger"> Delete </a>
+                                                                                <form method="POST">
+                                                                                    <h4>Delete <?php echo $meal_categories->category_name; ?> Meal Category ?</h4>
+                                                                                    <br>
+                                                                                    <p>Heads Up, You are about to delete <?php echo $meal_categories->category_name; ?> Meal Category. This action is irrevisble.</p>
+                                                                                    <input type="hidden" value="<?php echo $meal_categories->category_id; ?>" name="category_id">
+                                                                                    <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
+                                                                                    <input type="submit" name="delete" value="Delete" class="text-center btn btn-danger">
+                                                                                </form>
                                                                             </div>
                                                                         </div>
                                                                     </div>

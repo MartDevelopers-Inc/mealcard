@@ -66,14 +66,14 @@ require_once('../config/checklogin.php');
 require_once('../config/codeGen.php');
 checklogin();
 /* Reversal Payment */
-if (isset($_GET['delete'])) {
-    $delete  = $_GET['delete'];
+if (isset($_POST['delete'])) {
+    $order_id = $_POST['order_id'];
     /* Reverse Payment */
-    $reverse = "DELETE FROM orders WHERE order_id = '$delete'";
+    $reverse = "DELETE FROM orders WHERE order_id = '$order_id'";
     $stmt = $mysqli->prepare($reverse);
     $stmt->execute();
     if ($stmt) {
-        $success = "Payment Reversed" && header("refresh:1, url=payments");
+        $success = "Payment Reversed";
     } else {
         $err = "Failed!, Please Try Again Later";
     }
@@ -197,11 +197,14 @@ require_once('../partials/head.php');
                                                                                     </button>
                                                                                 </div>
                                                                                 <div class="modal-body text-center text-danger">
-                                                                                    <h4>Delete Payment Record : <?php echo $payments->payment_confirmation_code; ?> ?</h4>
-                                                                                    <br>
-                                                                                    <p>Heads Up, You are about to delete this payment record, This action is irrevisble.</p>
-                                                                                    <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
-                                                                                    <a href="payments?delete=<?php echo $payments->payment_order_id; ?>" class="text-center btn btn-danger"> Delete </a>
+                                                                                    <form method="POST">
+                                                                                        <h4>Delete Payment Record : <?php echo $payments->payment_confirmation_code; ?> ?</h4>
+                                                                                        <br>
+                                                                                        <p>Heads Up, You are about to delete this payment record, This action is irrevisble.</p>
+                                                                                        <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
+                                                                                        <input type="hidden" value="<?php echo $payments->payment_order_id; ?>" name="order_id">
+                                                                                        <input type="submit" value="Delete" name="delete" class="text-center btn btn-danger">
+                                                                                    </form>
                                                                                 </div>
                                                                             </div>
                                                                         </div>

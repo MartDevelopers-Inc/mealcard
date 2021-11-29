@@ -148,14 +148,14 @@ if (isset($_POST['update_password'])) {
 }
 
 /* Handle Delete Cashier */
-if (isset($_GET['delete'])) {
-    $delete = $_GET['delete'];
+if (isset($_POST['delete'])) {
+    $user_id = $_POST['user_id'];
     /* Wipe This MF */
-    $delete_sql = "DELETE FROM users WHERE user_id = '$delete'";
+    $delete_sql = "DELETE FROM users WHERE user_id = '$user_id'";
     $delete_sql_stmt = $mysqli->prepare($delete_sql);
     $delete_sql_stmt->execute();
     if ($delete_sql_stmt) {
-        $success = "Deleted" && header("refresh:1; url=cashiers");
+        $success = "Cashier Details Deleted";
     } else {
         $err  = "Failed!, Please Try Again Later";
     }
@@ -377,11 +377,14 @@ require_once('../partials/head.php');
                                                                                     </button>
                                                                                 </div>
                                                                                 <div class="modal-body text-center text-danger">
-                                                                                    <h4>Delete <?php echo $cashiers->user_name; ?> Details ?</h4>
-                                                                                    <br>
-                                                                                    <p>Heads Up, You are about to delete <?php echo $cashiers->user_name; ?> Details. This action is irrevisble.</p>
-                                                                                    <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
-                                                                                    <a href="cashiers?delete=<?php echo $cashiers->user_id; ?>" class="text-center btn btn-danger"> Delete </a>
+                                                                                    <form method="POST">
+                                                                                        <h4>Delete <?php echo $cashiers->user_name; ?> Details ?</h4>
+                                                                                        <br>
+                                                                                        <p>Heads Up, You are about to delete <?php echo $cashiers->user_name; ?> Details. This action is irrevisble.</p>
+                                                                                        <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
+                                                                                        <input type="hidden" name="user_id" value="<?php echo $cashiers->user_id; ?>">
+                                                                                        <input type="submit" name="delete" value="Delete" class="text-center btn btn-danger">
+                                                                                    </form>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
