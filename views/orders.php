@@ -109,7 +109,7 @@ if (isset($_POST['delete'])) {
     $order_id = $_POST['order_id'];
     $deletesql  = "DELETE FROM orders WHERE order_id = ?";
     $stmt = $mysqli->prepare($deletesql);
-    $rc = $stmt->bind_param('s', $delete);
+    $rc = $stmt->bind_param('s', $order_id);
     $stmt->execute();
 
     if ($stmt) {
