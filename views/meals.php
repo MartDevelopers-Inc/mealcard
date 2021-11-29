@@ -363,11 +363,14 @@ require_once('../partials/head.php');
                                                                                     </button>
                                                                                 </div>
                                                                                 <div class="modal-body text-center text-danger">
-                                                                                    <h4>Delete <?php echo $meals->meal_name; ?> Details ?</h4>
-                                                                                    <br>
-                                                                                    <p>Heads Up, You are about to delete <?php echo $meals->meal_name; ?> Details. This action is irrevisble.</p>
-                                                                                    <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
-                                                                                    <a href="meals?delete=<?php echo $meals->meal_id; ?>" class="text-center btn btn-danger"> Delete </a>
+                                                                                    <form method="POST">
+                                                                                        <h4>Delete <?php echo $meals->meal_name; ?> Details ?</h4>
+                                                                                        <br>
+                                                                                        <p>Heads Up, You are about to delete <?php echo $meals->meal_name; ?> Details. This action is irrevisble.</p>
+                                                                                        <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
+                                                                                        <input type="hidden" value="<?php echo $meals->meal_id; ?>" name="meal_id">
+                                                                                        <input type="submit" name="delete" class="text-center btn btn-danger">
+                                                                                    </form>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
