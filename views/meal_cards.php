@@ -129,12 +129,12 @@ if (isset($_POST['update_card'])) {
 
 
 /* Delete Meal Card */
-if (isset($_GET['delete'])) {
-    $delete = $_GET['delete'];
-    $card_holder = $_GET['owner'];
+if (isset($_POST['delete'])) {
+    $card_id = $_POST['card_id'];
+    $card_user_id = $_POST['card_user_id'];
     /* Wipe This MF */
-    $delete_sql = "DELETE FROM meal_cards WHERE card_id = '$delete'";
-    $user_sql = "UPDATE users SET user_has_card = 'No' WHERE user_id = '$card_holder'";
+    $delete_sql = "DELETE FROM meal_cards WHERE card_id = '$card_id'";
+    $user_sql = "UPDATE users SET user_has_card = 'No' WHERE user_id = '$card_user_id'";
 
     $delete_sql_stmt = $mysqli->prepare($delete_sql);
     $user_sql_stmt = $mysqli->prepare($user_sql);
@@ -143,7 +143,7 @@ if (isset($_GET['delete'])) {
     $user_sql_stmt->execute();
 
     if ($delete_sql_stmt &&  $user_sql_stmt) {
-        $success = "Deleted" && header("refresh:1; url=meal_cards");
+        $success = "Meal Card Deleted";
     } else {
         $err  = "Failed!, Please Try Again Later";
     }
